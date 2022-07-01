@@ -33,6 +33,7 @@ ISDND = float(st.number_input("Déchets non-dangereux en mélange (en tonnes) :"
 st.subheader("Bilan")
 
 st.write(ISDND*2)
+st.write(ISDI*13)
 
 
 
