@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import numpy as np
 import urllib.request
 import math
 import random
@@ -28,6 +29,11 @@ mav4e = 13
 st.header("Choix du chantier")
 #Récupérer données chantier (nom, coord GPS (ou adresse))
 st.header("Choix des exutoires")
+df = pd.DataFrame(
+     np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
+     columns=['lat', 'lon'])
+
+st.map(df)
 #Récupérer données exutoires (nom, coord GPS (ou adresse))
 #Combien d'exutoires à prendre en compte ?
 #Appel openstreetmap? calul distance chantier/exutoire
@@ -66,9 +72,6 @@ st.header("Données")
 
 with st.expander("Distance à parcourir :"):
     st.subheader(str(dist_chantier_exutoire*pass_tot) + " km")
-
-st.write("")
-#pb variable pas load cam
 
 with st.expander("Passages :"):
     st.write("Nombre de passages pour l'évacuation des terres :")
@@ -170,10 +173,17 @@ if action1:
         new_E_ISDI1 = (new_ISDI1 * FEterres)/1000
         new_pass_ISDI1 = math.ceil(new_ISDI1/(load_cam5*(cam5/100)+load_cam4*(cam4/100)))
         new_E_trans_ISDI1 = FE_trans * dist_chantier_exutoire * (new_ISDI1 + mav5e * (cam5 / 100) * new_pass_ISDI1 + mav4e * (cam4 / 100) * new_pass_ISDI1)
+        Ea1 = E_ISDI1+E_trans_ISDI1-new_E_ISDI1-new_E_trans_ISDI1
         st.write("Cette action permet de réduire les émissions totales de :")
-        st.subheader(str(round(E_ISDI1+E_trans_ISDI1-new_E_ISDI1-new_E_trans_ISDI1, 1)) + " tCO2e")
-        y = random.choice(["Repas avec du boeuf", "km en voiture", "aller-retour Paris-NYC"])
-        st.write(y)
+        st.subheader(str(round(Ea1, 1)) + " tCO2e")
+        v = random.choice([str(math.ceil(Ea1 * 138)) + " repas avec du boeuf 🥩",
+                           str(math.ceil(Ea1 * 5181)) + " km en voiture (" + str(math.ceil(Ea1 * 8)) + " trajets Paris-Marseille) 🚗",
+                           str(math.ceil(Ea1)) + " aller-retour Paris-NYC ✈️",
+                           str(math.ceil(Ea1 * 54)) + " jours de chauffage (gaz) 🌡️",
+                           str(math.ceil(Ea1 * 61)) + " smartphones 📱",
+                           str(math.ceil(Ea1 * 2208)) + " litres d'eau en bouteille 🧴",
+                           str(math.ceil(Ea1 * 43)) + " jeans en coton 👖"])
+        st.subheader("Soit " + v)
     else:
         st.error("Le taux de réutilisation des terres sur site est déjà supérieur à 85%")
 
@@ -197,8 +207,14 @@ if action2:
         st.write("Cette action permet de réduire les émissions totales de :")
         Ea2 = round(E_trans - new_E_trans, 1)
         st.subheader(str(Ea2) + " tCO2e")
-        y = random.choice([str(Ea2*138) + " Repas avec du boeuf", "km en voiture", "aller-retour Paris-NYC"])
-        st.write("Soit " + y)
+        w = random.choice([str(math.ceil(Ea2*138)) + " repas avec du boeuf 🥩",
+                           str(math.ceil(Ea2*5181)) + " km en voiture (" + str(math.ceil(Ea2 * 8)) + " trajets Paris-Marseille) 🚗",
+                           str(math.ceil(Ea2)) + " aller-retour Paris-NYC ✈️",
+                           str(math.ceil(Ea2*54)) + " jours de chauffage (gaz) 🌡️",
+                           str(math.ceil(Ea2*61)) + " smartphones 📱",
+                           str(math.ceil(Ea2*2208)) + " litres d'eau en bouteille 🧴",
+                           str(math.ceil(Ea2*43)) + " jeans en coton 👖"])
+        st.subheader("Soit " + w)
     else:
         st.error("Le taux d'utilisation de 5 essieux est déjà supérieur à 90%")
 
@@ -214,7 +230,16 @@ if action3:
     new_pass_tot = new_pass_ISDI1 + new_pass_ISDI2 + new_pass_ISDND + new_pass_ISDD
     new_E_trans = round(FE_trans * dist_chantier_exutoire * (tot_D + mav5e * (cam5 / 100) * new_pass_tot + mav4e * (cam4 / 100) * new_pass_tot), 1)
     st.write("Cette action permet de réduire les émissions totales de :")
-    st.subheader(str(round(E_trans - new_E_trans, 1)) + " tCO2e")
+    Ea3 = E_trans - new_E_trans
+    st.subheader(str(round(Ea3, 1)) + " tCO2e")
+    x = random.choice([str(math.ceil(Ea3 * 138)) + " repas avec du boeuf 🥩",
+                       str(math.ceil(Ea3 * 5181)) + " km en voiture (" + str(math.ceil(Ea3 * 8)) + " trajets Paris-Marseille) 🚗",
+                       str(math.ceil(Ea3)) + " aller-retour Paris-NYC ✈️",
+                       str(math.ceil(Ea3 * 54)) + " jours de chauffage (gaz) 🌡️",
+                       str(math.ceil(Ea3 * 61)) + " smartphones 📱",
+                       str(math.ceil(Ea3 * 2208)) + " litres d'eau en bouteille 🧴",
+                       str(math.ceil(Ea3 * 43)) + " jeans en coton 👖"])
+    st.subheader("Soit " + x)
 
 #Choix d'un exutoire 10 km plus proche
 action4 = st.checkbox("Choisir un exutoire 10 km plus proche")
@@ -223,7 +248,16 @@ if action4:
         new_dist_chantier_exutoire = dist_chantier_exutoire - 10
         new_E_trans = round(FE_trans * new_dist_chantier_exutoire * (tot_D + mav5e * (cam5 / 100) * pass_tot + mav4e * (cam4 / 100) * pass_tot), 1)
         st.write("Cette action permet de réduire les émissions totales de :")
-        st.subheader(str(round(E_trans - new_E_trans, 1)) + " tCO2e")
+        Ea4 = E_trans - new_E_trans
+        st.subheader(str(round(Ea4, 1)) + " tCO2e")
+        y = random.choice([str(math.ceil(Ea4 * 138)) + " repas avec du boeuf 🥩",
+                           str(math.ceil(Ea4 * 5181)) + " km en voiture (" + str(math.ceil(Ea4 * 8)) + " trajets Paris-Marseille) 🚗",
+                           str(math.ceil(Ea4)) + " aller-retour Paris-NYC ✈️",
+                           str(math.ceil(Ea4 * 54)) + " jours de chauffage (gaz) 🌡️",
+                           str(math.ceil(Ea4 * 61)) + " smartphones 📱",
+                           str(math.ceil(Ea4 * 2208)) + " litres d'eau en bouteille 🧴",
+                           str(math.ceil(Ea4 * 43)) + " jeans en coton 👖"])
+        st.subheader("Soit " + y)
     else:
         st.error("L'exutoire se trouve déjà à moins de 10 km du chantier")
 
@@ -250,7 +284,25 @@ if action5:
     new_E_valo = round(new_E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD, 1)
     new_E_tot = new_E_trans + new_E_valo
     st.write("L'ensemble des actions combinées permet de réduire les émissions totales de :")
-    st.subheader(str(round(E_tot - new_E_tot, 1)) + " tCO2e")
+    Ea5 = E_tot - new_E_tot
+    st.subheader(str(round(Ea5, 1)) + " tCO2e")
+    z = random.choice([str(math.ceil(Ea5 * 138)) + " repas avec du boeuf 🥩",
+                       str(math.ceil(Ea5 * 5181)) + " km en voiture (" + str(math.ceil(Ea5 * 8)) + " trajets Paris-Marseille) 🚗",
+                       str(math.ceil(Ea5)) + " aller-retour Paris-NYC ✈️",
+                       str(math.ceil(Ea5 * 54)) + " jours de chauffage (gaz) 🌡️",
+                       str(math.ceil(Ea5 * 61)) + " smartphones 📱",
+                       str(math.ceil(Ea5 * 2208)) + " litres d'eau en bouteille 🧴",
+                       str(math.ceil(Ea5 * 43)) + " jeans en coton 👖"])
+    st.subheader("Soit " + z)
+    conso_moy = 30 / 100
+    conso_tot = conso_moy * pass_tot
+    new_conso_tot = conso_moy * new_pass_tot
+    prix_c = 2
+    eco = (conso_tot-new_conso_tot)*prix_c
+    st.write(str(eco))
+
+st.header("Estimation des gains €")
+
 
 
 st.write("")
