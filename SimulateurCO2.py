@@ -26,18 +26,90 @@ dist_chantier_exutoire = 45
 mav5e = 14
 mav4e = 13
 
-st.header("Choix du chantier")
+"""st.header("Choix du chantier et de l'exutoire")
+gps_site={'l15_smc_C':[48.80676379609311, 2.4714128993643167],
+          'l18_tcto_C':[48.71864217054404, 2.2267706822329747],
+          'l18_mas_C':[48.72618364228579, 2.256979195965277],
+          'X_austerlitz_C':[48.84101009097729, 2.3628191982951976],
+          'X_e3s_C':[48.764337707431714, 2.2888278993623645],
+          'l18_oa8_C':[48.73041281488208, 2.299016182160656],
+          'l18_oa12_C':[48.73041281488208, 2.299016182160656],
+          'l18_ant_C':[48.73614139875681, 2.3108366128519306],
+          'X_t10_C':[48.77918448732479, 2.2521011398356183],
+          'l15_chc_C':[48.818081419932184, 2.501509306150639]}
+site = st.selectbox("Choix du site", gps_site)
+coord1 = gps_site.get(site)
 #Récupérer données chantier (nom, coord GPS (ou adresse))
-st.header("Choix des exutoires")
-df = pd.DataFrame(
-     np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
-     columns=['lat', 'lon'])
 
+gps_exu={'sgp_bonneuil_E':[48.78136128027323, 2.4867031109993354],
+          'sgp_bruyere_oise_E':[49.150212134583846, 2.3367129821798214],
+          'sgp_lagny_marne_E':[48.87634563470945, 2.678905695658136],
+          'sgp_aulnay_bois_E':[48.95878248312839, 2.4855640282076026],
+          'sgp_champagne_oise_E':[49.13540594986553, 2.2559238840337916],
+          'ect_cormeilles_E':[48.9633919, 2.2143567],
+          'ect_annet_E':[48.9321000, 2.72360083],
+          'ect_auneuil_E':[49.3889375, 2.0036132],
+          'ect_baillet_E':[49.0550194, 2.2890186],
+          'ect_chelles_E':[48.892966, 2.5905579],
+          'ect_chevannes_E':[48.536575, 2.422022],
+          'ect_forges_E':[48.6008494, 2.0678437],
+          'ect_grisy_suisnes_E':[48.686389, 2.697708],
+          'ect_lacourneuve_E':[48.936929, 2.410814],
+          'ect_lens_E':[50.432276, 2.845321],
+          'ect_roissy_E':[48.783784, 2.626967],
+          'ect_vaujours_E':[48.933681, 2.602302],
+          'ect_villeneuve_E':[49.0310310, 2.6286292],
+          'ect_villeparisis_E':[48.9356944, 2.6302777777777777],
+          'lafarge_guerville_E':[48.96458006102009, 1.7570075975168304],
+          'veolia_triel_E':[48.955341638668365, 2.0213898607531635],
+          'cosson_puiseux_E':[49.06648191286999, 2.479039395666808],
+          'veolia_claye_E':[48.94840582269361, 2.7203403686797096],
+          'veolia_monthyon_E':[49.01744600518233, 2.8246193398464805],
+          'bruyere_E':[49.15022616957621, 2.3367451686889606],
+          'cemex_beauvilliers_E':[48.28941475198129, 1.7052754221049893],
+          'cemex_saint-denis_E':[48.930756141419344, 2.341060311006168],
+          'cemex_aubervilliers_E':[48.91471300358766, 2.3720397551873242],
+          'cemex_point_jour_E':[48.836042403059494, 2.2634007263473697],
+          'cemex_javel-haut_E':[48.854166954656975, 2.2812401817506722],
+          'cemex_bercy_E':[48.84042470012778, 2.3761455696535783],
+          'cemex_val_reuil_E':[49.28567504195899, 1.2348890128770635],
+          'cemex_bouafles_E':[49.196967596969564, 1.374364784036617],
+          'cemex_alizay_E':[49.316776332620485, 1.1667280300786589],
+          'cemex_tolbiac_E':[48.83005670868657, 2.3832038938013804],
+          'cemex_ivry_E':[48.825982162341525, 2.3882739398377715],
+          'cemex_athis-mons_E':[48.70531414616078, 2.40059579935967],
+          'cemex_evry_E':[48.62995307019293, 2.4605857263379787],
+          'cemex_gennevilliers_E':[48.94253186996389, 2.2929529975158354],
+          'cemex_marolles_E':[48.38750387725529, 3.0706238263269854],
+          'cemex_pecy_E':[48.657621597499926, 3.0977914551756216],
+          'gsm_acheres_E':[48.980997032566826, 2.0709067128631022],
+          'ecoterres_bruyères_E':[49.14911670326355, 2.3306978551980446],
+          'recycleo_villeau_E':[48.24708211596705, 1.5902035551570055],
+          'brezillon_vitry_E':[48.78814167031243, 2.3616199975087695],
+          'antrope_chevincourt_E':[49.52482912249918, 2.8439487705608233],
+          'sita_laimont_E':[48.84351503969166, 5.031479797511305],
+          'terralia_bourron_E':[48.34283222729696, 2.6766590398158256],
+          'terralia_soucy_E':[48.24406404864583, 3.292801670502411],
+          'coved_champigny_E':[48.30296448167418, 3.1230684551595185],
+          'scbv_bannost_E':[48.6751796085341, 3.1728285705219346],
+          'gsm_guerville_E':[48.96289768329372, 1.7389381840259135],
+          'gsm_triel_E':[48.96222522257524, 2.008573600287507],
+          'terralia_bray_E':[47.84305689633331, 2.3470011532841704],
+          'brezillon_longueil_E':[49.316699932880844, 2.7247543245147106],
+          'sita_villeparisis_E':[48.92933059540954, 2.603475770533497],
+          'antrope_saintleudesserent_E':[49.225662629258075, 2.401051497528799],
+          'extract_bruyere_sur_oise_E':[49.1491096856107, 2.3306978551980446],
+          'not found':[48.893896731644446, 2.3541898956589606]}
+
+exutoire = st.selectbox("Choix de l'exutoire", gps_exu)
+coord2 = gps_exu.get(exutoire)
+
+#map exutoire et site
+df = pd.DataFrame([coord1, coord2], columns=['lat', 'lon'])
 st.map(df)
-#Récupérer données exutoires (nom, coord GPS (ou adresse))
-#Combien d'exutoires à prendre en compte ?
-#Appel openstreetmap? calul distance chantier/exutoire
 
+#Appel openstreetmap? calul distance chantier/exutoire"""
+st.header("Nombre de passages quotidien")
 
 st.header("Quantité de déchets à évacuer")
 
@@ -67,6 +139,15 @@ pass_ISDD = math.ceil(ISDD/(load_cam5*(cam5/100)+load_cam4*(cam4/100)))
 pass_tot = pass_ISDI1+pass_ISDI2+pass_ISDND+pass_ISDD
 FE_trans = FEmoy5e*(cam5/100)+FEmoy4e*(cam4/100)
 tot_D = ISDI1+ISDI2+ISDND+ISDD
+
+st.header("Nombre de passages quotidien")
+nb_passages = st.radio("", ('Faible (~10)', 'Moyen (~50)', 'Fort (~100)'))
+if nb_passages == 'Faible (~10)':
+    pass_jour = 10
+elif nb_passages == 'Moyen (~50)':
+    pass_jour = 50
+elif nb_passages == 'Fort (~100)':
+    pass_jour = 100
 
 st.header("Données")
 
