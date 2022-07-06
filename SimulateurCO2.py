@@ -22,115 +22,56 @@ FEdnd = 87
 FEdd = 844
 FEmoy5e = 0.07/1000
 FEmoy4e = 0.13/1000
-dist_chantier_exutoire = 45
-mav5e = 14
-mav4e = 13
+dist_chantier_exutoire = 35
+mav5e = 15
+mav4e = 12
 
-"""st.header("Choix du chantier et de l'exutoire")
-gps_site={'l15_smc_C':[48.80676379609311, 2.4714128993643167],
-          'l18_tcto_C':[48.71864217054404, 2.2267706822329747],
-          'l18_mas_C':[48.72618364228579, 2.256979195965277],
-          'X_austerlitz_C':[48.84101009097729, 2.3628191982951976],
-          'X_e3s_C':[48.764337707431714, 2.2888278993623645],
-          'l18_oa8_C':[48.73041281488208, 2.299016182160656],
-          'l18_oa12_C':[48.73041281488208, 2.299016182160656],
-          'l18_ant_C':[48.73614139875681, 2.3108366128519306],
-          'X_t10_C':[48.77918448732479, 2.2521011398356183],
-          'l15_chc_C':[48.818081419932184, 2.501509306150639]}
-site = st.selectbox("Choix du site", gps_site)
-coord1 = gps_site.get(site)
-#Récupérer données chantier (nom, coord GPS (ou adresse))
+col1, col2 = st.columns(2)
+with col1:
+    st.header("Quantité de déchets à évacuer")
 
-gps_exu={'sgp_bonneuil_E':[48.78136128027323, 2.4867031109993354],
-          'sgp_bruyere_oise_E':[49.150212134583846, 2.3367129821798214],
-          'sgp_lagny_marne_E':[48.87634563470945, 2.678905695658136],
-          'sgp_aulnay_bois_E':[48.95878248312839, 2.4855640282076026],
-          'sgp_champagne_oise_E':[49.13540594986553, 2.2559238840337916],
-          'ect_cormeilles_E':[48.9633919, 2.2143567],
-          'ect_annet_E':[48.9321000, 2.72360083],
-          'ect_auneuil_E':[49.3889375, 2.0036132],
-          'ect_baillet_E':[49.0550194, 2.2890186],
-          'ect_chelles_E':[48.892966, 2.5905579],
-          'ect_chevannes_E':[48.536575, 2.422022],
-          'ect_forges_E':[48.6008494, 2.0678437],
-          'ect_grisy_suisnes_E':[48.686389, 2.697708],
-          'ect_lacourneuve_E':[48.936929, 2.410814],
-          'ect_lens_E':[50.432276, 2.845321],
-          'ect_roissy_E':[48.783784, 2.626967],
-          'ect_vaujours_E':[48.933681, 2.602302],
-          'ect_villeneuve_E':[49.0310310, 2.6286292],
-          'ect_villeparisis_E':[48.9356944, 2.6302777777777777],
-          'lafarge_guerville_E':[48.96458006102009, 1.7570075975168304],
-          'veolia_triel_E':[48.955341638668365, 2.0213898607531635],
-          'cosson_puiseux_E':[49.06648191286999, 2.479039395666808],
-          'veolia_claye_E':[48.94840582269361, 2.7203403686797096],
-          'veolia_monthyon_E':[49.01744600518233, 2.8246193398464805],
-          'bruyere_E':[49.15022616957621, 2.3367451686889606],
-          'cemex_beauvilliers_E':[48.28941475198129, 1.7052754221049893],
-          'cemex_saint-denis_E':[48.930756141419344, 2.341060311006168],
-          'cemex_aubervilliers_E':[48.91471300358766, 2.3720397551873242],
-          'cemex_point_jour_E':[48.836042403059494, 2.2634007263473697],
-          'cemex_javel-haut_E':[48.854166954656975, 2.2812401817506722],
-          'cemex_bercy_E':[48.84042470012778, 2.3761455696535783],
-          'cemex_val_reuil_E':[49.28567504195899, 1.2348890128770635],
-          'cemex_bouafles_E':[49.196967596969564, 1.374364784036617],
-          'cemex_alizay_E':[49.316776332620485, 1.1667280300786589],
-          'cemex_tolbiac_E':[48.83005670868657, 2.3832038938013804],
-          'cemex_ivry_E':[48.825982162341525, 2.3882739398377715],
-          'cemex_athis-mons_E':[48.70531414616078, 2.40059579935967],
-          'cemex_evry_E':[48.62995307019293, 2.4605857263379787],
-          'cemex_gennevilliers_E':[48.94253186996389, 2.2929529975158354],
-          'cemex_marolles_E':[48.38750387725529, 3.0706238263269854],
-          'cemex_pecy_E':[48.657621597499926, 3.0977914551756216],
-          'gsm_acheres_E':[48.980997032566826, 2.0709067128631022],
-          'ecoterres_bruyères_E':[49.14911670326355, 2.3306978551980446],
-          'recycleo_villeau_E':[48.24708211596705, 1.5902035551570055],
-          'brezillon_vitry_E':[48.78814167031243, 2.3616199975087695],
-          'antrope_chevincourt_E':[49.52482912249918, 2.8439487705608233],
-          'sita_laimont_E':[48.84351503969166, 5.031479797511305],
-          'terralia_bourron_E':[48.34283222729696, 2.6766590398158256],
-          'terralia_soucy_E':[48.24406404864583, 3.292801670502411],
-          'coved_champigny_E':[48.30296448167418, 3.1230684551595185],
-          'scbv_bannost_E':[48.6751796085341, 3.1728285705219346],
-          'gsm_guerville_E':[48.96289768329372, 1.7389381840259135],
-          'gsm_triel_E':[48.96222522257524, 2.008573600287507],
-          'terralia_bray_E':[47.84305689633331, 2.3470011532841704],
-          'brezillon_longueil_E':[49.316699932880844, 2.7247543245147106],
-          'sita_villeparisis_E':[48.92933059540954, 2.603475770533497],
-          'antrope_saintleudesserent_E':[49.225662629258075, 2.401051497528799],
-          'extract_bruyere_sur_oise_E':[49.1491096856107, 2.3306978551980446],
-          'not found':[48.893896731644446, 2.3541898956589606]}
+    ISDI1brut = st.number_input("Terres à excaver (en tonnes)", step=1)
+    ISDI2 = st.number_input("Déchets inertes : Gravats (en tonnes)", step=1)
+    ISDND = st.number_input("Déchets non-dangereux en mélange (en tonnes)", step=1)
+    ISDD = st.number_input("Déchets dangereux (en tonnes)", step=1)
 
-exutoire = st.selectbox("Choix de l'exutoire", gps_exu)
-coord2 = gps_exu.get(exutoire)
+with col2:
+    st.header("Distance chantier-exutoire")
 
-#map exutoire et site
-df = pd.DataFrame([coord1, coord2], columns=['lat', 'lon'])
-st.map(df)
+    dist_exuISDI1 = st.number_input("Distance exutoire 1 (en km)", value=35, step=1)
+    dist_exuISDI2 = st.number_input("Distance exutoire 2 (en km)", value=35, step=1)
+    dist_exuISDND = st.number_input("Distance exutoire 3 (en km)", value=35, step=1)
+    dist_exuISDD = st.number_input("Distance exutoire 4 (en km)", value=35, step=1)
 
-#Appel openstreetmap? calul distance chantier/exutoire"""
-st.header("Nombre de passages quotidien")
+col1, col2 = st.columns(2)
+with col1:
+    st.header("Nombre de passages quotidien")
 
-st.header("Quantité de déchets à évacuer")
+    nb_passages = st.radio("", ('Faible (~10)', 'Moyen (~50)', 'Fort (~100)'))
+    if nb_passages == 'Faible (~10)':
+        pass_jour = 10
+    elif nb_passages == 'Moyen (~50)':
+        pass_jour = 50
+    elif nb_passages == 'Fort (~100)':
+        pass_jour = 100
+with col2:
+    st.header("Taux de réemploi des terres :")
+    repl_terres = st.slider("Réemploi des terres sur site (%)",0,100,0, step=1)
+    valo_terres = 100 - repl_terres
+    # st.slider("Envoi vers exutoire pour valorisation (%)",0,100,100, step=1)
+    ISDI1 = ISDI1brut * (valo_terres/100)
 
-ISDI1brut = st.number_input("Terres à excaver (en tonnes) : ", step=1)
-ISDI2 = st.number_input("Déchets inertes : Gravats (en tonnes) : ", step=1)
-ISDND = st.number_input("Déchets non-dangereux en mélange (en tonnes) :", step=1)
-ISDD = st.number_input("Déchets dangereux (en tonnes) :", step=1)
-
-
-st.header("Taux de valorisation / réemploi des terres :")
-valo_terres = st.slider("Envoi vers exutoire pour valorisation (%)",0,100,100, step=1)
-repl_terres = st.slider("Réemploi sur site (%)",0,100,100-valo_terres, step=1)
-ISDI1 = ISDI1brut * (valo_terres/100)
-
-st.header("Type de camions")
-cam5 = st.slider("Pourcentage de camions 5 essieux (%)",0,100,70, step=1)
-cam4 = st.slider("Pourcentage de camions 4 essieux (%)",0,100,100-cam5, step=1)
-
-st.header("Chargement moyen")
-load_cam5 = st.slider("Chargement moyen des camions 5 essieux (tonnes)",0,35,25, step=1)
-load_cam4 = st.slider("Chargement moyen des camions 4 essieux (tonnes)",0,30,15, step=1)
+col1, col2 = st.columns(2)
+with col1:
+    st.header("Type de camions")
+    nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=20, step=1)
+    nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=10, step=1)
+    cam5 = (nb_cam5 / (nb_cam5 + nb_cam4)) * 100
+    cam4 = (nb_cam4 / (nb_cam5 + nb_cam4)) * 100
+with col2:
+    st.header("Chargement moyen")
+    load_cam5 = st.slider("Chargement moyen des camions articulés (tonnes)",15,29,25, step=1)
+    load_cam4 = st.slider("Chargement moyen des camions porteurs (tonnes)",10,20,15, step=1)
 
 pass_ISDI1 = math.ceil(ISDI1/(load_cam5*(cam5/100)+load_cam4*(cam4/100)))
 pass_ISDI2 = math.ceil(ISDI2/(load_cam5*(cam5/100)+load_cam4*(cam4/100)))
@@ -139,42 +80,17 @@ pass_ISDD = math.ceil(ISDD/(load_cam5*(cam5/100)+load_cam4*(cam4/100)))
 pass_tot = pass_ISDI1+pass_ISDI2+pass_ISDND+pass_ISDD
 FE_trans = FEmoy5e*(cam5/100)+FEmoy4e*(cam4/100)
 tot_D = ISDI1+ISDI2+ISDND+ISDD
-
-st.header("Nombre de passages quotidien")
-nb_passages = st.radio("", ('Faible (~10)', 'Moyen (~50)', 'Fort (~100)'))
-if nb_passages == 'Faible (~10)':
-    pass_jour = 10
-elif nb_passages == 'Moyen (~50)':
-    pass_jour = 50
-elif nb_passages == 'Fort (~100)':
-    pass_jour = 100
-
-st.header("Données")
-
-with st.expander("Distance à parcourir :"):
-    st.subheader(str(dist_chantier_exutoire*pass_tot) + " km")
-
-with st.expander("Passages :"):
-    st.write("Nombre de passages pour l'évacuation des terres :")
-    st.subheader(pass_ISDI1)
-    st.write("Nombre de passages pour l'évacuation des gravats :")
-    st.subheader(pass_ISDI2)
-    st.write("Nombre de passages pour l'évacuation des déchets non-dangereux :")
-    st.subheader(pass_ISDND)
-    st.write("Nombre de passages pour l'évacuation des dangereux :")
-    st.subheader(pass_ISDD)
-    st.write("Total passages :")
-    st.subheader(pass_tot)
+dist_tot = pass_ISDI1*dist_exuISDI1 + pass_ISDI2*dist_exuISDI2 + pass_ISDND*dist_exuISDND + pass_ISDD*dist_exuISDD
 
 st.header("Bilan CO2e")
 E_ISDI1 = round((ISDI1*FEterres)/1000, 1)
 E_ISDI2 = round((ISDI2*FEgravats)/1000, 1)
 E_ISDND = round((ISDND*FEdnd)/1000, 1)
 E_ISDD = round((ISDD*FEdd)/1000, 1)
-E_trans_ISDI1 = round(FE_trans * dist_chantier_exutoire * (ISDI1 + mav5e * (cam5/100) * pass_ISDI1 + mav4e * (cam4/100) * pass_ISDI1), 1)
-E_trans_ISDI2 = round(FE_trans * dist_chantier_exutoire * (ISDI2 + mav5e * (cam5/100) * pass_ISDI2 + mav4e * (cam4/100) * pass_ISDI2), 1)
-E_trans_ISDND = round(FE_trans * dist_chantier_exutoire * (ISDND + mav5e * (cam5/100) * pass_ISDND + mav4e * (cam4/100) * pass_ISDND), 1)
-E_trans_ISDD = round(FE_trans * dist_chantier_exutoire * (ISDD + mav5e * (cam5/100) * pass_ISDD + mav4e * (cam4/100) * pass_ISDD), 1)
+E_trans_ISDI1 = round(FE_trans * dist_exuISDI1 * (ISDI1 + mav5e * (cam5/100) * pass_ISDI1 + mav4e * (cam4/100) * pass_ISDI1), 1)
+E_trans_ISDI2 = round(FE_trans * dist_exuISDI2 * (ISDI2 + mav5e * (cam5/100) * pass_ISDI2 + mav4e * (cam4/100) * pass_ISDI2), 1)
+E_trans_ISDND = round(FE_trans * dist_exuISDND * (ISDND + mav5e * (cam5/100) * pass_ISDND + mav4e * (cam4/100) * pass_ISDND), 1)
+E_trans_ISDD = round(FE_trans * dist_exuISDD * (ISDD + mav5e * (cam5/100) * pass_ISDD + mav4e * (cam4/100) * pass_ISDD), 1)
 
 with st.expander("Emissions de CO2e par types de déchets :"):
     col1, col2, col3, col4 = st.columns(4)
@@ -223,9 +139,15 @@ with st.expander("Emissions de CO2e par types de déchets :"):
             st.write("kgCO2e/tonne :")
             st.subheader(round(((E_ISDD + E_trans_ISDD)/ISDD)*1000, 1))
 
-
 with st.expander("Emissions totales de CO2e (en tCO2e):"):
     E_trans = round(FE_trans * dist_chantier_exutoire * (tot_D + mav5e * (cam5 / 100) * pass_tot + mav4e * (cam4 / 100) * pass_tot), 1)
+# REMPLACER !!!
+    E_transs = FE_trans * (dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
+                        + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2)
+                        + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND)
+                        + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD))
+    st.header(E_transs)
+
     E_valo = round(E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD, 1)
     E_tot = E_trans + E_valo
     col1, col2, col3, col4 = st.columns(4)
@@ -243,6 +165,23 @@ with st.expander("Emissions totales de CO2e (en tCO2e):"):
             st.write("kgCO2e/tonne :")
             st.subheader(round(((E_trans+E_valo)/tot_D)*1000), 1)
 
+st.header("Données")
+
+with st.expander("Distance à parcourir :"):
+    st.subheader(str(dist_tot) + " km")
+
+with st.expander("Passages :"):
+    st.write("Total passages :")
+    st.subheader(pass_tot)
+    st.write("Nombre de passages pour l'évacuation des terres :")
+    st.subheader(pass_ISDI1)
+    st.write("Nombre de passages pour l'évacuation des gravats :")
+    st.subheader(pass_ISDI2)
+    st.write("Nombre de passages pour l'évacuation des déchets non-dangereux :")
+    st.subheader(pass_ISDND)
+    st.write("Nombre de passages pour l'évacuation des dangereux :")
+    st.subheader(pass_ISDD)
+
 st.header("Réduire l'empreinte carbone")
 
 #Réutiliser 10% des terres sur site
@@ -253,7 +192,7 @@ if action1:
         new_ISDI1 = ISDI1brut * (new_valo_terres/100)
         new_E_ISDI1 = (new_ISDI1 * FEterres)/1000
         new_pass_ISDI1 = math.ceil(new_ISDI1/(load_cam5*(cam5/100)+load_cam4*(cam4/100)))
-        new_E_trans_ISDI1 = FE_trans * dist_chantier_exutoire * (new_ISDI1 + mav5e * (cam5 / 100) * new_pass_ISDI1 + mav4e * (cam4 / 100) * new_pass_ISDI1)
+        new_E_trans_ISDI1 = FE_trans * dist_exuISDI1 * (new_ISDI1 + mav5e * (cam5 / 100) * new_pass_ISDI1 + mav4e * (cam4 / 100) * new_pass_ISDI1)
         Ea1 = E_ISDI1+E_trans_ISDI1-new_E_ISDI1-new_E_trans_ISDI1
         st.write("Cette action permet de réduire les émissions totales de :")
         st.subheader(str(round(Ea1, 1)) + " tCO2e")
@@ -375,15 +314,14 @@ if action5:
                        str(math.ceil(Ea5 * 2208)) + " litres d'eau en bouteille 🧴",
                        str(math.ceil(Ea5 * 43)) + " jeans en coton 👖"])
     st.subheader("Soit " + z)
-    conso_moy = 30 / 100
-    conso_tot = conso_moy * pass_tot
-    new_conso_tot = conso_moy * new_pass_tot
-    prix_c = 2
-    eco = (conso_tot-new_conso_tot)*prix_c
-    st.write(str(eco))
 
 st.header("Estimation des gains €")
-
+#conso_moy = 30 / 100
+#conso_tot = conso_moy * pass_tot
+#new_conso_tot = conso_moy * new_pass_tot
+#prix_c = 2
+#eco = (conso_tot-new_conso_tot)*prix_c
+#st.write(str(eco))
 
 
 st.write("")
