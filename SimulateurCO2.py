@@ -5,10 +5,16 @@ import urllib.request
 import math
 import random
 from PIL import Image
+from datetime import datetime
 
 urllib.request.urlretrieve("data:image/jpeg;base64,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", "alta.png")
 col1, col2 = st.columns([1,1])
 image = Image.open("alta.png")
+now = datetime.now()
+date_heure = now.strftime("%d/%m/%Y %H:%M:%S")
+date = now.strftime("%d/%m/%Y")
+heure = now.strftime("%H:%M:%S")
+st.text("Date et heure : " + date_heure)
 
 with col1:
     st.title("Simulateur CO2")
@@ -140,23 +146,20 @@ with st.expander("Emissions de CO2e par types de déchets :"):
             st.subheader(round(((E_ISDD + E_trans_ISDD)/ISDD)*1000, 1))
 
 with st.expander("Emissions totales de CO2e (en tCO2e):"):
-    E_trans = round(FE_trans * dist_chantier_exutoire * (tot_D + mav5e * (cam5 / 100) * pass_tot + mav4e * (cam4 / 100) * pass_tot), 1)
-# REMPLACER !!!
-    E_transs = FE_trans * (dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
+    E_trans = FE_trans * (dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
                         + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2)
                         + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND)
                         + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD))
-    st.header(E_transs)
 
-    E_valo = round(E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD, 1)
+    E_valo = E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD
     E_tot = E_trans + E_valo
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.write("Transport :")
-        st.subheader(E_trans)
+        st.subheader(round(E_trans, 1))
     with col2:
         st.write("Valorisation :")
-        st.subheader(E_valo)
+        st.subheader(round(E_valo, 1))
     with col3:
         st.write("Total des émissions :")
         st.subheader(round(E_tot, 1))
@@ -214,16 +217,19 @@ if action2:
         new_cam5 = cam5 + 15
         new_cam4 = 100 - new_cam5
         new_FE_trans = FEmoy5e * (new_cam5 / 100) + FEmoy4e * (new_cam4 / 100)
-        new_E_trans_ISDI1 = round(new_FE_trans * dist_chantier_exutoire * (ISDI1 + mav5e * (new_cam5 / 100) * pass_ISDI1 + mav4e * (new_cam4 / 100) * pass_ISDI1), 1)
-        new_E_trans_ISDI2 = round(new_FE_trans * dist_chantier_exutoire * (ISDI2 + mav5e * (new_cam5 / 100) * pass_ISDI2 + mav4e * (new_cam4 / 100) * pass_ISDI2), 1)
-        new_E_trans_ISDND = round(new_FE_trans * dist_chantier_exutoire * (ISDND + mav5e * (new_cam5 / 100) * pass_ISDND + mav4e * (new_cam4 / 100) * pass_ISDND), 1)
-        new_E_trans_ISDD = round(new_FE_trans * dist_chantier_exutoire * (ISDD + mav5e * (new_cam5 / 100) * pass_ISDD + mav4e * (new_cam4 / 100) * pass_ISDD), 1)
+        new_E_trans_ISDI1 = round(new_FE_trans * dist_exuISDI1 * (ISDI1 + mav5e * (new_cam5 / 100) * pass_ISDI1 + mav4e * (new_cam4 / 100) * pass_ISDI1), 1)
+        new_E_trans_ISDI2 = round(new_FE_trans * dist_exuISDI2 * (ISDI2 + mav5e * (new_cam5 / 100) * pass_ISDI2 + mav4e * (new_cam4 / 100) * pass_ISDI2), 1)
+        new_E_trans_ISDND = round(new_FE_trans * dist_exuISDND * (ISDND + mav5e * (new_cam5 / 100) * pass_ISDND + mav4e * (new_cam4 / 100) * pass_ISDND), 1)
+        new_E_trans_ISDD = round(new_FE_trans * dist_exuISDD * (ISDD + mav5e * (new_cam5 / 100) * pass_ISDD + mav4e * (new_cam4 / 100) * pass_ISDD), 1)
         new_pass_ISDI1 = math.ceil(ISDI1 / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100)))
         new_pass_ISDI2 = math.ceil(ISDI2 / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100)))
         new_pass_ISDND = math.ceil(ISDND / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100)))
         new_pass_ISDD = math.ceil(ISDD / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100)))
         new_pass_tot = new_pass_ISDI1+new_pass_ISDI2+new_pass_ISDND+new_pass_ISDD
-        new_E_trans = new_FE_trans * dist_chantier_exutoire * (tot_D + mav5e * (new_cam5 / 100) * new_pass_tot + mav4e * (new_cam4 / 100) * new_pass_tot)
+        new_E_trans = new_FE_trans * (dist_exuISDI1 * (ISDI1 + mav5e * (new_cam5 / 100) * new_pass_ISDI1 + mav4e * (new_cam4 / 100) * new_pass_ISDI1)
+                    + dist_exuISDI2 * (ISDI2 + mav5e * (new_cam5 / 100) * new_pass_ISDI2 + mav4e * (new_cam4 / 100) * new_pass_ISDI2)
+                    + dist_exuISDND * (ISDND + mav5e * (new_cam5 / 100) * new_pass_ISDND + mav4e * (new_cam4 / 100) * new_pass_ISDND)
+                    + dist_exuISDD * (ISDD + mav5e * (new_cam5 / 100) * new_pass_ISDD + mav4e * (new_cam4 / 100) * new_pass_ISDD))
         st.write("Cette action permet de réduire les émissions totales de :")
         Ea2 = round(E_trans - new_E_trans, 1)
         st.subheader(str(Ea2) + " tCO2e")
@@ -248,7 +254,10 @@ if action3:
     new_pass_ISDND = math.ceil(ISDND / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
     new_pass_ISDD = math.ceil(ISDD / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
     new_pass_tot = new_pass_ISDI1 + new_pass_ISDI2 + new_pass_ISDND + new_pass_ISDD
-    new_E_trans = round(FE_trans * dist_chantier_exutoire * (tot_D + mav5e * (cam5 / 100) * new_pass_tot + mav4e * (cam4 / 100) * new_pass_tot), 1)
+    new_E_trans = FE_trans * (dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * new_pass_ISDI1 + mav4e * (cam4 / 100) * new_pass_ISDI1)
+                                  + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * new_pass_ISDI2 + mav4e * (cam4 / 100) * new_pass_ISDI2)
+                                  + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * new_pass_ISDND + mav4e * (cam4 / 100) * new_pass_ISDND)
+                                  + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * new_pass_ISDD + mav4e * (cam4 / 100) * new_pass_ISDD))
     st.write("Cette action permet de réduire les émissions totales de :")
     Ea3 = E_trans - new_E_trans
     st.subheader(str(round(Ea3, 1)) + " tCO2e")
@@ -264,9 +273,15 @@ if action3:
 #Choix d'un exutoire 10 km plus proche
 action4 = st.checkbox("Choisir un exutoire 10 km plus proche")
 if action4:
-    if dist_chantier_exutoire >= 10:
-        new_dist_chantier_exutoire = dist_chantier_exutoire - 10
-        new_E_trans = round(FE_trans * new_dist_chantier_exutoire * (tot_D + mav5e * (cam5 / 100) * pass_tot + mav4e * (cam4 / 100) * pass_tot), 1)
+    if dist_exuISDI1 >= 10 and dist_exuISDI2 >= 10 and dist_exuISDND >= 10 and dist_exuISDD >= 10:
+        new_dist_exuISDI1 = dist_exuISDI1 - 10
+        new_dist_exuISDI2 = dist_exuISDI1 - 10
+        new_dist_exuISDND = dist_exuISDI1 - 10
+        new_dist_exuISDD = dist_exuISDI1 - 10
+        new_E_trans = FE_trans * (new_dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
+                                  + new_dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2)
+                                  + new_dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND)
+                                  + new_dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD))
         st.write("Cette action permet de réduire les émissions totales de :")
         Ea4 = E_trans - new_E_trans
         st.subheader(str(round(Ea4, 1)) + " tCO2e")
@@ -279,7 +294,7 @@ if action4:
                            str(math.ceil(Ea4 * 43)) + " jeans en coton 👖"])
         st.subheader("Soit " + y)
     else:
-        st.error("L'exutoire se trouve déjà à moins de 10 km du chantier")
+        st.error("Un des exutoires se trouve déjà à moins de 10 km du chantier")
 
 #Résultats total + équivalences CO2e
 action5 = st.checkbox("Combiner toutes les actions de réduction")
@@ -315,7 +330,39 @@ if action5:
                        str(math.ceil(Ea5 * 43)) + " jeans en coton 👖"])
     st.subheader("Soit " + z)
 
-st.header("Estimation des gains €")
+st.header("Bilan CO2 de l'ouvrage")
+bdd = "data_FE_ouvrages.csv"
+df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
+df["Type d'ouvrage"] = df["Type d'ouvrage"].astype(str)
+df["Catégorie"] = df["Catégorie"].astype(str)
+df["Sous catégorie 1"] = df["Sous catégorie 1"].astype(str)
+df["Sous catégorie 2"] = df["Sous catégorie 2"].astype(str)
+df["Unité"] = df["Unité"].astype(str)
+
+ouvrage = st.selectbox("Type d'ouvrage :", df["Type d'ouvrage"].unique())
+df = df[df["Type d'ouvrage"].str.contains(str(ouvrage))]
+categorie = st.selectbox('Choix catégorie :', df['Catégorie'].unique())
+df = df[df['Catégorie'].str.contains(str(categorie))]
+sous_categorie1 = st.selectbox('Choix de la sous-catégorie 1 :', df['Sous catégorie 1'].unique())
+df = df[df['Sous catégorie 1'].str.contains(str(sous_categorie1))]
+sous_categorie2 = st.selectbox('Choix de la sous-catégorie 2 :', df['Sous catégorie 2'].unique())
+df = df[df['Sous catégorie 2'].str.contains(str(sous_categorie2))]
+
+st.dataframe(df, 1000, 150)
+for u in df["Unité"]:
+    u = u[7:].lower()
+DO = float(st.number_input("Donnée opérationnelle (en " + u + ") : ", step=1))
+for x in df["FE"]:
+    x = float(x)
+for i in df["Incertitude"]:
+    i = float(i)
+EMISSIONS = round(x / 1000 * DO, 2)
+INCERTITUDE = round(EMISSIONS * 0.01 * i, 2)
+st.write(" ")
+st.write(" ")
+st.subheader("Emissions GES de l'ouvrage 💨 : " + str(EMISSIONS) + " tCO2e ")
+st.write("(+ ou - " + str(INCERTITUDE) + " tCO2e)")
+#st.header("Estimation des gains €")
 #conso_moy = 30 / 100
 #conso_tot = conso_moy * pass_tot
 #new_conso_tot = conso_moy * new_pass_tot
