@@ -22,7 +22,7 @@ with col1:
 with col2:
     st.image(image)
 
-FEterres = 13
+FEterres = 12
 FEgravats = 26
 FEdnd = 87
 FEdd = 844
@@ -31,6 +31,12 @@ FEmoy4e = 0.105/1000
 dist_chantier_exutoire = 35
 mav5e = 15
 mav4e = 12
+prix_c = 2
+prix_ISDI1 = 300
+prix_ISDI2 = 300
+prix_ISDND = 600
+prix_ISDD = 1500
+conso_moy = 30 / 100
 
 col1, col2 = st.columns(2)
 with col1:
@@ -52,14 +58,8 @@ with col2:
 col1, col2 = st.columns(2)
 with col1:
     st.header("Nombre de passages quotidien")
+    pass_jour = st.slider("Nombre de passages quotidien estimés",10,100,50, step=1)
 
-    nb_passages = st.radio("", ('Faible (~10)', 'Moyen (~50)', 'Fort (~100)'))
-    if nb_passages == 'Faible (~10)':
-        pass_jour = 10
-    elif nb_passages == 'Moyen (~50)':
-        pass_jour = 50
-    elif nb_passages == 'Fort (~100)':
-        pass_jour = 100
 with col2:
     st.header("Taux de réemploi des terres :")
     repl_terres = st.slider("Réemploi des terres sur site (%)",0,100,0, step=1)
@@ -93,57 +93,57 @@ E_ISDI1 = round((ISDI1*FEterres)/1000, 1)
 E_ISDI2 = round((ISDI2*FEgravats)/1000, 1)
 E_ISDND = round((ISDND*FEdnd)/1000, 1)
 E_ISDD = round((ISDD*FEdd)/1000, 1)
-E_trans_ISDI1 = round(FE_trans * dist_exuISDI1 * (ISDI1 + mav5e * (cam5/100) * pass_ISDI1 + mav4e * (cam4/100) * pass_ISDI1), 1)
-E_trans_ISDI2 = round(FE_trans * dist_exuISDI2 * (ISDI2 + mav5e * (cam5/100) * pass_ISDI2 + mav4e * (cam4/100) * pass_ISDI2), 1)
-E_trans_ISDND = round(FE_trans * dist_exuISDND * (ISDND + mav5e * (cam5/100) * pass_ISDND + mav4e * (cam4/100) * pass_ISDND), 1)
-E_trans_ISDD = round(FE_trans * dist_exuISDD * (ISDD + mav5e * (cam5/100) * pass_ISDD + mav4e * (cam4/100) * pass_ISDD), 1)
+E_trans_ISDI1 = round(FE_trans * dist_exuISDI1 * (ISDI1 + mav5e * (cam5/100) * pass_ISDI1 + mav4e * (cam4/100) * pass_ISDI1), 0)
+E_trans_ISDI2 = round(FE_trans * dist_exuISDI2 * (ISDI2 + mav5e * (cam5/100) * pass_ISDI2 + mav4e * (cam4/100) * pass_ISDI2), 0)
+E_trans_ISDND = round(FE_trans * dist_exuISDND * (ISDND + mav5e * (cam5/100) * pass_ISDND + mav4e * (cam4/100) * pass_ISDND), 0)
+E_trans_ISDD = round(FE_trans * dist_exuISDD * (ISDD + mav5e * (cam5/100) * pass_ISDD + mav4e * (cam4/100) * pass_ISDD), 0)
 
 with st.expander("Emissions de CO2e par types de déchets :"):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.subheader("Terres")
         st.write("CO2e valorisation (en tCO2e):")
-        st.subheader(E_ISDI1)
+        st.subheader(int(E_ISDI1))
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(E_trans_ISDI1)
+        st.subheader(int(E_trans_ISDI1))
         st.write("CO2e total (en tCO2e):")
-        st.subheader(E_ISDI1+E_trans_ISDI1)
+        st.subheader(int(E_ISDI1+E_trans_ISDI1))
         if ISDI1 > 0:
             st.write("kgCO2e/tonne :")
-            st.subheader(round(((E_ISDI1 + E_trans_ISDI1)/ISDI1)*1000, 1))
+            st.subheader(int(((E_ISDI1 + E_trans_ISDI1)/ISDI1)*1000))
     with col2:
         st.subheader("Gravats")
         st.write("CO2e valorisation (en tCO2e):")
-        st.subheader(E_ISDI2)
+        st.subheader(int(E_ISDI2))
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(E_trans_ISDI2)
+        st.subheader(int(E_trans_ISDI2))
         st.write("CO2e total (en tCO2e):")
-        st.subheader(E_ISDI2 + E_trans_ISDI2)
+        st.subheader(int(E_ISDI2 + E_trans_ISDI2))
         if ISDI2 > 0:
             st.write("kgCO2e/tonne :")
-            st.subheader(round(((E_ISDI2 + E_trans_ISDI2)/ISDI2)*1000, 1))
+            st.subheader(int(((E_ISDI2 + E_trans_ISDI2)/ISDI2)*1000))
     with col3:
         st.subheader("DND")
         st.write("CO2e valorisation (en tCO2e):")
-        st.subheader(E_ISDND)
+        st.subheader(int(E_ISDND))
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(E_trans_ISDND)
+        st.subheader(int(E_trans_ISDND))
         st.write("CO2e total (en tCO2e):")
-        st.subheader(E_ISDND + E_trans_ISDND)
+        st.subheader(int(E_ISDND + E_trans_ISDND))
         if ISDND > 0:
             st.write("kgCO2e/tonne :")
-            st.subheader(round(((E_ISDND + E_trans_ISDND)/ISDND)*1000, 1))
+            st.subheader(int(((E_ISDND + E_trans_ISDND)/ISDND)*1000))
     with col4:
         st.subheader("DD")
         st.write("CO2e valorisation (en tCO2e):")
-        st.subheader(E_ISDD)
+        st.subheader(int(E_ISDD))
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(E_trans_ISDD)
+        st.subheader(int(E_trans_ISDD))
         st.write("CO2e total (en tCO2e):")
-        st.subheader(E_ISDD + E_trans_ISDD)
+        st.subheader(int(E_ISDD + E_trans_ISDD))
         if ISDD > 0:
             st.write("kgCO2e/tonne :")
-            st.subheader(round(((E_ISDD + E_trans_ISDD)/ISDD)*1000, 1))
+            st.subheader(int(((E_ISDD + E_trans_ISDD)/ISDD)*1000))
 
 with st.expander("Emissions totales de CO2e (en tCO2e):"):
     E_trans = FE_trans * (dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
@@ -156,17 +156,17 @@ with st.expander("Emissions totales de CO2e (en tCO2e):"):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.write("Transport :")
-        st.subheader(round(E_trans, 1))
+        st.subheader(int(E_trans))
     with col2:
         st.write("Valorisation :")
-        st.subheader(round(E_valo, 1))
+        st.subheader(int(E_valo))
     with col3:
         st.write("Total des émissions :")
-        st.subheader(round(E_tot, 1))
+        st.subheader(int(E_tot))
     with col4:
         if tot_D > 0:
             st.write("kgCO2e/tonne :")
-            st.subheader(round(((E_trans+E_valo)/tot_D)*1000), 1)
+            st.subheader(int(((E_trans+E_valo)/tot_D)*1000))
 
 with st.expander("Distance à parcourir :"):
     st.subheader(str(dist_tot) + " km")
@@ -186,7 +186,7 @@ with st.expander("Passages :"):
     st.write("Nombre de passages pour l'évacuation des dangereux :")
     st.subheader(pass_ISDD)
 
-st.header("Réduire l'empreinte carbone")
+st.header("Actions de réduction et gains")
 
 #Réutiliser 10% des terres sur site
 action1 = st.checkbox('Augmenter de 10% la réutilisation des terres sur site')
@@ -206,12 +206,24 @@ if action1:
                            str(math.ceil(Ea1 * 61)) + " smartphones 📱",
                            str(math.ceil(Ea1 * 2208)) + " litres d'eau en bouteille 🧴",
                            str(math.ceil(Ea1 * 43)) + " jeans en coton 👖"])
-        st.write("Cette action permet de réduire les émissions totales de :")
-        st.subheader(str(round(Ea1, 1)) + " tCO2e, soit " + v)
-        st.write("Cette action permet de réduire le nombre de jours d'évacution de :")
-        st.subheader(str(math.ceil(jours_evacuation - (new_pass_tot / pass_jour))) + " jours")
+        with st.expander("Réduction des émissions carbone"):
+            st.write("Cette action permet de réduire les émissions totales de :")
+            st.subheader(str(int(Ea1)) + " tCO2e, soit " + str(int((Ea1/E_tot)*100)) + " % des émissions totales estimées")
+            st.write("soit " + v)
+        with st.expander("Réduction du nombre de passages"):
+            st.write("Cette action permet de réduire le nombre de passages de (évacuation des terres) :")
+            st.subheader(str(pass_ISDI1-new_pass_ISDI1) + " passages, " + str(math.ceil(jours_evacuation - (new_pass_tot / pass_jour))) + " jours")
+        with st.expander("Estimation du gain économique €"):
+            conso_tot = conso_moy * pass_tot * dist_exuISDI1
+            new_conso_tot = conso_moy * new_pass_tot * dist_exuISDI1
+            eco_c = (conso_tot - new_conso_tot) * prix_c
+            eco_ISDI = (pass_ISDI1 - new_pass_ISDI1) * prix_ISDI1
+            st.write("Gain € carburant : ")
+            st.subheader(str(math.ceil(eco_c)) + " €")
+            st.write("Gain € évacuation terres : ")
+            st.subheader(str(math.ceil(eco_ISDI)) + " €")
     else:
-        st.error("Le taux de réutilisation des terres sur site est déjà supérieur à 85%")
+        st.error("Le taux de réutilisation des terres sur site est déjà supérieur à 90%")
 
 #Privilégier les camions 5 essieux (de 70% à 80%)
 action2 = st.checkbox("Utiliser 15% de camions 5 essieux en plus")
@@ -241,39 +253,77 @@ if action2:
                            str(math.ceil(Ea2*61)) + " smartphones 📱",
                            str(math.ceil(Ea2*2208)) + " litres d'eau en bouteille 🧴",
                            str(math.ceil(Ea2*43)) + " jeans en coton 👖"])
-        st.write("Cette action permet de réduire les émissions totales de :")
-        st.subheader(str(Ea2) + " tCO2e, soit " + w)
-        st.write("Cette action permet de réduire le nombre de jours d'évacution de :")
-        st.subheader(str(math.ceil(jours_evacuation - (new_pass_tot / pass_jour))) + " jours")
+        with st.expander("Réduction des émissions carbone"):
+            st.write("Cette action permet de réduire les émissions totales de :")
+            st.subheader(str(int(Ea2)) + " tCO2e, soit " + str(int((Ea2/E_tot)*100)) + " % des émissions totales estimées")
+            st.write("soit " + w)
+        with st.expander("Réduction du nombre de passages"):
+            st.write("Cette action permet de réduire le nombre de passages de :")
+            st.subheader(str(pass_tot - new_pass_tot) + " passages, " + str(math.ceil(jours_evacuation - (new_pass_tot / pass_jour))) + " jours")
+        with st.expander("Estimation du gain économique €"):
+            conso_tot = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
+                        conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
+            new_conso_tot = (conso_moy * new_pass_ISDI2 * dist_exuISDI2) + (
+                        conso_moy * new_pass_ISDI1 * dist_exuISDI1) + (conso_moy * new_pass_ISDND * dist_exuISDND) + (
+                                        conso_moy * new_pass_ISDD * dist_exuISDD)
+            eco_c = (conso_tot - new_conso_tot) * prix_c
+            eco_ISDI1 = (pass_ISDI1 - new_pass_ISDI1) * prix_ISDI1
+            eco_ISDI2 = (pass_ISDI2 - new_pass_ISDI2) * prix_ISDI2
+            eco_ISDND = (pass_ISDND - new_pass_ISDND) * prix_ISDND
+            eco_ISDD = (pass_ISDD - new_pass_ISDD) * prix_ISDD
+            eco_D_tot = eco_ISDI1 + eco_ISDI2 + eco_ISDND + eco_ISDD
+            st.write("Gain € carburant : ")
+            st.subheader(str(math.ceil(eco_c)) + " €")
+            st.write("Gain € évacuations : ")
+            st.subheader(str(math.ceil(eco_D_tot)) + " €")
     else:
-        st.error("Le taux d'utilisation de 5 essieux est déjà supérieur à 90%")
+        st.error("Le taux d'utilisation de 5 essieux est déjà supérieur à 85%")
 
 #Optimiser le chargement de 2 tonnes (borner l'action)
 action3 = st.checkbox('Optimiser le chargement moyen des camions de 2 tonnes')
 if action3:
-    new_load_cam5 = load_cam5 + 2
-    new_load_cam4 = load_cam4 + 2
-    new_pass_ISDI1 = math.ceil(ISDI1 / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
-    new_pass_ISDI2 = math.ceil(ISDI2 / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
-    new_pass_ISDND = math.ceil(ISDND / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
-    new_pass_ISDD = math.ceil(ISDD / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
-    new_pass_tot = new_pass_ISDI1 + new_pass_ISDI2 + new_pass_ISDND + new_pass_ISDD
-    new_E_trans = FE_trans * (dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * new_pass_ISDI1 + mav4e * (cam4 / 100) * new_pass_ISDI1)
-                                  + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * new_pass_ISDI2 + mav4e * (cam4 / 100) * new_pass_ISDI2)
-                                  + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * new_pass_ISDND + mav4e * (cam4 / 100) * new_pass_ISDND)
-                                  + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * new_pass_ISDD + mav4e * (cam4 / 100) * new_pass_ISDD))
-    Ea3 = E_trans - new_E_trans
-    x = random.choice([str(math.ceil(Ea3 * 138)) + " repas avec du boeuf 🥩",
-                       str(math.ceil(Ea3 * 5181)) + " km en voiture (" + str(math.ceil(Ea3 * 8)) + " trajets Paris-Marseille) 🚗",
-                       str(math.ceil(Ea3)) + " aller-retour Paris-NYC ✈️",
-                       str(math.ceil(Ea3 * 54)) + " jours de chauffage (gaz) 🌡️",
-                       str(math.ceil(Ea3 * 61)) + " smartphones 📱",
-                       str(math.ceil(Ea3 * 2208)) + " litres d'eau en bouteille 🧴",
-                       str(math.ceil(Ea3 * 43)) + " jeans en coton 👖"])
-    st.write("Cette action permet de réduire les émissions totales de :")
-    st.subheader(str(round(Ea3, 1)) + " tCO2e, soit " + x)
-    st.write("Cette action permet de réduire le nombre de jours d'évacution de :")
-    st.subheader(str(math.ceil(jours_evacuation - (new_pass_tot / pass_jour))) + " jours")
+    if load_cam4 <= 18 and load_cam5 <= 27:
+        new_load_cam5 = load_cam5 + 2
+        new_load_cam4 = load_cam4 + 2
+        new_pass_ISDI1 = math.ceil(ISDI1 / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
+        new_pass_ISDI2 = math.ceil(ISDI2 / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
+        new_pass_ISDND = math.ceil(ISDND / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
+        new_pass_ISDD = math.ceil(ISDD / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
+        new_pass_tot = new_pass_ISDI1 + new_pass_ISDI2 + new_pass_ISDND + new_pass_ISDD
+        new_E_trans = FE_trans * (dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * new_pass_ISDI1 + mav4e * (cam4 / 100) * new_pass_ISDI1)
+                                      + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * new_pass_ISDI2 + mav4e * (cam4 / 100) * new_pass_ISDI2)
+                                      + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * new_pass_ISDND + mav4e * (cam4 / 100) * new_pass_ISDND)
+                                      + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * new_pass_ISDD + mav4e * (cam4 / 100) * new_pass_ISDD))
+        Ea3 = E_trans - new_E_trans
+        x = random.choice([str(math.ceil(Ea3 * 138)) + " repas avec du boeuf 🥩",
+                           str(math.ceil(Ea3 * 5181)) + " km en voiture (" + str(math.ceil(Ea3 * 8)) + " trajets Paris-Marseille) 🚗",
+                           str(math.ceil(Ea3)) + " aller-retour Paris-NYC ✈️",
+                           str(math.ceil(Ea3 * 54)) + " jours de chauffage (gaz) 🌡️",
+                           str(math.ceil(Ea3 * 61)) + " smartphones 📱",
+                           str(math.ceil(Ea3 * 2208)) + " litres d'eau en bouteille 🧴",
+                           str(math.ceil(Ea3 * 43)) + " jeans en coton 👖"])
+        with st.expander("Réduction des émissions carbone"):
+            st.write("Cette action permet de réduire les émissions totales de :")
+            st.subheader(str(int(Ea3)) + " tCO2e, soit " + str(int((Ea3 / E_tot) * 100)) + " % des émissions totales estimées")
+            st.write("soit " + x)
+        with st.expander("Réduction du nombre de passages"):
+            st.write("Cette action permet de réduire le nombre de passages de :")
+            st.subheader(str(pass_tot - new_pass_tot) + " passages, " + str(math.ceil(jours_evacuation - (new_pass_tot / pass_jour))) + " jours")
+        with st.expander("Estimation du gain économique €"):
+            conso_tot = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
+            new_conso_tot = (conso_moy * new_pass_ISDI2 * dist_exuISDI2) + (conso_moy * new_pass_ISDI1 * dist_exuISDI1) + (conso_moy * new_pass_ISDND * dist_exuISDND) + (conso_moy * new_pass_ISDD * dist_exuISDD)
+            eco_c = (conso_tot - new_conso_tot) * prix_c
+            eco_ISDI1 = (pass_ISDI1 - new_pass_ISDI1) * prix_ISDI1
+            eco_ISDI2 = (pass_ISDI2 - new_pass_ISDI2) * prix_ISDI2
+            eco_ISDND = (pass_ISDND - new_pass_ISDND) * prix_ISDND
+            eco_ISDD = (pass_ISDD - new_pass_ISDD) * prix_ISDD
+            eco_D_tot = eco_ISDI1 + eco_ISDI2 + eco_ISDND + eco_ISDD
+            st.write("Gain € carburant : ")
+            st.subheader(str(math.ceil(eco_c)) + " €")
+            st.write("Gain € évacuations : ")
+            st.subheader(str(math.ceil(eco_D_tot)) + " €")
+    else:
+        st.error("Le chargement maximal est dépassé")
 
 #Choix d'un exutoire 10 km plus proche
 action4 = st.checkbox("Choisir un exutoire 10 km plus proche")
@@ -295,15 +345,23 @@ if action4:
                            str(math.ceil(Ea4 * 61)) + " smartphones 📱",
                            str(math.ceil(Ea4 * 2208)) + " litres d'eau en bouteille 🧴",
                            str(math.ceil(Ea4 * 43)) + " jeans en coton 👖"])
-        st.write("Cette action permet de réduire les émissions totales de :")
-        st.subheader(str(round(Ea4, 1)) + " tCO2e, soit " + y)
+        with st.expander("Réduction des émissions carbone"):
+            st.write("Cette action permet de réduire les émissions totales de :")
+            st.subheader(str(int(Ea4)) + " tCO2e, soit " + str(int((Ea4/E_tot)*100)) + " % des émissions totales estimées")
+            st.write("soit " + y)
+        with st.expander("Estimation du gain économique €"):
+            conso_tot = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
+                        conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
+            new_conso_tot = (conso_moy * pass_ISDI2 * new_dist_exuISDI2) + (conso_moy * pass_ISDI1 * new_dist_exuISDI1) + (conso_moy * pass_ISDND * new_dist_exuISDND) + (conso_moy * pass_ISDD * new_dist_exuISDD)
+            eco_c = (conso_tot - new_conso_tot) * prix_c
+            st.write("Gain € carburant : ")
+            st.subheader(str(math.ceil(eco_c)) + " €")
     else:
         st.error("Un des exutoires se trouve déjà à moins de 10 km du chantier")
 
-#Résultats total + équivalences CO2e
+#Toutes les actions combinées
 action5 = st.checkbox("Combiner toutes les actions de réduction")
 if action5:
-    new_dist_chantier_exutoire = dist_chantier_exutoire - 10
     new_valo_terres = valo_terres - 10
     new_cam5 = cam5 + 15
     new_cam4 = 100 - new_cam5
@@ -311,15 +369,21 @@ if action5:
     new_load_cam5 = load_cam5 + 2
     new_load_cam4 = load_cam4 + 2
     new_ISDI1 = ISDI1brut * (new_valo_terres / 100)
-
-    new_E_ISDI1 = (new_ISDI1 * FEterres) / 1000
+    new_dist_exuISDI1 = dist_exuISDI1 - 10
+    new_dist_exuISDI2 = dist_exuISDI1 - 10
+    new_dist_exuISDND = dist_exuISDI1 - 10
+    new_dist_exuISDD = dist_exuISDI1 - 10
     new_pass_ISDI1 = math.ceil(new_ISDI1 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100)))
     new_pass_ISDI2 = math.ceil(ISDI2 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100)))
     new_pass_ISDND = math.ceil(ISDND / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100)))
     new_pass_ISDD = math.ceil(ISDD / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100)))
+    new_E_trans = FE_trans * (new_dist_exuISDI1 * (ISDI1 + mav5e * (new_cam5 / 100) * new_pass_ISDI1 + mav4e * (new_cam4 / 100) * new_pass_ISDI1)
+                + new_dist_exuISDI2 * (ISDI2 + mav5e * (new_cam5 / 100) * new_pass_ISDI2 + mav4e * (new_cam4 / 100) * new_pass_ISDI2)
+                + new_dist_exuISDND * (ISDND + mav5e * (new_cam5 / 100) * new_pass_ISDND + mav4e * (new_cam4 / 100) * new_pass_ISDND)
+                + new_dist_exuISDD * (ISDD + mav5e * (new_cam5 / 100) * new_pass_ISDD + mav4e * (new_cam4 / 100) * new_pass_ISDD))
+    new_E_ISDI1 = (new_ISDI1 * FEterres) / 1000
     new_tot_D = new_ISDI1 + ISDI2 + ISDND + ISDD
     new_pass_tot = new_pass_ISDI1 + new_pass_ISDI2 + new_pass_ISDND + new_pass_ISDD
-    new_E_trans = round(new_FE_trans * new_dist_chantier_exutoire * (new_tot_D + mav5e * (new_cam5 / 100) * new_pass_tot + mav4e * (new_cam4 / 100) * new_pass_tot), 1)
     new_E_valo = round(new_E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD, 1)
     new_E_tot = new_E_trans + new_E_valo
     Ea5 = E_tot - new_E_tot
@@ -330,12 +394,29 @@ if action5:
                        str(math.ceil(Ea5 * 61)) + " smartphones 📱",
                        str(math.ceil(Ea5 * 2208)) + " litres d'eau en bouteille 🧴",
                        str(math.ceil(Ea5 * 43)) + " jeans en coton 👖"])
-    st.write("L'ensemble des actions combinées permet de réduire les émissions totales de :")
-    st.subheader(str(round(Ea5, 1)) + " tCO2e, soit " + z)
-    st.write("L'ensemble des actions combinées permet de réduire le nombre de jours d'évacution de :")
-    st.subheader(str(math.ceil(jours_evacuation-(new_pass_tot/pass_jour))) + " jours")
+    with st.expander("Réduction des émissions carbone"):
+        st.write("Cette action permet de réduire les émissions totales de :")
+        st.subheader(str(int(Ea5)) + " tCO2e, soit " + str(int((Ea5 / E_tot) * 100)) + " % des émissions totales estimées")
+        st.write("soit " + z)
+    with st.expander("Réduction du nombre de passages"):
+        st.write("Cette action permet de réduire le nombre de passages de :")
+        st.subheader(str(pass_tot - new_pass_tot) + " passages, " + str(math.ceil(jours_evacuation - (new_pass_tot / pass_jour))) + " jours")
+    with st.expander("Estimation du gain économique €"):
+        conso_tot = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
+        new_conso_tot = (conso_moy * new_pass_ISDI2 * new_dist_exuISDI2) + (conso_moy * new_pass_ISDI1 * new_dist_exuISDI1) + (conso_moy * new_pass_ISDND * new_dist_exuISDND) + (conso_moy * new_pass_ISDD * new_dist_exuISDD)
+        eco_c = (conso_tot - new_conso_tot) * prix_c
+        eco_ISDI1 = (pass_ISDI1 - new_pass_ISDI1) * prix_ISDI1
+        eco_ISDI2 = (pass_ISDI2 - new_pass_ISDI2) * prix_ISDI2
+        eco_ISDND = (pass_ISDND - new_pass_ISDND) * prix_ISDND
+        eco_ISDD = (pass_ISDD - new_pass_ISDD) * prix_ISDD
+        eco_D_tot = eco_ISDI1 + eco_ISDI2 + eco_ISDND + eco_ISDD
+        st.write("Gain € carburant : ")
+        st.subheader(str(math.ceil(eco_c)) + " €")
+        st.write("Gain € évacuations : ")
+        st.subheader(str(math.ceil(eco_D_tot)) + " €")
 
-st.header("Bilan CO2 de l'ouvrage")
+st.header("Estimation du bilan CO2 de la construction de l'ouvrage")
+st.caption("Données issue de la Base Carbone® de l'ADEME")
 bdd = "data_FE_ouvrages.csv"
 df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
 df["Type d'ouvrage"] = df["Type d'ouvrage"].astype(str)
@@ -365,16 +446,8 @@ EMISSIONS = round(x / 1000 * DO, 2)
 INCERTITUDE = round(EMISSIONS * 0.01 * i, 2)
 st.write(" ")
 st.write(" ")
-st.subheader("Emissions GES de l'ouvrage 💨 : " + str(EMISSIONS) + " tCO2e ")
-st.write("(+ ou - " + str(INCERTITUDE) + " tCO2e)")
-#st.header("Estimation des gains €")
-#conso_moy = 30 / 100
-#conso_tot = conso_moy * pass_tot
-#new_conso_tot = conso_moy * new_pass_tot
-#prix_c = 2
-#eco = (conso_tot-new_conso_tot)*prix_c
-#st.write(str(eco))
-
+st.subheader("Emissions GES de l'ouvrage 💨 : " + str(int(EMISSIONS)) + " tCO2e ")
+st.write("(+ ou - " + str(int(INCERTITUDE)) + " tCO2e)")
 
 st.write("")
 st.write("")
