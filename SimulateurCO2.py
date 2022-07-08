@@ -97,7 +97,13 @@ E_trans_ISDI1 = round(FE_trans * dist_exuISDI1 * (ISDI1 + mav5e * (cam5/100) * p
 E_trans_ISDI2 = round(FE_trans * dist_exuISDI2 * (ISDI2 + mav5e * (cam5/100) * pass_ISDI2 + mav4e * (cam4/100) * pass_ISDI2), 0)
 E_trans_ISDND = round(FE_trans * dist_exuISDND * (ISDND + mav5e * (cam5/100) * pass_ISDND + mav4e * (cam4/100) * pass_ISDND), 0)
 E_trans_ISDD = round(FE_trans * dist_exuISDD * (ISDD + mav5e * (cam5/100) * pass_ISDD + mav4e * (cam4/100) * pass_ISDD), 0)
+E_trans = FE_trans * (dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
+                      + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2)
+                      + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND)
+                      + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD))
 
+E_valo = E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD
+E_tot = E_trans + E_valo
 with st.expander("Emissions de CO2e par types de déchets :"):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -146,13 +152,6 @@ with st.expander("Emissions de CO2e par types de déchets :"):
             st.subheader(int(((E_ISDD + E_trans_ISDD)/ISDD)*1000))
 
 with st.expander("Emissions totales de CO2e (en tCO2e):"):
-    E_trans = FE_trans * (dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
-                        + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2)
-                        + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND)
-                        + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD))
-
-    E_valo = E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD
-    E_tot = E_trans + E_valo
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.write("Transport :")
@@ -448,6 +447,20 @@ st.write(" ")
 st.write(" ")
 st.subheader("Emissions GES de l'ouvrage 💨 : " + str(int(EMISSIONS)) + " tCO2e ")
 st.write("(+ ou - " + str(int(INCERTITUDE)) + " tCO2e)")
+
+st.header("Synthèse")
+from fpdf import FPDF
+pdf = FPDF()
+pdf.add_page()
+pdf.set_font("Arial", size=26)
+pdf.cell(200, 10, txt="Synthèse des résultats", ln=1, align='C')
+pdf.set_font("Arial", size=13)
+pdf.cell(200, 10, txt="",ln=2)
+pdf.cell(200, 10, txt="Emissions totales estimées " + str(int(E_tot)) + " tCO2e", ln=3)
+pdf = pdf.output("test.pdf")
+with open("test.pdf", "rb") as pdf_file:
+    PDFbyte = pdf_file.read()
+st.download_button(label="Download", data=PDFbyte, file_name="test.pdf", mime='application/octet-stream')
 
 st.write("")
 st.write("")
