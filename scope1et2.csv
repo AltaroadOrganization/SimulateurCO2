@@ -1,0 +1,27 @@
+ALTAROAD,Scope,Poste,Donnée opérationnelle,Unité,Emissions (en tCO2e),Incertitude (en tCO2e),Date ajout,Heure ajout
+,Scope 1,['Agglomérés de houille'],7.0,kg,0.0,0.0,06/06/2022,14:01:59
+,Scope 1,['Gazole non routier'],23000.0,litre,72.7,7.27,07/06/2022,14:03:34
+,Scope 1,['Essence'],3245.0,litre,3.6,0.36,07/06/2022,14:12:29
+,Scope 1,['Agglomérés de houille'],343.0,kg,1.1,0.23,07/06/2022,14:25:17
+,Scope 1,['Propane'],3457.0,litre,6.2,0.31,07/06/2022,14:47:55
+,Scope 1,['Agglomérés de houille'],3456.0,kg,11.6,2.32,07/06/2022,14:57:13
+,Scope 1,['Essence'],12000.0,litre,32.4,3.24,07/06/2022,14:58:04
+,Scope 1,['Gazole non routier'],3212.0,litre,10.2,1.02,08/06/2022,14:59:36
+,Scope 1,['Gazole routier'],12000.0,litre,37.2,3.72,08/06/2022,15:00:03
+,Scope 1,['Agglomérés de houille'],2345.0,kg,7.9,1.57,08/06/2022,15:03:54
+,Scope 1,['Biodiesel'],3890.0,litre,27.9,5.58,07/06/2022,15:37:00
+,Scope 1,['Butane'],542.0,litre,1.1,0.05,07/06/2022,15:39:55
+,Scope 1,['Déchets bois'],2000.0,kg,0.1,0.03,07/06/2022,16:31:37
+,Scope 1,['Gazole non routier'],34000.0,litre,107.4,10.74,08/06/2022,14:06:27
+,Scope 1,['Essence'],50.0,litre,0.1,0.01,08/06/2022,16:46:18
+,Scope 1,['Butane'],200.0,litre,0.4,0.02,09/06/2022,14:18:44
+,Scope 2,['Electricité'],345666.0,kwh,20.29,6.09,06/06/2022,14:02:42
+,Scope 2,['Electricité'],25000.0,kwh,1.47,0.44,07/06/2022,15:41:06
+,Scope 2,['Réseau de froid'],34567.0,kwh,0.55,0.17,07/06/2022,15:42:06
+,Scope 2,['Réseau de chaleur'],57000.0,kwh,10.26,3.08,07/06/2022,15:42:53
+,Scope 1,['Agglomérés de houille'],4.0,kg,0.0,0.0,09/06/2022,15:59:10
+,Scope 1,['Gazole non routier'],2300.0,kg,8.7,0.87,10/06/2022,11:53:50
+,Scope 2,['Electricité'],1.0,kwh,0.0,0.0,10/06/2022,16:34:41
+,Scope 1,['Agglomérés de houille'],3.0,kg,0.0,0.0,10/06/2022,16:51:21
+,Scope 1,['Biodiesel'],12.0,litre,0.1,0.02,13/06/2022,11:04:04
+,Scope 1,['Gazole routier'],1.0,litre,0.0,0.0,25/07/2022,16:38:27

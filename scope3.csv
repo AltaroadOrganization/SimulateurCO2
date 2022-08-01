@@ -1,0 +1,16 @@
+ALTAROAD,Poste,Nom,Donnée opérationnelle,Unité,Emissions (en tCO2e),Incertitude (en tCO2e),Date ajout,Heure ajout
+,Poste 10,['Bâtiment de bureaux'],300.0,m²,195.0,2.0,20/07/2022,11:19:32
+,Poste 10,['Machines'],12000.0,kg,66.0,2.0,20/07/2022,11:19:32
+,Poste 11,['Cuivre'],15.0,kg,19.56,2.0,20/07/2022,11:19:32
+,Poste 23,['Voiture moyenne'],30000.0,passager.km,4.08,2.0,20/07/2022,11:19:32
+,Poste 9,['Béton'],125761.0,tonne,11067.0,2213.39,01/08/2022,14:37:01
+,Poste 9,['Béton'],135626.0,tonne,11935.1,2387.02,01/08/2022,14:38:57
+,Poste 9,['Béton'],9108.0,tonne,801.5,160.3,01/08/2022,14:39:28
+,Poste 9,['Béton'],70709.0,tonne,6222.4,1244.48,01/08/2022,14:39:47
+,Poste 9,['Acier ou fer blanc'],321.0,tonne,709.7,70.97,01/08/2022,14:41:04
+,Poste 9,['Acier ou fer blanc'],5934.0,tonne,13120.1,1312.01,01/08/2022,14:41:31
+,Poste 9,['Acier ou fer blanc'],61.0,tonne,134.9,13.49,01/08/2022,14:42:59
+,Poste 9,['Acier ou fer blanc'],5662.0,tonne,12518.7,1251.87,01/08/2022,14:43:13
+,Poste 9,['Acier ou fer blanc'],1492.0,tonne,3298.8,329.88,01/08/2022,14:43:35
+,Poste 9,['Acier ou fer blanc'],5.0,tonne,11.1,1.11,01/08/2022,14:43:55
+,Poste 9,['Acier ou fer blanc'],52.0,tonne,115.0,11.5,01/08/2022,14:44:15

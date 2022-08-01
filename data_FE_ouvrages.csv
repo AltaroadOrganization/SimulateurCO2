@@ -15,9 +15,9 @@ Type d'ouvrage;Catégorie;Sous catégorie 1;Sous catégorie 2;Unité;Incertitude;FE
  Voirie ;Glissière de sécurité;pour voirie de type TC5;;kgCO2e/m de route;15;87,5
  Voirie ;Glissière de sécurité;pour voirie de type TC6;;kgCO2e/m de route;15;280
  Voirie ;Glissière de sécurité;pour voirie de type TC7;;kgCO2e/m de route;15;280
- Bâtiments;Immeubles de logements collectifs (IC);;;kgCO2e/m² SHON;50;525
+ Bâtiments;Immeubles de logements collectifs :IC ;;;kgCO2e/m² SHON;50;525
  Bâtiments;Maison éco-construite « bois, paille, pierre, terre »;;;kgCO2e/m2 SHON;30;144
- Bâtiments;Maisons individuelles (MI);;;kgCO2e/m² SHON;50;425
+ Bâtiments;Maisons individuelles :MI ;;;kgCO2e/m² SHON;50;425
  Voirie ;Parking;aire de repos d'autoroute;béton armé;kgCO2e/m²;15;337
  Voirie ;Parking;aire de repos d'autoroute;bitume;kgCO2e/m²;15;92
  Voirie ;Parking;aire de repos d'autoroute;Semi rigide;kgCO2e/m²;15;165
