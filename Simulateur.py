@@ -64,6 +64,7 @@ header1 = '''
 <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 1&2 : Consommations d'énergies 🔋</p>
 </head>
 '''
+st.write('---------------------------------------------------')
 st.markdown(header1, unsafe_allow_html=True)
 #st.header("SCOPE 1&2 : Consommations d'énergies 🔋")
 st.write("Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
@@ -173,6 +174,7 @@ header2 = '''
 <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Evacuation des déchets 🗑️</p>
 </head>
 '''
+st.write('---------------------------------------------------')
 st.markdown(header2, unsafe_allow_html=True)
 #st.header('SCOPE 3 : Evacuation des déchets 🗑️')
 st.write('Ici, vous simulez les évacuations des déchets, et leur traitement')
@@ -742,6 +744,7 @@ header3 = '''
 <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Autres déchets 🗑️ & achats 🛒</p>
 </head>
 '''
+st.write('---------------------------------------------------')
 st.markdown(header3, unsafe_allow_html=True)
 #st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
 st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat de matières premières, équipements ou services")
@@ -860,6 +863,7 @@ header4 = '''
 <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Construction de l'ouvrage 🏗️</p>
 </head>
 '''
+st.write('---------------------------------------------------')
 st.markdown(header4, unsafe_allow_html=True)
 #st.header("SCOPE 3 : Construction de l'ouvrage 🏗️")
 st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface")
@@ -903,6 +907,7 @@ header5 = '''
 <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Synthèse du bilan CO2 simulé 📋</p>
 </head>
 '''
+st.write('---------------------------------------------------')
 st.markdown(header5, unsafe_allow_html=True)
 #st.header("Synthèse du bilan CO2 simulé 📋")
 st.write('Et hop! un pdf à télécharger avec toute votre simulation')
