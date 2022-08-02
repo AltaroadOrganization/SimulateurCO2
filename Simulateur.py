@@ -908,7 +908,6 @@ with st.expander("Résultat 📊"):
     st.subheader("Emissions GES de l'ouvrage 💨 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
     st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
 
-
 header5 = '''
 <head>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
@@ -1023,7 +1022,7 @@ pdf.set_font("Arial", size=12)
 pdf.cell(200, 10, txt="Selon les données de l'ADEME, la construction de ce type d'ouvrage d'une surface de " + str(
     int(DO_ouv)) + " m²,", ln=3)
 pdf.cell(200, 10,
-         txt="émetterait environ " + str(int(EMISSIONS_ouv)) + " tCO2e (+ ou - " + str(
+         txt="émettrait environ " + str(int(EMISSIONS_ouv)) + " tCO2e (+ ou - " + str(
              int(INCERTITUDE_ouv)) + " tCO2e).",
          ln=3)
 
@@ -1070,7 +1069,8 @@ if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'util
                                file_name="ALTAROAD_Simulateur_CO2_SYNTHESE.pdf",
                                mime='application/octet-stream')
         else:
-            st.write('{} est une adresse email invalide'.format(email_user))
+            st.write('{} est malheureusement une adresse email invalide'.format(email_user))
+
 st.write("------------------------------------")
 st.caption("Les données sources utilisées sont référencées et disponible sur demande à Altaroad")
 st.caption("Développé par Altaroad - CONFIDENTIEL 2022 - https://www.altaroad.com")
