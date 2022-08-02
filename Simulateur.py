@@ -23,7 +23,13 @@ heure = result.strftime("%H:%M:%S")
 st.text("Date et heure : " + date_heure)
 
 with col1:
-    st.title("Simulateur CO2")
+    original_title = '''
+    <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+    <p style="font-family:Sen; color:#f37121; letter-spacing: -1px; line-height: 1.2; font-size: 40px;">Simulateur CO2 du chantier</p>'
+    </head>
+    '''
+    st.markdown(original_title, unsafe_allow_html=True)
 with col2:
     st.image(image)
 
@@ -42,9 +48,7 @@ prix_ISDND = 1500
 prix_ISDD = 5000
 conso_moy = 30 / 100
 st.write("")
-st.write("Ce simulateur permet d'anticiper les émissions carbone de votre chantier en estimant, par exemple, les quantités d'énergie, de déchets ou de matériaux.")
-st.write("Il propose également quelques actions de réduction des émissions CO2 et des coûts et permet de modifier certains paramètres pour comprendre comment diminuer le bilan CO2 du chantier.")
-st.write("Pour plus de précisions un guide est disponible ci-dessous :")
+st.write("Cet outil permet de simuler les émissions carbone de votre chantier en intégrant tous les SCOPE avec les quantités d'énergie, de déchets et de matériaux nécessaires à l'ouvrage.")
 st.write("")
 with open('Guide_Simulateur.pdf', "rb") as pdf_file:
     PDFbyte = pdf_file.read()
