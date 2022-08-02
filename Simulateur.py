@@ -53,7 +53,7 @@ st.download_button(label="Télécharger",
                    file_name="Guide_Simulateur.pdf",
                    mime='application/octet-stream')
 st.caption("Données issues de la Base Carbone® de l'ADEME")
-st.header("SCOPE 1 & 2 : Estimation des consommations d'énergies 🔋")
+st.header("SCOPE 1&2 : Consommations d'énergies 🔋")
 st.write("Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
 with st.expander("Energies fossiles 🛢️"):
     scope1et2 = "simulation_S1et2.csv"
@@ -155,8 +155,8 @@ with st.expander("Résultats 📊"):
             ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig1)
 
-st.header('SCOPE3 : Evacuation des déchets')
-st.write('Ici, vous simulez les évacuations de matériaux, et leur valorisation')
+st.header('SCOPE 3 : Evacuation des déchets 🗑️')
+st.write('Ici, vous simulez les évacuations des déchets, et leur traitement')
 col1, col2 = st.columns(2)
 with col1:
     st.subheader("Quantité de déchets à évacuer 🚮")
@@ -639,8 +639,8 @@ with st.expander("Réductions"):
     ax.bar(actions, valeurs, color='grey', edgecolor='orange')
     st.pyplot(fig)
 
-st.header("SCOPE3 : Autres déchets 🗑️ & autres achats de biens et services 🛒")
-st.write("Ici, vous simulez les émissions liées à tout le reste du scope 3")
+st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
+st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat de matières premières, équipements ou services")
 with st.expander("Type de déchet ♻"):
     simul_dechets = "simulation_dechets.csv"
     df_d = pd.read_csv(simul_dechets, encoding="latin1", sep=",", decimal='.')
@@ -749,7 +749,7 @@ with st.expander("Résultats 📊"):
             ax.bar(poste, es, color='grey', edgecolor='orange')
             st.pyplot(fig)
 
-st.header("SCOPE 3 : Estimation du bilan CO2 de la construction de l'ouvrage 🏗️")
+st.header("SCOPE 3 : Construction de l'ouvrage 🏗️")
 st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface")
 bdd = "data_FE_ouvrages.csv"
 df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
