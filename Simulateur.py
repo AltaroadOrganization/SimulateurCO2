@@ -23,7 +23,8 @@ heure = result.strftime("%H:%M:%S")
 st.text("Date et heure : " + date_heure)
 
 with col1:
-    st.title("Simulateur CO2")
+    original_title = '<p style="font-family:Helvetica; color:#f37121; letter-spacing: -1px; line-height: 1.1; font-size: 35px;">Simulateur CO2 du chantier</p>'
+    st.markdown(original_title, unsafe_allow_html=True)
 with col2:
     st.image(image)
 
