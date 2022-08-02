@@ -26,7 +26,7 @@ with col1:
     original_title = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#f37121; letter-spacing: -1px; line-height: 1.2; font-size: 40px;">Simulateur CO2 du chantier</p>'
+    <p style="font-family:Sen; color:#f37121; letter-spacing: -1px; line-height: 1.2; font-size: 40px;">Simulateur CO2 du chantier</p>
     </head>
     '''
     st.markdown(original_title, unsafe_allow_html=True)
@@ -57,7 +57,15 @@ st.download_button(label="Télécharger",
                    file_name="Guide_Simulateur.pdf",
                    mime='application/octet-stream')
 st.caption("Données issues de la Base Carbone® de l'ADEME")
-st.header("SCOPE 1&2 : Consommations d'énergies 🔋")
+
+header1 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 1&2 : Consommations d'énergies 🔋</p>
+</head>
+'''
+st.markdown(header1, unsafe_allow_html=True)
+#st.header("SCOPE 1&2 : Consommations d'énergies 🔋")
 st.write("Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
 with st.expander("Energies fossiles 🛢️"):
     scope1et2 = "simulation_S1et2.csv"
@@ -159,7 +167,14 @@ with st.expander("Résultats 📊"):
             ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig1)
 
-st.header('SCOPE 3 : Evacuation des déchets 🗑️')
+header2 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Evacuation des déchets 🗑️</p>
+</head>
+'''
+st.markdown(header2, unsafe_allow_html=True)
+#st.header('SCOPE 3 : Evacuation des déchets 🗑️')
 st.write('Ici, vous simulez les évacuations des déchets, et leur traitement')
 col1, col2 = st.columns(2)
 with col1:
@@ -659,7 +674,14 @@ with st.expander("Réductions"):
     ax.bar(actions, valeurs, color='grey', edgecolor='orange')
     st.pyplot(fig)
 
-st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
+header3 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Autres déchets 🗑️ & achats 🛒</p>
+</head>
+'''
+st.markdown(header3, unsafe_allow_html=True)
+#st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
 st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat de matières premières, équipements ou services")
 with st.expander("Type de déchet ♻"):
     simul_dechets = "simulation_dechets.csv"
@@ -769,7 +791,15 @@ with st.expander("Résultats 📊"):
             ax.bar(poste, es, color='grey', edgecolor='orange')
             st.pyplot(fig)
 
-st.header("SCOPE 3 : Construction de l'ouvrage 🏗️")
+
+header4 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Construction de l'ouvrage 🏗️</p>
+</head>
+'''
+st.markdown(header4, unsafe_allow_html=True)
+#st.header("SCOPE 3 : Construction de l'ouvrage 🏗️")
 st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface")
 bdd = "data_FE_ouvrages.csv"
 df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
@@ -804,7 +834,15 @@ with st.expander("Résultat 📊"):
     st.subheader("Emissions GES de l'ouvrage 💨 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
     st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
 
-st.header("Synthèse du bilan CO2 simulé 📋")
+
+header5 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Synthèse du bilan CO2 simulé 📋</p>
+</head>
+'''
+st.markdown(header5, unsafe_allow_html=True)
+#st.header("Synthèse du bilan CO2 simulé 📋")
 st.write('Et hop! un pdf à télécharger avec toute votre simulation')
 pdf = FPDF()
 pdf.add_page()
