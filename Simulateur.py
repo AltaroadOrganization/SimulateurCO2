@@ -9,6 +9,14 @@ from fpdf import FPDF
 import math
 import random
 import datetime
+import re
+
+#function to check if an email is valid
+def solve(s):
+   pat = "^[a-zA-Z0-9-_.]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
+   if re.match(pat,s):
+      return True
+   return False
 
 Image_title=Image.open("Banner_Linkedin.png")
 st.image(Image_title)
@@ -910,7 +918,7 @@ header5 = '''
 st.write('---------------------------------------------------')
 st.markdown(header5, unsafe_allow_html=True)
 #st.header("Synthèse du bilan CO2 simulé 📋")
-st.write('Et hop! un pdf à télécharger avec toute votre simulation')
+st.write('Et hop! je reçois télécharge un pdf de synthèse de ma simulation')
 pdf = FPDF()
 pdf.add_page()
 pdf.set_font("Arial", "B", size=26)
@@ -1049,13 +1057,20 @@ pdf.cell(200, 10, txt="Scope 2 : " + str(int(tot_S2)) + " tCO2e, soit " + str(
 pdf.cell(200, 10, txt="Scope 3 : " + str(int(E_tot + EMISSIONS_ouv + tot_d)) + " tCO2e, soit " + str(
     round(((E_tot + EMISSIONS_ouv + tot_d) / (E_tot + EMISSIONS_ouv + tot_d + tot_S1et2)) * 100, 1)) + " %", ln=5)
 
-pdf = pdf.output("SYNTHESE.pdf")
-with open("SYNTHESE.pdf", "rb") as pdf_file:
+pdf = pdf.output("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf")
+with open("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf", "rb") as pdf_file:
     PDFbyte = pdf_file.read()
-st.download_button(label="Télécharger",
-                   data=PDFbyte,
-                   file_name="SYNTHESE.pdf",
-                   mime='application/octet-stream')
-st.write("")
+if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'utilisation de ce simulateur et j'indique mon email. "
+               "Votre email ne sera pas diffusé en dehors de nos services."):
+    email_user=st.text_input('indiquez votre email valide ici', value="", max_chars=None, key=None, type="default")
+    if email_user!='':
+        if solve(email_user):
+            st.download_button(label="Télécharger",
+                               data=PDFbyte,
+                               file_name="ALTAROAD_Simulateur_CO2_SYNTHESE.pdf",
+                               mime='application/octet-stream')
+        else:
+            st.write('{} est une adresse email invalide'.format(email_user))
+st.write("------------------------------------")
 st.caption("Les données sources utilisées sont référencées et disponible sur demande à Altaroad")
 st.caption("Développé par Altaroad - CONFIDENTIEL 2022 - https://www.altaroad.com")
