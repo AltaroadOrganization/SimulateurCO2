@@ -818,7 +818,15 @@ with st.expander("Résultat 📊"):
     st.subheader("Emissions GES de l'ouvrage 💨 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
     st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
 
-st.header("Synthèse du bilan CO2 simulé 📋")
+
+header5 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Synthèse du bilan CO2 simulé 📋</p>
+</head>
+'''
+st.markdown(header5, unsafe_allow_html=True)
+#st.header("Synthèse du bilan CO2 simulé 📋")
 st.write('Et hop! un pdf à télécharger avec toute votre simulation')
 pdf = FPDF()
 pdf.add_page()
