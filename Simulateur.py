@@ -42,6 +42,107 @@ prix_ISDND = 1500
 prix_ISDD = 5000
 conso_moy = 30 / 100
 
+st.header("SCOPE 1 & 2 - Estimation des consommations d'énergies 🔋")
+with st.expander("Energies fossiles 🛢️"):
+    scope1et2 = "simulation_S1et2.csv"
+    df_S1 = pd.read_csv(scope1et2, encoding="latin1", sep=",", decimal='.')
+    bdd_s2 = "Base_Carbone_FE_S1et2.csv"
+    df = pd.read_csv(bdd_s2, encoding="latin1", sep=";", decimal=',')
+    df["Sous catégorie 1"] = df["Sous catégorie 1"].astype(str)
+    df["Sous catégorie 2"] = df["Sous catégorie 2"].astype(str)
+    df["Sous catégorie 3"] = df["Sous catégorie 3"].astype(str)
+    df["Sous catégorie 4"] = df["Sous catégorie 4"].astype(str)
+    df["Nom attribut français"] = df["Nom attribut français"].astype(str)
+    df["Unité français"] = df["Unité français"].astype(str)
+    df = df[df['Code de la catégorie'].str.contains(str("Combustibles "))]
+    df = df[df['Sous catégorie 1'].str.contains(str(" Fossiles "))]
+    type = st.radio("Type d'énergie", ('Liquide', 'Gaz'))
+    if type == 'Liquide':
+        df = df[df['Sous catégorie 2'].str.contains(str(" Liquides "))]
+    elif type == 'Gaz':
+        df = df[df['Sous catégorie 2'].str.contains(str(" Gazeux "))]
+    df = df[df['Sous catégorie 4'] == " Usage routier ou non-routier"]
+    choix_fe = st.selectbox("Choix du facteur d'émissions :", df["Nom base français"].unique())
+    df = df[df['Nom base français'] == choix_fe]
+    choix_attribut = st.selectbox("Choix de l'attribut :", df['Nom attribut français'].unique())
+    df = df[df["Nom attribut français"] == choix_attribut]
+    choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
+    df = df[df["Unité français"] == choix_unite]
+    for u in df["Unité français"]:
+        u = u[7:].lower()
+    DO = float(st.number_input("Quantité estimée (en " + u + ") : ", step=1))
+    for x in df["Total poste non décomposé"]:
+        x = float(x)
+    for i in df["Incertitude"]:
+        i = float(i)
+    EMISSIONS = round(x / 1000 * DO, 2)
+    INCERTITUDE = round(EMISSIONS * 0.01 * i, 2)
+    POSTE = str(df['Nom base français'].unique())
+    ATT = str(df['Nom attribut français'].unique())
+    st.write(" ")
+    st.write(" ")
+    st.text(
+        "Emissions GES de la donnée 💨 : " + str(EMISSIONS) + " tCO2e " + "(+ ou - " + str(INCERTITUDE) + " tCO2e)")
+    if st.button("Ajout du poste d'émissions ➕"):
+        new = [POSTE, ATT, str(DO), u, EMISSIONS]
+        with open(scope1et2, 'a', newline='', encoding='latin1') as f_object:
+            writer_object = writer(f_object)
+            writer_object.writerow(new)
+            f_object.close()
+    refresh = st.checkbox('Rafraîchir')
+with st.expander("Electricité ⚡"):
+    elec_moy = 0.0569
+    i2 = 10
+    u2 = "kWh"
+    DO2 = float(st.number_input("Quantité estimée (en " + u2 + ") : ", step=1))
+    EMISSIONS2 = round(elec_moy / 1000 * DO2, 2)
+    INCERTITUDE2 = round(EMISSIONS2 * 0.01 * i2, 2)
+    POSTE2 = "['Electricité']"
+    st.write(" ")
+    st.write(" ")
+    st.text("Emissions GES de la donnée 💨 : " + str(EMISSIONS2) + " tCO2e " + "(+ ou - " + str(
+        INCERTITUDE2) + " tCO2e)")
+    S2 = [(POSTE2, " ", DO2, u2, EMISSIONS2)]
+    df_S2 = pd.DataFrame(S2,
+                         columns=['Energie', 'Attribut', 'Quantité estimée', 'Unité', 'Emissions GES (en tCO2e)'])
+    if st.button("Ajout du poste d'émissions ➕  "):
+        st.text("")
+
+with st.expander("Résultats 📊"):
+    df_S1et2 = pd.concat([df_S1, df_S2])
+    st.dataframe(df_S1et2)
+    tot_S1 = round(df_S1["Emissions GES (en tCO2e)"].sum(), 1)
+    st.text("Total des émissions GES du scope 1 🛢️ 💨 : " + str(tot_S1) + " tCO2e")
+    tot_S2 = round(df_S2["Emissions GES (en tCO2e)"].sum(), 1)
+    st.text("Total des émissions GES du scope 2 ⚡ 💨 : " + str(tot_S2) + " tCO2e")
+    tot_S1et2 = round(df_S1et2["Emissions GES (en tCO2e)"].sum(), 1)
+    st.text("Total des émissions GES des scopes 1 & 2 🛢️+⚡ 💨 : " + str(tot_S1et2) + " tCO2e")
+    st.write(" ")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if tot_S1 > 0 or tot_S2 > 0:
+            fig = plt.figure()
+            ax = fig.add_axes([0, 0, 1, 1])
+            poste = df_S1et2["Energie"]
+            es = df_S1et2["Emissions GES (en tCO2e)"]
+            ax.set_title('Emissions GES du Scope 1 et 2')
+            ax.set_ylabel('Emissions (tCO2e)')
+            ax.set_xlabel('Donnée')
+            plt.xticks(rotation=45)
+            ax.bar(poste, es, color='grey', edgecolor='orange')
+            st.pyplot(fig)
+    with col2:
+        if tot_S1 > 0 or tot_S2 > 0:
+            labels = '1', '2'
+            sizes = [tot_S1, tot_S2]
+            fig1, ax1 = plt.subplots()
+            ax1.set_title("Part des émissions GES par scope")
+            ax1.pie(sizes, autopct='%1.1f%%', startangle=90)
+            ax1.axis('equal')
+            ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+            st.pyplot(fig1)
+
 st.header('SCOPE3 - EVACUATION')
 st.write('Ici, vous simulez les évacuations de matériaux, et leur valorisation')
 col1, col2 = st.columns(2)
@@ -92,7 +193,7 @@ FE_trans = FEmoy5e * (cam5 / 100) + FEmoy4e * (cam4 / 100)
 tot_D = ISDI1 + ISDI2 + ISDND + ISDD
 dist_tot = pass_ISDI1 * dist_exuISDI1 + pass_ISDI2 * dist_exuISDI2 + pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD
 
-st.header("Données & Bilan CO2e 💨")
+st.subheader("Données & Bilan CO2e 💨")
 E_ISDI1 = round((ISDI1 * FEterres) / 1000, 1)
 E_ISDI2 = round((ISDI2 * FEgravats) / 1000, 1)
 E_ISDND = round((ISDND * FEdnd) / 1000, 1)
@@ -194,7 +295,7 @@ with st.expander("Passages :"):
     st.write("Nombre de passages pour l'évacuation des déchets dangereux :")
     st.subheader(pass_ISDD)
 
-st.header("Actions de réduction et gains 📉")
+st.subheader("Actions de réduction et gains 📉")
 
 # Réutiliser 10% des terres sur site
 action1 = st.checkbox('Augmenter de 10% la réutilisation des terres sur site')
@@ -525,142 +626,6 @@ with st.expander("Réductions"):
     ax.bar(actions, valeurs, color='grey', edgecolor='orange')
     st.pyplot(fig)
 
-st.subheader("SCOPE3: Estimation du bilan CO2 de la construction de l'ouvrage 🏗️")
-st.caption("Données issues de la Base Carbone® de l'ADEME")
-bdd = "data_FE_ouvrages.csv"
-df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
-df["Type d'ouvrage"] = df["Type d'ouvrage"].astype(str)
-df["Catégorie"] = df["Catégorie"].astype(str)
-df["Sous catégorie 1"] = df["Sous catégorie 1"].astype(str)
-df["Sous catégorie 2"] = df["Sous catégorie 2"].astype(str)
-df["Unité"] = df["Unité"].astype(str)
-
-with st.expander("Données 👷"):
-    ouvrage = st.selectbox("Type d'ouvrage :", df["Type d'ouvrage"].unique())
-    df = df[df["Type d'ouvrage"].str.contains(str(ouvrage))]
-    categorie = st.selectbox('Choix catégorie :', df['Catégorie'].unique())
-    df = df[df['Catégorie'].str.contains(str(categorie))]
-    sous_categorie1 = st.selectbox('Choix de la sous-catégorie 1 :', df['Sous catégorie 1'].unique())
-    df = df[df['Sous catégorie 1'].str.contains(str(sous_categorie1))]
-    sous_categorie2 = st.selectbox('Choix de la sous-catégorie 2 :', df['Sous catégorie 2'].unique())
-    df = df[df['Sous catégorie 2'].str.contains(str(sous_categorie2))]
-
-    st.dataframe(df, 1000, 150)
-    for u in df["Unité"]:
-        u = u[7:].lower()
-    DO_ouv = float(st.number_input("Donnée opérationnelle (en " + u + ") : ", step=1))
-    for x in df["FE"]:
-        x = float(x)
-    for i in df["Incertitude"]:
-        i = float(i)
-    EMISSIONS_ouv = round(x / 1000 * DO_ouv, 2)
-    INCERTITUDE_ouv = round(EMISSIONS_ouv * 0.01 * i, 2)
-    st.write(" ")
-with st.expander("Résultat 📊"):
-    st.subheader("Emissions GES de l'ouvrage 💨 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
-    st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
-
-st.header("SCOPE 1 & 2 - Estimation des consommations d'énergies 🔋")
-with st.expander("Energies fossiles 🛢️"):
-    scope1et2 = "simulation_S1et2.csv"
-    df_S1 = pd.read_csv(scope1et2, encoding="latin1", sep=",", decimal='.')
-    bdd_s2 = "Base_Carbone_FE_S1et2.csv"
-    df = pd.read_csv(bdd_s2, encoding="latin1", sep=";", decimal=',')
-    df["Sous catégorie 1"] = df["Sous catégorie 1"].astype(str)
-    df["Sous catégorie 2"] = df["Sous catégorie 2"].astype(str)
-    df["Sous catégorie 3"] = df["Sous catégorie 3"].astype(str)
-    df["Sous catégorie 4"] = df["Sous catégorie 4"].astype(str)
-    df["Nom attribut français"] = df["Nom attribut français"].astype(str)
-    df["Unité français"] = df["Unité français"].astype(str)
-    df = df[df['Code de la catégorie'].str.contains(str("Combustibles "))]
-    df = df[df['Sous catégorie 1'].str.contains(str(" Fossiles "))]
-    type = st.radio("Type d'énergie", ('Liquide', 'Gaz'))
-    if type == 'Liquide':
-        df = df[df['Sous catégorie 2'].str.contains(str(" Liquides "))]
-    elif type == 'Gaz':
-        df = df[df['Sous catégorie 2'].str.contains(str(" Gazeux "))]
-    df = df[df['Sous catégorie 4'] == " Usage routier ou non-routier"]
-    choix_fe = st.selectbox("Choix du facteur d'émissions :", df["Nom base français"].unique())
-    df = df[df['Nom base français'] == choix_fe]
-    choix_attribut = st.selectbox("Choix de l'attribut :", df['Nom attribut français'].unique())
-    df = df[df["Nom attribut français"] == choix_attribut]
-    choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
-    df = df[df["Unité français"] == choix_unite]
-    for u in df["Unité français"]:
-        u = u[7:].lower()
-    DO = float(st.number_input("Quantité estimée (en " + u + ") : ", step=1))
-    for x in df["Total poste non décomposé"]:
-        x = float(x)
-    for i in df["Incertitude"]:
-        i = float(i)
-    EMISSIONS = round(x / 1000 * DO, 2)
-    INCERTITUDE = round(EMISSIONS * 0.01 * i, 2)
-    POSTE = str(df['Nom base français'].unique())
-    ATT = str(df['Nom attribut français'].unique())
-    st.write(" ")
-    st.write(" ")
-    st.text(
-        "Emissions GES de la donnée 💨 : " + str(EMISSIONS) + " tCO2e " + "(+ ou - " + str(INCERTITUDE) + " tCO2e)")
-    if st.button("Ajout du poste d'émissions ➕"):
-        new = [POSTE, ATT, str(DO), u, EMISSIONS]
-        with open(scope1et2, 'a', newline='', encoding='latin1') as f_object:
-            writer_object = writer(f_object)
-            writer_object.writerow(new)
-            f_object.close()
-    refresh = st.checkbox('Rafraîchir')
-with st.expander("Electricité ⚡"):
-    elec_moy = 0.0569
-    i2 = 10
-    u2 = "kWh"
-    DO2 = float(st.number_input("Quantité estimée (en " + u2 + ") : ", step=1))
-    EMISSIONS2 = round(elec_moy / 1000 * DO2, 2)
-    INCERTITUDE2 = round(EMISSIONS2 * 0.01 * i2, 2)
-    POSTE2 = "['Electricité']"
-    st.write(" ")
-    st.write(" ")
-    st.text("Emissions GES de la donnée 💨 : " + str(EMISSIONS2) + " tCO2e " + "(+ ou - " + str(
-        INCERTITUDE2) + " tCO2e)")
-    S2 = [(POSTE2, " ", DO2, u2, EMISSIONS2)]
-    df_S2 = pd.DataFrame(S2,
-                         columns=['Energie', 'Attribut', 'Quantité estimée', 'Unité', 'Emissions GES (en tCO2e)'])
-    if st.button("Ajout du poste d'émissions ➕  "):
-        st.text("")
-
-with st.expander("Résultats 📊"):
-    df_S1et2 = pd.concat([df_S1, df_S2])
-    st.dataframe(df_S1et2)
-    tot_S1 = round(df_S1["Emissions GES (en tCO2e)"].sum(), 1)
-    st.text("Total des émissions GES du scope 1 🛢️ 💨 : " + str(tot_S1) + " tCO2e")
-    tot_S2 = round(df_S2["Emissions GES (en tCO2e)"].sum(), 1)
-    st.text("Total des émissions GES du scope 2 ⚡ 💨 : " + str(tot_S2) + " tCO2e")
-    tot_S1et2 = round(df_S1et2["Emissions GES (en tCO2e)"].sum(), 1)
-    st.text("Total des émissions GES des scopes 1 & 2 🛢️+⚡ 💨 : " + str(tot_S1et2) + " tCO2e")
-    st.write(" ")
-
-    col1, col2 = st.columns(2)
-    with col1:
-        if tot_S1 > 0 or tot_S2 > 0:
-            fig = plt.figure()
-            ax = fig.add_axes([0, 0, 1, 1])
-            poste = df_S1et2["Energie"]
-            es = df_S1et2["Emissions GES (en tCO2e)"]
-            ax.set_title('Emissions GES du Scope 1 et 2')
-            ax.set_ylabel('Emissions (tCO2e)')
-            ax.set_xlabel('Donnée')
-            plt.xticks(rotation=45)
-            ax.bar(poste, es, color='grey', edgecolor='orange')
-            st.pyplot(fig)
-    with col2:
-        if tot_S1 > 0 or tot_S2 > 0:
-            labels = '1', '2'
-            sizes = [tot_S1, tot_S2]
-            fig1, ax1 = plt.subplots()
-            ax1.set_title("Part des émissions GES par scope")
-            ax1.pie(sizes, autopct='%1.1f%%', startangle=90)
-            ax1.axis('equal')
-            ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-            st.pyplot(fig1)
-
 st.header("SCOPE3 : Autres déchets 🗑️ & autres achats de biens et services 🛒")
 with st.expander("Type de déchet ♻"):
     simul_dechets = "simulation_dechets.csv"
@@ -769,6 +734,41 @@ with st.expander("Résultats 📊"):
             plt.xticks(rotation=45)
             ax.bar(poste, es, color='grey', edgecolor='orange')
             st.pyplot(fig)
+
+st.header("SCOPE3: Estimation du bilan CO2 de la construction de l'ouvrage 🏗️")
+st.caption("Données issues de la Base Carbone® de l'ADEME")
+bdd = "data_FE_ouvrages.csv"
+df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
+df["Type d'ouvrage"] = df["Type d'ouvrage"].astype(str)
+df["Catégorie"] = df["Catégorie"].astype(str)
+df["Sous catégorie 1"] = df["Sous catégorie 1"].astype(str)
+df["Sous catégorie 2"] = df["Sous catégorie 2"].astype(str)
+df["Unité"] = df["Unité"].astype(str)
+
+with st.expander("Données 👷"):
+    ouvrage = st.selectbox("Type d'ouvrage :", df["Type d'ouvrage"].unique())
+    df = df[df["Type d'ouvrage"].str.contains(str(ouvrage))]
+    categorie = st.selectbox('Choix catégorie :', df['Catégorie'].unique())
+    df = df[df['Catégorie'].str.contains(str(categorie))]
+    sous_categorie1 = st.selectbox('Choix de la sous-catégorie 1 :', df['Sous catégorie 1'].unique())
+    df = df[df['Sous catégorie 1'].str.contains(str(sous_categorie1))]
+    sous_categorie2 = st.selectbox('Choix de la sous-catégorie 2 :', df['Sous catégorie 2'].unique())
+    df = df[df['Sous catégorie 2'].str.contains(str(sous_categorie2))]
+
+    st.dataframe(df, 1000, 150)
+    for u in df["Unité"]:
+        u = u[7:].lower()
+    DO_ouv = float(st.number_input("Donnée opérationnelle (en " + u + ") : ", step=1))
+    for x in df["FE"]:
+        x = float(x)
+    for i in df["Incertitude"]:
+        i = float(i)
+    EMISSIONS_ouv = round(x / 1000 * DO_ouv, 2)
+    INCERTITUDE_ouv = round(EMISSIONS_ouv * 0.01 * i, 2)
+    st.write(" ")
+with st.expander("Résultat 📊"):
+    st.subheader("Emissions GES de l'ouvrage 💨 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
+    st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
 
 st.header("Synthèse du bilan CO2 simulé 📋")
 st.write('un pdf à télécharger avec toute votre simulation')
