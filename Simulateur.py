@@ -18,6 +18,9 @@ def solve(s):
       return True
    return False
 
+#all the inputs and outputs are saved in a dict
+simulator_dict={}
+
 Image_title=Image.open("Banner_Linkedin.png")
 st.image(Image_title)
 
@@ -28,7 +31,8 @@ result = now + datetime.timedelta(hours=2)
 date_heure = result.strftime("%d/%m/%Y %H:%M:%S")
 date = result.strftime("%d/%m/%Y")
 heure = result.strftime("%H:%M:%S")
-st.text("Date et heure : " + date_heure)
+st.text("Date et heure : {}".format(date_heure))
+simulator_dict['date_heure']=date_heure
 
 with col1:
     original_title = '''
@@ -80,6 +84,10 @@ type_chantier = st.text_input('type de chantier', value="par exemple: CONSTRUCTI
 lieu_chantier = st.text_input('le lieu du chantier', value="entrer une adresse", max_chars=None, key=None, type="default")
 taille_chantier = st.text_input('la taille du chantier', value="par exemple : PETIT (semaine) / MOYEN (mois) / GROS (année)", max_chars=None, key=None, type="default")
 
+simulator_dict['type_chantier']=type_chantier
+simulator_dict['lieu_chantier']=lieu_chantier
+simulator_dict['taille_chantier']=taille_chantier
+
 header1 = '''
 <head>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
@@ -90,6 +98,7 @@ st.write('---------------------------------------------------')
 st.markdown(header1, unsafe_allow_html=True)
 #st.header("SCOPE 1&2 : Consommations d'énergies 🔋")
 st.write("Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
+
 with st.expander("Energies fossiles 🛢️"):
     scope1et2 = "simulation_S1et2.csv"
     df_S1 = pd.read_csv(scope1et2, encoding="latin1", sep=",", decimal='.')
@@ -137,6 +146,7 @@ with st.expander("Energies fossiles 🛢️"):
             writer_object.writerow(new)
             f_object.close()
     refresh = st.checkbox('Rafraîchir')
+
 with st.expander("Electricité ⚡"):
     elec_moy = 0.0569
     i2 = 10
@@ -153,7 +163,11 @@ with st.expander("Electricité ⚡"):
     df_S2 = pd.DataFrame(S2,
                          columns=['Energie', 'Attribut', 'Quantité estimée', 'Unité', 'Emissions GES (en tCO2e)'])
     if st.button("Ajout du poste d'émissions ➕  "):
-        st.text("")
+        new2 = [POSTE2, "", str(DO2), u2, EMISSIONS2]
+        with open(scope1et2, 'a', newline='', encoding='latin1') as f_object:
+            writer_object = writer(f_object)
+            writer_object.writerow(new2)
+            f_object.close()
 
 with st.expander("Résultats 📊"):
     df_S1et2 = pd.concat([df_S1, df_S2])
@@ -1088,3 +1102,5 @@ if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'util
 st.write("------------------------------------")
 st.caption("Les données sources utilisées sont référencées et disponible sur demande à Altaroad")
 st.caption("Développé par Altaroad - CONFIDENTIEL 2022 - https://www.altaroad.com")
+
+st.write(simulator_dict)
