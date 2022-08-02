@@ -43,9 +43,7 @@ prix_ISDND = 1500
 prix_ISDD = 5000
 conso_moy = 30 / 100
 st.write("")
-st.write("Ce simulateur permet d'anticiper les émissions carbone de votre chantier en estimant, par exemple, les quantités d'énergie, de déchets ou de matériaux.")
-st.write("Il propose également quelques actions de réduction des émissions CO2 et des coûts et permet de modifier certains paramètres pour comprendre comment diminuer le bilan CO2 du chantier.")
-st.write("Pour plus de précisions un guide est disponible ci-dessous :")
+st.write("Cet outil permet de simuler les émissions carbone de votre chantier en intégrant tous les SCOPE avec les quantités d'énergie, de déchets et de matériaux nécessaires à l'ouvrage.")
 st.write("")
 with open('Guide_Simulateur.pdf', "rb") as pdf_file:
     PDFbyte = pdf_file.read()
