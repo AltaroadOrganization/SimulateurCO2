@@ -338,10 +338,13 @@ if action1:
                            str(math.ceil(Ea1 * 2208)) + " litres d'eau en bouteille 🧴",
                            str(math.ceil(Ea1 * 43)) + " jeans en coton 👖"])
         with st.expander("Réduction des émissions carbone"):
-            st.write("Cette action permet de réduire les émissions totales de :")
-            st.subheader(str(int(Ea1)) + " tCO2e, soit " + str(
-                int((Ea1 / E_tot) * 100)) + " % des émissions totales estimées")
-            st.write("soit " + v)
+            if E_tot > 0:
+                st.write("Cette action permet de réduire les émissions totales de :")
+                st.subheader(str(int(Ea1)) + " tCO2e, soit " + str(
+                    int((Ea1 / E_tot) * 100)) + " % des émissions totales estimées")
+                st.write("soit " + v)
+            else:
+                st.write("Merci d'entrer au minimum une quantité de déchets")
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages (évacuation des terres) de :")
             st.subheader(str(pass_ISDI1 - new_pass_ISDI1) + " passages, " + str(
@@ -353,6 +356,7 @@ if action1:
             st.subheader(str(math.ceil(eco_ISDI)) + " €")
     else:
         st.error("Le taux de réutilisation des terres sur site est déjà supérieur à 90%")
+
 
 # Privilégier les camions 5 essieux (de 70% à 80%)
 action2 = st.checkbox("Utiliser 15% de camions 5 essieux en plus")
@@ -405,10 +409,13 @@ if action2:
                            str(math.ceil(Ea2 * 2208)) + " litres d'eau en bouteille 🧴",
                            str(math.ceil(Ea2 * 43)) + " jeans en coton 👖"])
         with st.expander("Réduction des émissions carbone"):
-            st.write("Cette action permet de réduire les émissions totales de :")
-            st.subheader(str(int(Ea2)) + " tCO2e, soit " + str(
-                int((Ea2 / E_tot) * 100)) + " % des émissions totales estimées")
-            st.write("soit " + w)
+            if E_tot > 0:
+                st.write("Cette action permet de réduire les émissions totales de :")
+                st.subheader(str(int(Ea2)) + " tCO2e, soit " + str(
+                    int((Ea2 / E_tot) * 100)) + " % des émissions totales estimées")
+                st.write("soit " + w)
+            else:
+                st.write("Merci d'entrer au minimum une quantité de déchets")
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages de :")
             st.subheader(str(pass_tot - new_pass_tot_Ea2) + " passages, " + str(
@@ -461,10 +468,13 @@ if action3:
                            str(math.ceil(Ea3 * 2208)) + " litres d'eau en bouteille 🧴",
                            str(math.ceil(Ea3 * 43)) + " jeans en coton 👖"])
         with st.expander("Réduction des émissions carbone"):
-            st.write("Cette action permet de réduire les émissions totales de :")
-            st.subheader(str(int(Ea3)) + " tCO2e, soit " + str(
-                int((Ea3 / E_tot) * 100)) + " % des émissions totales estimées")
-            st.write("soit " + x)
+            if E_tot > 0:
+                st.write("Cette action permet de réduire les émissions totales de :")
+                st.subheader(str(int(Ea3)) + " tCO2e, soit " + str(
+                    int((Ea3 / E_tot) * 100)) + " % des émissions totales estimées")
+                st.write("soit " + x)
+            else:
+                st.write("Merci d'entrer au minimum une quantité de déchets")
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages de :")
             st.subheader(str(pass_tot - new_pass_tot_Ea3) + " passages, " + str(
@@ -505,10 +515,13 @@ if action4:
                            str(math.ceil(Ea4 * 2208)) + " litres d'eau en bouteille 🧴",
                            str(math.ceil(Ea4 * 43)) + " jeans en coton 👖"])
         with st.expander("Réduction des émissions carbone"):
-            st.write("Cette action permet de réduire les émissions totales de :")
-            st.subheader(str(int(Ea4)) + " tCO2e, soit " + str(
-                int((Ea4 / E_tot) * 100)) + " % des émissions totales estimées")
-            st.write("soit " + y)
+            if E_tot > 0:
+                st.write("Cette action permet de réduire les émissions totales de :")
+                st.subheader(str(int(Ea4)) + " tCO2e, soit " + str(
+                    int((Ea4 / E_tot) * 100)) + " % des émissions totales estimées")
+                st.write("soit " + y)
+            else:
+                st.write("Merci d'entrer au minimum une quantité de déchets")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea4)) + " €")
@@ -556,10 +569,13 @@ if action5:
                        str(math.ceil(Ea5 * 2208)) + " litres d'eau en bouteille 🧴",
                        str(math.ceil(Ea5 * 43)) + " jeans en coton 👖"])
     with st.expander("Réduction des émissions carbone"):
-        st.write("Cette action permet de réduire les émissions totales de :")
-        st.subheader(
-            str(int(Ea5)) + " tCO2e, soit " + str(int((Ea5 / E_tot) * 100)) + " % des émissions totales estimées")
-        st.write("soit " + z)
+        if E_tot > 0:
+            st.write("Cette action permet de réduire les émissions totales de :")
+            st.subheader(
+                str(int(Ea5)) + " tCO2e, soit " + str(int((Ea5 / E_tot) * 100)) + " % des émissions totales estimées")
+            st.write("soit " + z)
+        else:
+            st.write("Merci d'entrer au minimum une quantité de déchets")
     with st.expander("Réduction du nombre de passages"):
         st.write("Cette action permet de réduire le nombre de passages de :")
         st.subheader(str(pass_tot - new_pass_tot_Ea5) + " passages, " + str(
