@@ -16,15 +16,14 @@ urllib.request.urlretrieve(
 col1, col2 = st.columns([1, 1])
 image = Image.open("alta.png")
 now = datetime.datetime.utcnow()
-result = now + timedelta(hours=2)
+result = now + datetime.timedelta(hours=2)
 date_heure = result.strftime("%d/%m/%Y %H:%M:%S")
 date = result.strftime("%d/%m/%Y")
 heure = result.strftime("%H:%M:%S")
 st.text("Date et heure : " + date_heure)
 
 with col1:
-    st.title("Simulateur CO2")
-    st.title("Altaroad")
+    st.title("Simulateur CO2 - ALTAROAD")
 with col2:
     st.image(image)
 
@@ -43,17 +42,18 @@ prix_ISDND = 1500
 prix_ISDD = 5000
 conso_moy = 30 / 100
 
+st.header('SCOPE3 - EVACUATION')
+st.write('Ici, vous simulez les évacuations de matériaux, et leur valorisation')
 col1, col2 = st.columns(2)
 with col1:
-    st.header("Quantité de déchets à évacuer 🚮")
-
+    st.subheader("Quantité de déchets à évacuer 🚮")
     ISDI1brut = st.number_input("Terres à excaver (en tonnes)", step=1)
     ISDI2 = st.number_input("Déchets inertes : Gravats (en tonnes)", step=1)
     ISDND = st.number_input("Déchets non-dangereux en mélange (en tonnes)", step=1)
     ISDD = st.number_input("Déchets dangereux (en tonnes)", step=1)
 
 with col2:
-    st.header("Distance chantier-exutoire ↔")
+    st.subheader("Distance chantier-exutoire ↔")
 
     dist_exuISDI1 = st.number_input("Distance exutoire 1 (en km)", value=35, step=1)
     dist_exuISDI2 = st.number_input("Distance exutoire 2 (en km)", value=35, step=1)
@@ -62,24 +62,24 @@ with col2:
 
 col1, col2 = st.columns(2)
 with col1:
-    st.header("Nombre de passages quotidiens 🔃")
+    st.subheader("Nombre de passages quotidiens 🔃")
     pass_jour = st.slider("Nombre de passages quotidien estimés", 10, 100, 50, step=5)
 
 with col2:
-    st.header("Taux de réemploi des terres ♻️")
+    st.subheader("Taux de réemploi des terres ♻️")
     repl_terres = st.slider("Réemploi des terres sur site (%)", 0, 100, 0, step=5)
     valo_terres = 100 - repl_terres
     ISDI1 = math.ceil(ISDI1brut * (valo_terres / 100))
 
 col1, col2 = st.columns(2)
 with col1:
-    st.header("Types de camions 🚛")
+    st.subheader("Types de camions 🚛")
     nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=20, step=1)
     nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=10, step=1)
     cam5 = (nb_cam5 / (nb_cam5 + nb_cam4)) * 100
     cam4 = (nb_cam4 / (nb_cam5 + nb_cam4)) * 100
 with col2:
-    st.header("Chargements 🚚")
+    st.subheader("Chargements 🚚")
     load_cam5 = st.slider("Chargement moyen des camions articulés (tonnes)", 15, 29, 25, step=1)
     load_cam4 = st.slider("Chargement moyen des camions porteurs (tonnes)", 10, 20, 15, step=1)
 
@@ -460,7 +460,7 @@ st.caption("- Coût d'évacuation d'un chargement 'gravats' : 300 €")
 st.caption("- Coût d'évacuation d'un chargement 'déchets non-dangereux' : 1500 €")
 st.caption("- Coût d'évacuation d'un chargement 'déchets dangereux' : 5000 €")
 
-st.header("Graphiques 📊")
+st.subheader("Graphiques 📊")
 with st.expander("Déchets"):
     col1, col2 = st.columns(2)
     with col1:
@@ -525,7 +525,7 @@ with st.expander("Réductions"):
     ax.bar(actions, valeurs, color='grey', edgecolor='orange')
     st.pyplot(fig)
 
-st.header("Estimation du bilan CO2 de la construction de l'ouvrage 🏗️")
+st.subheader("SCOPE3: Estimation du bilan CO2 de la construction de l'ouvrage 🏗️")
 st.caption("Données issues de la Base Carbone® de l'ADEME")
 bdd = "data_FE_ouvrages.csv"
 df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
@@ -560,7 +560,7 @@ with st.expander("Résultat 📊"):
     st.subheader("Emissions GES de l'ouvrage 💨 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
     st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
 
-st.header("Estimation des consommations d'énergies (Scope 1 & 2) 🔋")
+st.header("SCOPE 1 & 2 - Estimation des consommations d'énergies 🔋")
 with st.expander("Energies fossiles 🛢️"):
     scope1et2 = "simulation_S1et2.csv"
     df_S1 = pd.read_csv(scope1et2, encoding="latin1", sep=",", decimal='.')
@@ -661,7 +661,7 @@ with st.expander("Résultats 📊"):
             ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig1)
 
-st.header("Autres déchets 🗑️ & autres achats de biens et services 🛒")
+st.header("SCOPE3 : Autres déchets 🗑️ & autres achats de biens et services 🛒")
 with st.expander("Type de déchet ♻"):
     simul_dechets = "simulation_dechets.csv"
     df_d = pd.read_csv(simul_dechets, encoding="latin1", sep=",", decimal='.')
@@ -770,7 +770,8 @@ with st.expander("Résultats 📊"):
             ax.bar(poste, es, color='grey', edgecolor='orange')
             st.pyplot(fig)
 
-st.header("Synthèse 📋")
+st.header("Synthèse du bilan CO2 simulé 📋")
+st.write('un pdf à télécharger avec toute votre simulation')
 pdf = FPDF()
 pdf.add_page()
 pdf.set_font("Arial", "B", size=26)
