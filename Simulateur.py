@@ -26,7 +26,7 @@ with col1:
     original_title = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#f37121; letter-spacing: -1px; line-height: 1.2; font-size: 40px;">Simulateur CO2 du chantier</p>'
+    <p style="font-family:Sen; color:#f37121; letter-spacing: -1px; line-height: 1.2; font-size: 40px;">Simulateur CO2 du chantier</p>
     </head>
     '''
     st.markdown(original_title, unsafe_allow_html=True)
@@ -57,7 +57,15 @@ st.download_button(label="Télécharger",
                    file_name="Guide_Simulateur.pdf",
                    mime='application/octet-stream')
 st.caption("Données issues de la Base Carbone® de l'ADEME")
-st.header("SCOPE 1&2 : Consommations d'énergies 🔋")
+
+header1 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 1&2 : Consommations d'énergies 🔋</p>
+</head>
+'''
+st.markdown(header1, unsafe_allow_html=True)
+#st.header("SCOPE 1&2 : Consommations d'énergies 🔋")
 st.write("Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
 with st.expander("Energies fossiles 🛢️"):
     scope1et2 = "simulation_S1et2.csv"
