@@ -167,7 +167,14 @@ with st.expander("Résultats 📊"):
             ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig1)
 
-st.header('SCOPE 3 : Evacuation des déchets 🗑️')
+header2 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Evacuation des déchets 🗑️</p>
+</head>
+'''
+st.markdown(header2, unsafe_allow_html=True)
+#st.header('SCOPE 3 : Evacuation des déchets 🗑️')
 st.write('Ici, vous simulez les évacuations des déchets, et leur traitement')
 col1, col2 = st.columns(2)
 with col1:
