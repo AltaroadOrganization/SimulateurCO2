@@ -11,3 +11,7 @@ Energie,Attribut,Quantité estimée,Unité,Emissions GES (en tCO2e)
 ['Fioul Lourd'],['commercial'],101.0,litre,0.33
 ['Electricité'],,2000.0,kWh,0.11
 ['Electricité'],,200000.0,kWh,11.38
+['Fioul domestique'],['nan'],99998.0,litre,324.99
+['Fioul domestique'],['nan'],99998.0,litre,324.99
+['Electricité'],,3455555.0,kWh,196.62
+['Electricité'],,3455555.0,kWh,196.62

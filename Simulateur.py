@@ -98,10 +98,20 @@ st.write('---------------------------------------------------')
 st.markdown(header1, unsafe_allow_html=True)
 #st.header("SCOPE 1&2 : Consommations d'énergies 🔋")
 st.write("Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
+if st.button('Rafraîchir Scope 1 et 2'):
+    scope2 = "scope2_blank.csv"
+    df_S2 = pd.read_csv(scope2, encoding="latin1", sep=",", decimal='.', index_col=0)
+    df_S2[df_S2.columns]=""
+    df_S2.to_csv('scope2_blank.csv')
+    scope1 = "scope1_blank.csv"
+    df_S1 = pd.read_csv(scope1, encoding="latin1", sep=",", decimal='.', index_col=0)
+    df_S1[df_S1.columns]=""
+    df_S1.to_csv('scope1_blank.csv')
 
 with st.expander("Energies fossiles 🛢️"):
-    scope1et2 = "simulation_S1et2.csv"
-    df_S1 = pd.read_csv(scope1et2, encoding="latin1", sep=",", decimal='.')
+    scope1 = "scope1_blank.csv"
+    df_S1 = pd.read_csv(scope1, encoding="latin1", sep=",", decimal='.', index_col=0)
+    df_S1=df_S1.dropna()
     bdd_s2 = "Base_Carbone_FE_S1et2.csv"
     df = pd.read_csv(bdd_s2, encoding="latin1", sep=";", decimal=',')
     df["Sous catégorie 1"] = df["Sous catégorie 1"].astype(str)
@@ -140,14 +150,14 @@ with st.expander("Energies fossiles 🛢️"):
     st.text(
         "Emissions GES de la donnée 💨 : " + str(EMISSIONS) + " tCO2e " + "(+ ou - " + str(INCERTITUDE) + " tCO2e)")
     if st.button("Ajout du poste d'émissions ➕"):
-        new = [POSTE, ATT, str(DO), u, EMISSIONS]
-        with open(scope1et2, 'a', newline='', encoding='latin1') as f_object:
+        new = ["Scope1",POSTE, ATT, str(DO), u, EMISSIONS]
+        with open(scope1, 'a', newline='', encoding='latin1') as f_object:
             writer_object = writer(f_object)
             writer_object.writerow(new)
             f_object.close()
-    refresh = st.checkbox('Rafraîchir')
 
 with st.expander("Electricité ⚡"):
+    scope2 = "scope2_blank.csv"
     elec_moy = 0.0569
     i2 = 10
     u2 = "kWh"
@@ -159,17 +169,18 @@ with st.expander("Electricité ⚡"):
     st.write(" ")
     st.text("Emissions GES de la donnée 💨 : " + str(EMISSIONS2) + " tCO2e " + "(+ ou - " + str(
         INCERTITUDE2) + " tCO2e)")
-    S2 = [(POSTE2, " ", DO2, u2, EMISSIONS2)]
-    df_S2 = pd.DataFrame(S2,
-                         columns=['Energie', 'Attribut', 'Quantité estimée', 'Unité', 'Emissions GES (en tCO2e)'])
     if st.button("Ajout du poste d'émissions ➕  "):
-        new2 = [POSTE2, "", str(DO2), u2, EMISSIONS2]
-        with open(scope1et2, 'a', newline='', encoding='latin1') as f_object:
+        new2 = ["Scope2",POSTE2, "-", str(DO2), u2, EMISSIONS2]
+        with open(scope2, 'a', newline='', encoding='latin1') as f_object:
             writer_object = writer(f_object)
             writer_object.writerow(new2)
             f_object.close()
 
 with st.expander("Résultats 📊"):
+    df_S1 = pd.read_csv(scope1, encoding="latin1", sep=",", decimal='.', index_col=0)
+    df_S1 = df_S1.dropna()
+    df_S2 = pd.read_csv(scope2, encoding="latin1", sep=",", decimal='.', index_col=0)
+    df_S2 = df_S2.dropna()
     df_S1et2 = pd.concat([df_S1, df_S2])
     st.dataframe(df_S1et2)
     tot_S1 = round(df_S1["Emissions GES (en tCO2e)"].sum(), 1)
@@ -187,11 +198,12 @@ with st.expander("Résultats 📊"):
             ax = fig.add_axes([0, 0, 1, 1])
             poste = df_S1et2["Energie"]
             es = df_S1et2["Emissions GES (en tCO2e)"]
+            st.write(es)
             ax.set_title('Emissions GES du Scope 1 et 2')
             ax.set_ylabel('Emissions (tCO2e)')
             ax.set_xlabel('Donnée')
             plt.xticks(rotation=45)
-            ax.bar(poste, es, color='grey', edgecolor='orange')
+            ax.bar(poste, es, color='orange', edgecolor='red')
             st.pyplot(fig)
     with col2:
         if tot_S1 > 0 or tot_S2 > 0:
@@ -203,6 +215,10 @@ with st.expander("Résultats 📊"):
             ax1.axis('equal')
             ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig1)
+
+
+simulator_dict['Scope1_tot_tCO2e']=tot_S1
+simulator_dict['Scope2_tot_tCO2e']=tot_S2
 
 header2 = '''
 <head>
