@@ -178,15 +178,28 @@ st.markdown(header2, unsafe_allow_html=True)
 st.write('Ici, vous simulez les évacuations des déchets, et leur traitement')
 col1, col2 = st.columns(2)
 with col1:
-    st.subheader("Quantité de déchets à évacuer 🚮")
+    subheader1 = '''
+    <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Quantité de déchets à évacuer 🚮</p>
+    </head>
+    '''
+    st.markdown(subheader1, unsafe_allow_html=True)
+    #st.subheader("Quantité de déchets à évacuer 🚮")
     ISDI1brut = st.number_input("Terres à excaver (en tonnes)", step=1)
     ISDI2 = st.number_input("Déchets inertes : Gravats (en tonnes)", step=1)
     ISDND = st.number_input("Déchets non-dangereux en mélange (en tonnes)", step=1)
     ISDD = st.number_input("Déchets dangereux (en tonnes)", step=1)
 
 with col2:
-    st.subheader("Distance chantier-exutoire ↔")
-
+    subheader2 = '''
+    <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Distance chantier-exutoire ↔</p>
+    </head>
+    '''
+    st.markdown(subheader2, unsafe_allow_html=True)
+    #st.subheader("Distance chantier-exutoire ↔")
     dist_exuISDI1 = st.number_input("Distance exutoire 1 (en km)", value=35, step=1)
     dist_exuISDI2 = st.number_input("Distance exutoire 2 (en km)", value=35, step=1)
     dist_exuISDND = st.number_input("Distance exutoire 3 (en km)", value=35, step=1)
@@ -194,24 +207,52 @@ with col2:
 
 col1, col2 = st.columns(2)
 with col1:
-    st.subheader("Nombre de passages quotidiens 🔃")
+    subheader3 = '''
+    <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Nombre de passages quotidiens 🔃</p>
+    </head>
+    '''
+    st.markdown(subheader3, unsafe_allow_html=True)
+    #st.subheader("Nombre de passages quotidiens 🔃")
     pass_jour = st.slider("Nombre de passages quotidien estimés", 10, 100, 50, step=5)
 
 with col2:
-    st.subheader("Taux de réemploi des terres ♻️")
+    subheader4 = '''
+    <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Taux de réemploi des terres ♻</p>
+    </head>
+    '''
+    st.markdown(subheader4, unsafe_allow_html=True)
+    #st.subheader("Taux de réemploi des terres ♻️")
     repl_terres = st.slider("Réemploi des terres sur site (%)", 0, 100, 0, step=5)
     valo_terres = 100 - repl_terres
     ISDI1 = math.ceil(ISDI1brut * (valo_terres / 100))
 
 col1, col2 = st.columns(2)
 with col1:
-    st.subheader("Types de camions 🚛")
+    subheader5 = '''
+    <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Types de camions 🚛</p>
+    </head>
+    '''
+    st.markdown(subheader5, unsafe_allow_html=True)
+    #st.subheader("Types de camions 🚛")
     nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=20, step=1)
     nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=10, step=1)
     cam5 = (nb_cam5 / (nb_cam5 + nb_cam4)) * 100
     cam4 = (nb_cam4 / (nb_cam5 + nb_cam4)) * 100
 with col2:
-    st.subheader("Chargements 🚚")
+    subheader6 = '''
+    <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Chargements 🚚</p>
+    </head>
+    '''
+    st.markdown(subheader6, unsafe_allow_html=True)
+    #st.subheader("Chargements 🚚")
     load_cam5 = st.slider("Chargement moyen des camions articulés (tonnes)", 15, 29, 25, step=1)
     load_cam4 = st.slider("Chargement moyen des camions porteurs (tonnes)", 10, 20, 15, step=1)
 
@@ -224,7 +265,14 @@ FE_trans = FEmoy5e * (cam5 / 100) + FEmoy4e * (cam4 / 100)
 tot_D = ISDI1 + ISDI2 + ISDND + ISDD
 dist_tot = pass_ISDI1 * dist_exuISDI1 + pass_ISDI2 * dist_exuISDI2 + pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD
 
-st.subheader("Données & Bilan CO2e 💨")
+subheader7 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Données & Bilan CO2e 💨</p>
+</head>
+'''
+st.markdown(subheader7, unsafe_allow_html=True)
+#st.subheader("Données & Bilan CO2e 💨")
 E_ISDI1 = round((ISDI1 * FEterres) / 1000, 1)
 E_ISDI2 = round((ISDI2 * FEgravats) / 1000, 1)
 E_ISDND = round((ISDND * FEdnd) / 1000, 1)
@@ -326,7 +374,14 @@ with st.expander("Passages :"):
     st.write("Nombre de passages pour l'évacuation des déchets dangereux :")
     st.subheader(pass_ISDD)
 
-st.subheader("Actions de réduction et gains 📉")
+subheader8 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Actions de réduction et gains 📉</p>
+</head>
+'''
+st.markdown(subheader8, unsafe_allow_html=True)
+#st.subheader("Actions de réduction et gains 📉")
 
 # Réutiliser 10% des terres sur site
 action1 = st.checkbox('Augmenter de 10% la réutilisation des terres sur site')
@@ -609,7 +664,14 @@ with st.expander("Hypothèses de calcul du gain €"):
     st.caption("- Coût d'évacuation d'un chargement 'déchets non-dangereux' : 1500 €")
     st.caption("- Coût d'évacuation d'un chargement 'déchets dangereux' : 5000 €")
 
-st.subheader("Graphiques 📊")
+subheader9 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Graphiques 📊</p>
+</head>
+'''
+st.markdown(subheader9, unsafe_allow_html=True)
+#st.subheader("Graphiques 📊")
 with st.expander("Déchets"):
     col1, col2 = st.columns(2)
     with col1:
