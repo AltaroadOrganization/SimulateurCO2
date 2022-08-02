@@ -10,6 +10,9 @@ import math
 import random
 import datetime
 
+Image_title=Image.open("Banner_Linkedin.png")
+st.image(Image_title)
+
 col1, col2 = st.columns([1, 1])
 image = Image.open("logo.png")
 now = datetime.datetime.utcnow()
