@@ -58,13 +58,27 @@ conso_moy = 30 / 100
 st.write("")
 st.write("Cet outil permet de simuler les émissions carbone de votre chantier en intégrant tous les SCOPE avec les quantités d'énergie, de déchets et de matériaux nécessaires à l'ouvrage.")
 st.write("")
+col1, col2=st.columns(2)
+col1.write("Pour plus d'information, téléchargez le Manifeste du simulateur bilan CO2 Altaroad")
 with open('Guide_Simulateur.pdf', "rb") as pdf_file:
     PDFbyte = pdf_file.read()
-st.download_button(label="Télécharger",
+col2.download_button(label="le Manifeste",
                    data=PDFbyte,
                    file_name="Guide_Simulateur.pdf",
                    mime='application/octet-stream')
-st.caption("Données issues de la Base Carbone® de l'ADEME")
+st.caption("Toutes les données sont issues de la Base Carbone® de l'ADEME")
+
+header0 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Entrer les infos du chantier</p>
+</head>
+'''
+st.write('---------------------------------------------------')
+st.markdown(header0, unsafe_allow_html=True)
+type_chantier = st.text_input('type de chantier', value="par exemple: CONSTRUCTION / DEMOLITION / TERRASSEMENT", max_chars=None, key=None, type="default")
+lieu_chantier = st.text_input('le lieu du chantier', value="entrer une adresse", max_chars=None, key=None, type="default")
+taille_chantier = st.text_input('la taille du chantier', value="par exemple : PETIT (semaine) / MOYEN (mois) / GROS (année)", max_chars=None, key=None, type="default")
 
 header1 = '''
 <head>
