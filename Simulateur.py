@@ -54,7 +54,7 @@ st.download_button(label="Télécharger",
                    file_name="Guide_Simulateur.pdf",
                    mime='application/octet-stream')
 st.caption("Données issues de la Base Carbone® de l'ADEME")
-st.header("SCOPE 1 & 2 - Estimation des consommations d'énergies 🔋")
+st.header("SCOPE 1 & 2 : Estimation des consommations d'énergies 🔋")
 st.write("Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
 with st.expander("Energies fossiles 🛢️"):
     scope1et2 = "simulation_S1et2.csv"
@@ -750,7 +750,7 @@ with st.expander("Résultats 📊"):
             ax.bar(poste, es, color='grey', edgecolor='orange')
             st.pyplot(fig)
 
-st.header("SCOPE 3 - Estimation du bilan CO2 de la construction de l'ouvrage 🏗️")
+st.header("SCOPE 3 : Estimation du bilan CO2 de la construction de l'ouvrage 🏗️")
 st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface")
 bdd = "data_FE_ouvrages.csv"
 df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
