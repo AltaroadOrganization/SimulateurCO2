@@ -42,7 +42,8 @@ prix_ISDND = 1500
 prix_ISDD = 5000
 conso_moy = 30 / 100
 
-st.header("SCOPE 1 & 2 - Estimation des consommations d'énergies 🔋")
+st.header("SCOPE 1 & 2 : Estimation des consommations d'énergies 🔋")
+st.write("Ici, vous simulez les émissions liées aux consommations d'énergies totales des phases du chantier")
 with st.expander("Energies fossiles 🛢️"):
     scope1et2 = "simulation_S1et2.csv"
     df_S1 = pd.read_csv(scope1et2, encoding="latin1", sep=",", decimal='.')
@@ -143,7 +144,7 @@ with st.expander("Résultats 📊"):
             ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig1)
 
-st.header('SCOPE3 - EVACUATION')
+st.header('SCOPE3 : Evacuation des déchets')
 st.write('Ici, vous simulez les évacuations de matériaux, et leur valorisation')
 col1, col2 = st.columns(2)
 with col1:
@@ -627,6 +628,7 @@ with st.expander("Réductions"):
     st.pyplot(fig)
 
 st.header("SCOPE3 : Autres déchets 🗑️ & autres achats de biens et services 🛒")
+st.write("Ici, vous simulez les émissions liées à tout le reste du scope 3")
 with st.expander("Type de déchet ♻"):
     simul_dechets = "simulation_dechets.csv"
     df_d = pd.read_csv(simul_dechets, encoding="latin1", sep=",", decimal='.')
@@ -736,6 +738,7 @@ with st.expander("Résultats 📊"):
             st.pyplot(fig)
 
 st.header("SCOPE3: Estimation du bilan CO2 de la construction de l'ouvrage 🏗️")
+st.write("Ici, vous simulez les émissions liées à la construction de l'ouvrage")
 st.caption("Données issues de la Base Carbone® de l'ADEME")
 bdd = "data_FE_ouvrages.csv"
 df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
@@ -771,7 +774,7 @@ with st.expander("Résultat 📊"):
     st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
 
 st.header("Synthèse du bilan CO2 simulé 📋")
-st.write('un pdf à télécharger avec toute votre simulation')
+st.write('Et hop! un pdf à télécharger avec toute votre simulation')
 pdf = FPDF()
 pdf.add_page()
 pdf.set_font("Arial", "B", size=26)
@@ -896,7 +899,7 @@ pdf.cell(200, 10, txt="Emissions GES : " + str(tot_d) + " tCO2e", ln=5)
 pdf.cell(200, 10, txt="", ln=2)
 
 pdf.set_font("Arial", "B", size=22)
-pdf.cell(200, 10, txt="Estimation du blian CO2 total", ln=1, align='C')
+pdf.cell(200, 10, txt="Estimation du bilan CO2 total", ln=1, align='C')
 pdf.cell(200, 10, txt="", ln=2)
 pdf.set_font("Arial", 'B', size=14)
 
