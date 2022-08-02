@@ -41,8 +41,20 @@ prix_ISDI2 = 300
 prix_ISDND = 1500
 prix_ISDD = 5000
 conso_moy = 30 / 100
-
+st.write("")
+st.write("Ce simulateur permet d'anticiper les émissions carbone de votre chantier en estimant, par exemple, les quantités d'énergie, de déchets ou de matériaux.")
+st.write("Il propose également quelques actions de réduction des émissions CO2 et des coûts et permet de modifier certains paramètres pour comprendre comment diminuer le bilan CO2 du chantier.")
+st.write("Pour plus de précisions un guide est disponible ci-dessous :")
+st.write("")
+with open('Guide_Simulateur.pdf', "rb") as pdf_file:
+    PDFbyte = pdf_file.read()
+st.download_button(label="Télécharger",
+                   data=PDFbyte,
+                   file_name="Guide_Simulateur.pdf",
+                   mime='application/octet-stream')
+st.caption("Données issues de la Base Carbone® de l'ADEME")
 st.header("SCOPE 1 & 2 - Estimation des consommations d'énergies 🔋")
+st.write("Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
 with st.expander("Energies fossiles 🛢️"):
     scope1et2 = "simulation_S1et2.csv"
     df_S1 = pd.read_csv(scope1et2, encoding="latin1", sep=",", decimal='.')
@@ -143,8 +155,8 @@ with st.expander("Résultats 📊"):
             ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig1)
 
-st.header('SCOPE3 - EVACUATION')
-st.write('Ici, vous simulez les évacuations de matériaux, et leur valorisation')
+st.header('SCOPE 3 - EVACUATION')
+st.write('Ici, vous pouvez simuler les émissions carbone liées aux évacuations des différents types de déchets et leur traitement')
 col1, col2 = st.columns(2)
 with col1:
     st.subheader("Quantité de déchets à évacuer 🚮")
@@ -553,13 +565,14 @@ if action5:
         st.subheader(str(math.ceil(eco_c_Ea5)) + " €")
         st.write("Gain € évacuations : ")
         st.subheader(str(math.ceil(eco_D_tot_Ea5)) + " €")
-st.caption("*Le gain économique est calculé à partir des hypothèses suivantes :")
-st.caption("- Consommation moyenne des camions : 30 L/100km")
-st.caption("- Prix d'un litre de gazole routier B7 : 2 €")
-st.caption("- Coût d'évacuation d'un chargement 'terres' : 300 €")
-st.caption("- Coût d'évacuation d'un chargement 'gravats' : 300 €")
-st.caption("- Coût d'évacuation d'un chargement 'déchets non-dangereux' : 1500 €")
-st.caption("- Coût d'évacuation d'un chargement 'déchets dangereux' : 5000 €")
+with st.expander("Hypothèses de calcul du gain €"):
+    st.caption("*Le gain économique est calculé à partir des hypothèses suivantes :")
+    st.caption("- Consommation moyenne des camions : 30 L/100km")
+    st.caption("- Prix d'un litre de gazole routier B7 : 2 €")
+    st.caption("- Coût d'évacuation d'un chargement 'terres' : 300 €")
+    st.caption("- Coût d'évacuation d'un chargement 'gravats' : 300 €")
+    st.caption("- Coût d'évacuation d'un chargement 'déchets non-dangereux' : 1500 €")
+    st.caption("- Coût d'évacuation d'un chargement 'déchets dangereux' : 5000 €")
 
 st.subheader("Graphiques 📊")
 with st.expander("Déchets"):
@@ -626,7 +639,8 @@ with st.expander("Réductions"):
     ax.bar(actions, valeurs, color='grey', edgecolor='orange')
     st.pyplot(fig)
 
-st.header("SCOPE3 : Autres déchets 🗑️ & autres achats de biens et services 🛒")
+st.header("SCOPE 3 - Autres déchets 🗑️ & autres achats de biens et services 🛒")
+st.write("Ici, vous pouvez simuler l'évacuation et le traitment d'autres types de déchets, ainsi que l'achat et le fret de matières premières, équipements ou services")
 with st.expander("Type de déchet ♻"):
     simul_dechets = "simulation_dechets.csv"
     df_d = pd.read_csv(simul_dechets, encoding="latin1", sep=",", decimal='.')
@@ -735,8 +749,8 @@ with st.expander("Résultats 📊"):
             ax.bar(poste, es, color='grey', edgecolor='orange')
             st.pyplot(fig)
 
-st.header("SCOPE3: Estimation du bilan CO2 de la construction de l'ouvrage 🏗️")
-st.caption("Données issues de la Base Carbone® de l'ADEME")
+st.header("SCOPE 3 - Estimation du bilan CO2 de la construction de l'ouvrage 🏗️")
+st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface")
 bdd = "data_FE_ouvrages.csv"
 df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
 df["Type d'ouvrage"] = df["Type d'ouvrage"].astype(str)
@@ -771,7 +785,7 @@ with st.expander("Résultat 📊"):
     st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
 
 st.header("Synthèse du bilan CO2 simulé 📋")
-st.write('un pdf à télécharger avec toute votre simulation')
+st.write('Un pdf à télécharger avec toute votre simulation')
 pdf = FPDF()
 pdf.add_page()
 pdf.set_font("Arial", "B", size=26)
