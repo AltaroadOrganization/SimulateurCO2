@@ -58,11 +58,11 @@ conso_moy = 30 / 100
 st.write("")
 st.write("Cet outil permet de simuler les émissions carbone de votre chantier en intégrant tous les SCOPE avec les quantités d'énergie, de déchets et de matériaux nécessaires à l'ouvrage.")
 st.write("")
-col1, col2=st.columns(2)
-col1.write("Pour plus d'information, téléchargez le Manifeste du simulateur bilan CO2 Altaroad")
+
+st.write("Pour plus d'information, téléchargez le Manifeste ici")
 with open('Guide_Simulateur.pdf', "rb") as pdf_file:
     PDFbyte = pdf_file.read()
-col2.download_button(label="le Manifeste",
+st.download_button(label="le Manifeste",
                    data=PDFbyte,
                    file_name="Guide_Simulateur.pdf",
                    mime='application/octet-stream')
@@ -931,7 +931,7 @@ header5 = '''
 st.write('---------------------------------------------------')
 st.markdown(header5, unsafe_allow_html=True)
 #st.header("Synthèse du bilan CO2 simulé 📋")
-st.write('Et hop! je reçois télécharge un pdf de synthèse de ma simulation')
+st.write('Et hop! je télécharge un pdf de synthèse de ma simulation')
 pdf = FPDF()
 pdf.add_page()
 pdf.set_font("Arial", "B", size=26)
