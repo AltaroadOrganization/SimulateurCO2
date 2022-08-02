@@ -658,7 +658,14 @@ with st.expander("Réductions"):
     ax.bar(actions, valeurs, color='grey', edgecolor='orange')
     st.pyplot(fig)
 
-st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
+header3 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Autres déchets 🗑️ & achats 🛒</p>
+</head>
+'''
+st.markdown(header3, unsafe_allow_html=True)
+#st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
 st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat de matières premières, équipements ou services")
 with st.expander("Type de déchet ♻"):
     simul_dechets = "simulation_dechets.csv"
@@ -768,7 +775,15 @@ with st.expander("Résultats 📊"):
             ax.bar(poste, es, color='grey', edgecolor='orange')
             st.pyplot(fig)
 
-st.header("SCOPE 3 : Construction de l'ouvrage 🏗️")
+
+header4 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Construction de l'ouvrage 🏗️</p>
+</head>
+'''
+st.markdown(header4, unsafe_allow_html=True)
+#st.header("SCOPE 3 : Construction de l'ouvrage 🏗️")
 st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface")
 bdd = "data_FE_ouvrages.csv"
 df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
