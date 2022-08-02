@@ -787,7 +787,7 @@ with st.expander("Réductions"):
     ax.set_ylabel('tCO2e')
     ax.set_xlabel('Actions de réduction')
     plt.xticks(rotation=45)
-    ax.bar(actions, valeurs, color='grey', edgecolor='orange')
+    ax.bar(actions, valeurs, color='orange', edgecolor='red')
     st.pyplot(fig)
 
 header3 = '''
