@@ -472,7 +472,7 @@ if action1:
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages (évacuation des terres) de :")
             st.subheader(str(pass_ISDI1 - new_pass_ISDI1) + " passages, " + str(
-                math.ceil(jours_evacuation - (new_pass_tot / pass_jour))) + " jours")
+                math.ceil((jours_evacuation - (new_pass_tot / pass_jour))-1)) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea1)) + " €")
@@ -543,7 +543,7 @@ if action2:
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages de :")
             st.subheader(str(pass_tot - new_pass_tot_Ea2) + " passages, " + str(
-                math.ceil(jours_evacuation - (new_pass_tot_Ea2 / pass_jour))) + " jours")
+                math.ceil((jours_evacuation - (new_pass_tot_Ea2 / pass_jour))-1)) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea2)) + " €")
@@ -602,7 +602,7 @@ if action3:
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages de :")
             st.subheader(str(pass_tot - new_pass_tot_Ea3) + " passages, " + str(
-                math.ceil(jours_evacuation - (new_pass_tot_Ea3 / pass_jour))) + " jours")
+                math.ceil((jours_evacuation - (new_pass_tot_Ea3 / pass_jour))-1)) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea3)) + " €")
@@ -703,7 +703,7 @@ if action5:
     with st.expander("Réduction du nombre de passages"):
         st.write("Cette action permet de réduire le nombre de passages de :")
         st.subheader(str(pass_tot - new_pass_tot_Ea5) + " passages, " + str(
-            math.ceil(jours_evacuation - (new_pass_tot_Ea5 / pass_jour))) + " jours")
+            math.ceil((jours_evacuation - (new_pass_tot_Ea5 / pass_jour))-1)) + " jours")
     with st.expander("Estimation du gain économique €"):
         st.write("Gain € carburant : ")
         st.subheader(str(math.ceil(eco_c_Ea5)) + " €")
@@ -800,9 +800,20 @@ st.write('---------------------------------------------------')
 st.markdown(header3, unsafe_allow_html=True)
 #st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
 st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat de matières premières, équipements ou services")
+
+if st.button('Rafraîchir Scope 3'):
+    scope3d = "scope3d_blank.csv"
+    df_S3d = pd.read_csv(scope3d, encoding="latin1", sep=",", decimal='.', index_col=0)
+    df_S3d[df_S3d.columns]=""
+    df_S3d.to_csv('scope3d_blank.csv')
+    scope3a = "scope3a_blank.csv"
+    df_S3a = pd.read_csv(scope3a, encoding="latin1", sep=",", decimal='.', index_col=0)
+    df_S3a[df_S3a.columns] = ""
+    df_S3a.to_csv('scope3a_blank.csv')
+
 with st.expander("Type de déchet ♻"):
-    simul_dechets = "simulation_dechets.csv"
-    df_d = pd.read_csv(simul_dechets, encoding="latin1", sep=",", decimal='.')
+    scope3d = "scope3d_blank.csv"
+    df_S3d = pd.read_csv(scope3d, encoding="latin1", sep=",", decimal='.')
     bdd_d = "Base_Carbone_FE_S3.csv"
     df = pd.read_csv(bdd_d, encoding="latin1", sep=";", decimal=',')
     df = df[df['Poste'] == "Poste 11"]
@@ -825,20 +836,20 @@ with st.expander("Type de déchet ♻"):
     INCERTITUDE = round(EMISSIONS * 0.01 * i, 2)
     POSTE = str(df['Nom base français'].unique())
     TYPE = str(df['Spécificité 1'].unique())
-    TRAIT = str(df['Spécificité 2'].unique())
+    #TRAIT = str(df['Spécificité 2'].unique())
     st.write(" ")
     st.write(" ")
     st.text("Emissions GES de la donnée 💨 : " + str(EMISSIONS) + " tCO2e " + "(+ ou - " + str(INCERTITUDE) + " tCO2e)")
     if st.button("Ajout du poste d'émissions ➕ "):
-        new = [POSTE, TYPE, TRAIT, str(DO), u, EMISSIONS]
-        with open(simul_dechets, 'a', newline='', encoding='latin1') as f_object:
+        new = ["Scope 3", POSTE, TYPE, str(DO), u, EMISSIONS]
+        with open(scope3d, 'a', newline='', encoding='latin1') as f_object:
             writer_object = writer(f_object)
             writer_object.writerow(new)
             f_object.close()
 
 with st.expander("Type d'achat 🛒"):
-    simul_achats = "simulation_achats.csv"
-    df_a = pd.read_csv(simul_achats, encoding="latin1", sep=",", decimal='.')
+    scope3a = "scope3a_blank.csv"
+    df_S3a = pd.read_csv(scope3a, encoding="latin1", sep=",", decimal='.')
     bdd_a = "Base_Carbone_FE_S3.csv"
     df = pd.read_csv(bdd_a, encoding="latin1", sep=";", decimal=',')
     df = df[df['Poste'] == "Poste 9"]
@@ -866,25 +877,34 @@ with st.expander("Type d'achat 🛒"):
     st.text("Emissions GES de la donnée 🛒 💨 : " + str(EMISSIONS_a) + " tCO2e " + "(+ ou - " + str(
         INCERTITUDE_a) + " tCO2e)")
     if st.button("Ajout du poste d'émissions ➕   "):
-        new = [POSTE_a, TRAIT_a, str(DO_a), u, EMISSIONS_a]
-        with open(simul_achats, 'a', newline='', encoding='latin1') as f_object:
+        new = ["Scope 3", POSTE_a, TRAIT_a, str(DO_a), u, EMISSIONS_a]
+        with open(scope3a, 'a', newline='', encoding='latin1') as f_object:
             writer_object = writer(f_object)
             writer_object.writerow(new)
             f_object.close()
 
 with st.expander("Résultats 📊"):
-    refresh2 = st.checkbox('Rafraîchir ')
+    df_S3d = pd.read_csv(scope3d, encoding="latin1", sep=",", decimal='.', index_col=0)
+    df_S3d = df_S3d.dropna()
+    df_S3a = pd.read_csv(scope3a, encoding="latin1", sep=",", decimal='.', index_col=0)
+    df_S3a = df_S3a.dropna()
+    df_S3 = pd.concat([df_S3d, df_S3a])
+    st.dataframe(df_S3)
+    tot_S3d = round(df_S3d["Emissions GES (en tCO2e)"].sum(), 1)
+    st.text("Total des émissions GES 🗑️ 💨 : " + str(tot_S3d) + " tCO2e")
+    tot_S3a = round(df_S3a["Emissions GES (en tCO2e)"].sum(), 1)
+    st.text("Total des émissions GES 🛒 💨 : " + str(tot_S3a) + " tCO2e")
+    tot_S3 = round(df_S3["Emissions GES (en tCO2e)"].sum(), 1)
+    st.text("Total des émissions GES du scope 3 🗑️️+🛒 💨 : " + str(tot_S3) + " tCO2e")
+    st.write(" ")
+
     col1, col2 = st.columns(2)
     with col1:
-        st.dataframe(df_d)
-        tot_d = round(df_d["Emissions GES (en tCO2e)"].sum(), 1)
-        st.text("Total des émissions GES 🗑️ 💨 : " + str(tot_d) + " tCO2e")
-        st.write(" ")
-        if tot_d > 0:
+        if tot_S3d > 0:
             fig = plt.figure()
             ax = fig.add_axes([0, 0, 1, 1])
-            poste = df_d["Déchets"]
-            es = df_d["Emissions GES (en tCO2e)"]
+            poste = df_S3d["Donnee"]
+            es = df_S3d["Emissions GES (en tCO2e)"]
             ax.set_title('Emissions GES liées au traitement des déchets')
             ax.set_ylabel('Emissions (tCO2e)')
             ax.set_xlabel('Déchets')
@@ -892,15 +912,11 @@ with st.expander("Résultats 📊"):
             ax.bar(poste, es, color='grey', edgecolor='orange')
             st.pyplot(fig)
     with col2:
-        st.dataframe(df_a)
-        tot_a = round(df_a["Emissions GES (en tCO2e)"].sum(), 1)
-        st.text("Total des émissions GES 🛒 💨 : " + str(tot_a) + " tCO2e")
-        st.write(" ")
-        if tot_a > 0:
+        if tot_S3a > 0:
             fig = plt.figure()
             ax = fig.add_axes([0, 0, 1, 1])
-            poste = df_a["Biens ou services"]
-            es = df_a["Emissions GES (en tCO2e)"]
+            poste = df_S3a["Donnee"]
+            es = df_S3a["Emissions GES (en tCO2e)"]
             ax.set_title('Emissions GES liées aux achats de biens ou services')
             ax.set_ylabel('Emissions (tCO2e)')
             ax.set_xlabel('Biens ou services')
