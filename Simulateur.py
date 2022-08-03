@@ -198,20 +198,19 @@ with st.expander("Résultats 📊"):
             ax = fig.add_axes([0, 0, 1, 1])
             poste = df_S1et2["Donnee"]
             es = df_S1et2["Emissions GES (en tCO2e)"]
-            st.write(es)
-            ax.set_title('Emissions GES du Scope 1 et 2')
-            ax.set_ylabel('Emissions (tCO2e)')
-            ax.set_xlabel('Donnée')
+            ax.set_title('Emissions GES du Scope 1 et 2', color = "#f37121", fontfamily = 'sen', size = 'xx-large' )
+            ax.set_ylabel('Emissions (tCO2e)', color =  "#67686b", fontfamily = 'sen', size = 'x-large')
+            ax.set_xlabel('Données', color =  "#67686b", fontfamily = 'sen', size = 'x-large' )
             plt.xticks(rotation=45)
-            ax.bar(poste, es, color='orange', edgecolor='red')
+            ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth=3)
             st.pyplot(fig)
     with col2:
         if tot_S1 > 0 or tot_S2 > 0:
             labels = '1', '2'
             sizes = [tot_S1, tot_S2]
             fig1, ax1 = plt.subplots()
-            ax1.set_title("Part des émissions GES par scope")
-            ax1.pie(sizes, autopct='%1.1f%%', startangle=90)
+            ax1.set_title("Part des émissions GES par scope", color = "#f37121", fontfamily = 'sen', size = 'xx-large')
+            ax1.pie(sizes, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b"])
             ax1.axis('equal')
             ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig1)
@@ -733,8 +732,8 @@ with st.expander("Déchets"):
             labels = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
             sizes = [ISDI1, ISDI2, ISDND, ISDD]
             fig1, ax1 = plt.subplots()
-            ax1.set_title("Part des déchets par 'type'")
-            ax1.pie(sizes, autopct='%1.1f%%', startangle=90)
+            ax1.set_title("Part des déchets par 'type'",color = "#f37121", fontfamily = 'sen', size = 'xx-large')
+            ax1.pie(sizes, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "white"])
             ax1.axis('equal')
             ax1.legend(labels, title="Déchets", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig1)
@@ -742,8 +741,8 @@ with st.expander("Déchets"):
             labels2 = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
             sizes2 = [E_ISDI1, E_ISDI2, E_ISDND, E_ISDD]
             fig2, ax2 = plt.subplots()
-            ax2.set_title("Emissions de CO2 par déchet : 'traitement'")
-            ax2.pie(sizes2, autopct='%1.1f%%', startangle=90)
+            ax2.set_title("Emissions de CO2 par déchet : 'traitement'",color = "#f37121", fontfamily = 'sen', size = 'xx-large')
+            ax2.pie(sizes2, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "white"])
             ax2.axis('equal')
             ax2.legend(labels2, title="Déchets", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig2)
@@ -751,8 +750,8 @@ with st.expander("Déchets"):
             labels3 = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
             sizes3 = [E_trans_ISDI1, E_trans_ISDI2, E_trans_ISDND, E_trans_ISDD]
             fig3, ax3 = plt.subplots()
-            ax3.set_title("Emissions de CO2e par déchet : 'transport'")
-            ax3.pie(sizes3, autopct='%1.1f%%', startangle=90)
+            ax3.set_title("Emissions de CO2e par déchet : 'transport'",color = "#f37121", fontfamily = 'sen', size = 'xx-large')
+            ax3.pie(sizes3, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "white"])
             ax3.axis('equal')
             ax3.legend(labels3, title="Déchets", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig3)
@@ -762,8 +761,8 @@ with st.expander("Déchets"):
             sizes4 = [E_ISDI1 + E_trans_ISDI1, E_ISDI2 + E_trans_ISDI2, E_ISDND + E_trans_ISDND,
                       E_ISDD + E_trans_ISDD]
             fig4, ax4 = plt.subplots()
-            ax4.set_title("Emissions CO2e globales par déchet")
-            ax4.pie(sizes4, autopct='%1.1f%%', startangle=90)
+            ax4.set_title("Emissions CO2e globales par déchet",color = "#f37121", fontfamily = 'sen', size = 'xx-large')
+            ax4.pie(sizes4, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "white"])
             ax4.axis('equal')
             ax4.legend(labels4, title="Déchets", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig4)
@@ -771,8 +770,8 @@ with st.expander("Déchets"):
             labels5 = 'Traitement', 'Transport'
             sizes5 = [E_valo, E_trans]
             fig5, ax5 = plt.subplots()
-            ax5.set_title("Part des émissions de CO2e Traitement/Transport")
-            ax5.pie(sizes5, autopct='%1.1f%%', startangle=90)
+            ax5.set_title("Part des émissions de CO2e Traitement/Transport",color = "#f37121", fontfamily = 'sen', size = 'xx-large')
+            ax5.pie(sizes5, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b"])
             ax5.axis('equal')
             ax5.legend(labels5, title="Déchets", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
             st.pyplot(fig5)
@@ -783,11 +782,11 @@ with st.expander("Réductions"):
     actions = ["+ 10% de terres réutilisées", "+ 15% de camions 5 essieux", "+ 2t de chargement moyen",
                "- 10km distance chantier/exutoire", "Toutes les actions"]
     valeurs = [Ea1, Ea2, Ea3, Ea4, Ea5]
-    ax.set_title('Diminution des émissions CO2e par action')
-    ax.set_ylabel('tCO2e')
-    ax.set_xlabel('Actions de réduction')
+    ax.set_title('Diminution des émissions CO2e par action',color = "#f37121", fontfamily = 'sen', size = 'xx-large')
+    ax.set_ylabel('tCO2e', color =  "#67686b", fontfamily = 'sen', size = 'x-large' )
+    ax.set_xlabel('Actions de réduction', color =  "#67686b", fontfamily = 'sen', size = 'x-large' )
     plt.xticks(rotation=45)
-    ax.bar(actions, valeurs, color='orange', edgecolor='red')
+    ax.bar(actions, valeurs, color="#f37121", edgecolor="#67686b")
     st.pyplot(fig)
 
 header3 = '''
@@ -905,11 +904,11 @@ with st.expander("Résultats 📊"):
             ax = fig.add_axes([0, 0, 1, 1])
             poste = df_S3d["Donnee"]
             es = df_S3d["Emissions GES (en tCO2e)"]
-            ax.set_title('Emissions GES liées au traitement des déchets')
-            ax.set_ylabel('Emissions (tCO2e)')
-            ax.set_xlabel('Déchets')
+            ax.set_title('Emissions GES liées au traitement des déchets', color = "#f37121", fontfamily = 'sen', size = 'xx-large')
+            ax.set_ylabel('Emissions (tCO2e)',color =  "#67686b", fontfamily = 'sen', size = 'x-large')
+            ax.set_xlabel('Déchets',color =  "#67686b", fontfamily = 'sen', size = 'x-large')
             plt.xticks(rotation=45)
-            ax.bar(poste, es, color='grey', edgecolor='orange')
+            ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth = 3)
             st.pyplot(fig)
     with col2:
         if tot_S3a > 0:
@@ -917,11 +916,11 @@ with st.expander("Résultats 📊"):
             ax = fig.add_axes([0, 0, 1, 1])
             poste = df_S3a["Donnee"]
             es = df_S3a["Emissions GES (en tCO2e)"]
-            ax.set_title('Emissions GES liées aux achats de biens ou services')
-            ax.set_ylabel('Emissions (tCO2e)')
-            ax.set_xlabel('Biens ou services')
+            ax.set_title('Emissions GES liées aux achats de biens ou services', color = "#f37121", fontfamily = 'sen', size = 'xx-large')
+            ax.set_ylabel('Emissions (tCO2e)',color =  "#67686b", fontfamily = 'sen', size = 'x-large')
+            ax.set_xlabel('Biens ou services',color =  "#67686b", fontfamily = 'sen', size = 'x-large')
             plt.xticks(rotation=45)
-            ax.bar(poste, es, color='grey', edgecolor='orange')
+            ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth = 3)
             st.pyplot(fig)
 
 
@@ -980,16 +979,36 @@ st.markdown(header5, unsafe_allow_html=True)
 st.write('Et hop! je télécharge un pdf de synthèse de ma simulation')
 pdf = FPDF()
 pdf.add_page()
-pdf.set_font("Arial", "B", size=26)
+pdf.set_font("Arial", "B", size=24)
 pdf.cell(200, 10, txt="Synthèse des résultats", ln=1, align='C')
 pdf.set_font("Arial", size=8)
-pdf.cell(200, 10, txt="Document ALTAROAD", ln=1, align='C')
+pdf.cell(200, 10, txt="Document généré par ALTAROAD", ln=1, align='C')
 pdf.set_font("Arial", size=8)
 pdf.cell(200, 10, txt=date_heure, ln=1, align='C')
-pdf.cell(200, 10, txt="", ln=2)
-pdf.set_font("Arial", "B", size=22)
-pdf.cell(200, 10, txt="Evacuation des déchets du site", ln=1, align='C')
 
+pdf.cell(200, 10, txt="", ln=2)
+pdf.set_font("Arial", "B", size=20)
+pdf.cell(200, 10, txt="Le chantier", ln=1, align='C')
+pdf.cell(200, 10, txt="", ln=2)
+pdf.set_font("Arial", size=12)
+pdf.cell(200, 10, txt="Ce document résume l'estimation des émissions carbone du chantier de " + type_chantier, ln=5)
+pdf.cell(200, 10, txt="situé à " + lieu_chantier, ln=5)
+pdf.cell(200, 10, txt="Taille du chantier : " + taille_chantier, ln=5)
+
+pdf.cell(200, 10, txt="", ln=2)
+pdf.set_font("Arial", "B", size=20)
+pdf.cell(200, 10, txt="SCOPE 1&2 : Consommations d'énergies", ln=1, align='C')
+pdf.cell(200, 10, txt="", ln=2)
+pdf.set_font("Arial", "B", size=14)
+pdf.cell(200, 10, txt="Estimations du bilan CO2 des Scopes 1 & 2", ln=4)
+pdf.set_font("Arial", size=12)
+pdf.cell(200, 10, txt="Scope 1 : " + str(tot_S1) + " tCO2e", ln=5)
+pdf.cell(200, 10, txt="Scope 2 : " + str(tot_S2) + " tCO2e", ln=5)
+pdf.cell(200, 10, txt="Scopes 1 & 2 : " + str(tot_S1et2) + " tCO2e", ln=5)
+pdf.cell(200, 10, txt="", ln=2)
+
+pdf.set_font("Arial", "B", size=20)
+pdf.cell(200, 10, txt="SCOPE 3 : Evacuation des déchets", ln=1, align='C')
 pdf.cell(200, 10, txt="", ln=2)
 pdf.set_font("Arial", "B", size=14)
 pdf.cell(200, 10, txt="Données d'entrée", ln=4)
@@ -1019,7 +1038,6 @@ pdf.cell(200, 10, txt="Distance totale à parcourir : " + str(int(dist_tot)) + "
 pdf.cell(200, 10, txt="Nombre total de passages : " + str(int(pass_tot)), ln=3)
 pdf.cell(200, 10, txt="Nombre de jours d'évacuation : " + str(int(jours_evacuation)), ln=3)
 
-pdf.add_page()
 pdf.set_font("Arial", "B", size=14)
 pdf.cell(200, 10, txt="Bilan CO2e", ln=4)
 pdf.set_font("Arial", size=12)
@@ -1073,8 +1091,17 @@ pdf.cell(200, 10, txt="Gain CO2e = " + str(int(Ea5)) + " tCO2e; Gain passages = 
     math.ceil(eco_c_Ea5 + eco_D_tot_Ea5)) + " euros", ln=3)
 
 pdf.add_page()
-pdf.set_font("Arial", "B", size=22)
-pdf.cell(200, 10, txt="Scopes 1 & 2 et autres postes du Scope 3", ln=1, align='C')
+pdf.set_font("Arial", "B", size=20)
+pdf.cell(200, 10, txt="SCOPE 3 : Autres déchets & achats", ln=1, align='C')
+pdf.cell(200, 10, txt="", ln=2)
+pdf.set_font("Arial", "B", size=14)
+pdf.cell(200, 10, txt="Estimations CO2 autres déchets et achats", ln=4)
+pdf.set_font("Arial", size=12)
+pdf.cell(200, 10, txt="Emissions GES 'autres déchets' : " + str(tot_S3d) + " tCO2e", ln=5)
+pdf.cell(200, 10, txt="Emissions GES 'achats' : " + str(tot_S3a) + " tCO2e", ln=5)
+pdf.cell(200, 10, txt="", ln=2)
+pdf.set_font("Arial", "B", size=20)
+pdf.cell(200, 10, txt="SCOPE 3 : Construction de l'ouvrage", ln=1, align='C')
 pdf.cell(200, 10, txt="", ln=2)
 pdf.set_font("Arial", "B", size=14)
 pdf.cell(200, 10, txt="Estimations du bilan CO2 de la construction de l'ouvrage", ln=4)
@@ -1085,36 +1112,20 @@ pdf.cell(200, 10,
          txt="émettrait environ " + str(int(EMISSIONS_ouv)) + " tCO2e (+ ou - " + str(
              int(INCERTITUDE_ouv)) + " tCO2e).",
          ln=3)
-
-pdf.cell(200, 10, txt="", ln=2)
-pdf.set_font("Arial", "B", size=14)
-pdf.cell(200, 10, txt="Estimations du bilan CO2 des Scopes 1 & 2", ln=4)
-pdf.set_font("Arial", size=12)
-pdf.cell(200, 10, txt="Scope 1 : " + str(tot_S1) + " tCO2e", ln=5)
-pdf.cell(200, 10, txt="Scope 2 : " + str(tot_S2) + " tCO2e", ln=5)
-pdf.cell(200, 10, txt="Scopes 1 & 2 : " + str(tot_S1et2) + " tCO2e", ln=5)
-
-pdf.cell(200, 10, txt="", ln=2)
-pdf.set_font("Arial", "B", size=14)
-pdf.cell(200, 10, txt="Estimations CO2 de l'évacuation et du traitement des autres déchets", ln=4)
-pdf.set_font("Arial", size=12)
-pdf.cell(200, 10, txt="Emissions GES : " + str(tot_d) + " tCO2e", ln=5)
 pdf.cell(200, 10, txt="", ln=2)
 
-pdf.set_font("Arial", "B", size=22)
+pdf.set_font("Arial", "B", size=20)
 pdf.cell(200, 10, txt="Estimation du bilan CO2 total", ln=1, align='C')
 pdf.cell(200, 10, txt="", ln=2)
 pdf.set_font("Arial", 'B', size=14)
 
-pdf.cell(200, 10, txt="Total des émissions GES : " + str(int(E_tot + EMISSIONS_ouv + tot_d + tot_S1et2)) + " tCO2e",
+pdf.cell(200, 10, txt="Total des émissions GES : " + str(int(E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) + " tCO2e",
          ln=5)
 pdf.set_font("Arial", size=12)
-pdf.cell(200, 10, txt="Scope 1 : " + str(int(tot_S1)) + " tCO2e, soit " + str(
-    (tot_S1 / (E_tot + EMISSIONS_ouv + tot_d + tot_S1et2)) * 100) + " %", ln=5)
-pdf.cell(200, 10, txt="Scope 2 : " + str(int(tot_S2)) + " tCO2e, soit " + str(
-    (tot_S2 / (E_tot + EMISSIONS_ouv + tot_d + tot_S1et2)) * 100) + " %", ln=5)
-pdf.cell(200, 10, txt="Scope 3 : " + str(int(E_tot + EMISSIONS_ouv + tot_d)) + " tCO2e, soit " + str(
-    round(((E_tot + EMISSIONS_ouv + tot_d) / (E_tot + EMISSIONS_ouv + tot_d + tot_S1et2)) * 100, 1)) + " %", ln=5)
+pdf.cell(200, 10, txt="Scope 1 : " + str(round(tot_S1, 1)) + " tCO2e, soit " + str(round((tot_S1 / (E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) * 100, 1)) + " %", ln=5)
+pdf.cell(200, 10, txt="Scope 2 : " + str(round(tot_S2, 1)) + " tCO2e, soit " + str(round((tot_S2 / (E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) * 100, 1)) + " %", ln=5)
+pdf.cell(200, 10, txt="Scope 3 : " + str(round(E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a, 1)) + " tCO2e, soit " + str(
+    round(((E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a) / (E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) * 100, 1)) + " %", ln=5)
 
 pdf = pdf.output("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf")
 with open("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf", "rb") as pdf_file:
