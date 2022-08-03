@@ -198,21 +198,26 @@ with st.expander("Résultats 📊"):
             ax = fig.add_axes([0, 0, 1, 1])
             poste = df_S1et2["Donnee"]
             es = df_S1et2["Emissions GES (en tCO2e)"]
-            ax.set_title('Emissions GES du Scope 1 et 2', color = "#f37121", fontfamily = 'sen', size = 'xx-large' )
-            ax.set_ylabel('Emissions (tCO2e)', color =  "#67686b", fontfamily = 'sen', size = 'x-large')
-            ax.set_xlabel('Données', color =  "#67686b", fontfamily = 'sen', size = 'x-large' )
+            ax.set_title('Emissions GES des Scopes 1 et 2', color = "#f37121", fontfamily = 'sen', size = 28 )
+            ax.set_ylabel('Emissions (tCO2e)', color =  "#67686b", fontfamily = 'sen', size = 18)
+            ax.set_xlabel('Données', color =  "#67686b", fontfamily = 'sen', size = 18 )
             plt.xticks(rotation=45)
-            ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth=3)
+            ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth=4)
             st.pyplot(fig)
     with col2:
         if tot_S1 > 0 or tot_S2 > 0:
             labels = '1', '2'
             sizes = [tot_S1, tot_S2]
             fig1, ax1 = plt.subplots()
-            ax1.set_title("Part des émissions GES par scope", color = "#f37121", fontfamily = 'sen', size = 'xx-large')
-            ax1.pie(sizes, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b"])
+            ax1.set_title("Part des émissions GES par scope", color = "#f37121", fontfamily = 'sen', size = 28)
+            ax1.pie(sizes, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b"])
             ax1.axis('equal')
-            ax1.legend(labels, title="Scope :", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+            legend = ax1.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
+            legend.set_title("Scope")
+            title = legend.get_title()
+            title.set_color("#67686b")
+            title.set_family("sen")
+            title.set_size(18)
             st.pyplot(fig1)
 
 
@@ -732,28 +737,43 @@ with st.expander("Déchets"):
             labels = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
             sizes = [ISDI1, ISDI2, ISDND, ISDD]
             fig1, ax1 = plt.subplots()
-            ax1.set_title("Part des déchets par 'type'",color = "#f37121", fontfamily = 'sen', size = 'xx-large')
-            ax1.pie(sizes, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "white"])
+            ax1.set_title("Part des déchets par 'type'",color = "#f37121", fontfamily = 'sen', size = 28)
+            ax1.pie(sizes, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#F3D617"])
             ax1.axis('equal')
-            ax1.legend(labels, title="Déchets", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+            legend = ax1.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
+            legend.set_title("Déchets")
+            title = legend.get_title()
+            title.set_color("#67686b")
+            title.set_family("sen")
+            title.set_size(18)
             st.pyplot(fig1)
         if E_ISDI1 > 0 or E_ISDI2 > 0 or E_ISDND > 0 or E_ISDD > 0:
             labels2 = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
             sizes2 = [E_ISDI1, E_ISDI2, E_ISDND, E_ISDD]
             fig2, ax2 = plt.subplots()
-            ax2.set_title("Emissions de CO2 par déchet : 'traitement'",color = "#f37121", fontfamily = 'sen', size = 'xx-large')
-            ax2.pie(sizes2, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "white"])
+            ax2.set_title("Emissions de CO2 par déchet : 'traitement'",color = "#f37121", fontfamily = 'sen', size = 28)
+            ax2.pie(sizes2, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#F3D617"])
             ax2.axis('equal')
-            ax2.legend(labels2, title="Déchets", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+            legend = ax2.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
+            legend.set_title("Déchets")
+            title = legend.get_title()
+            title.set_color("#67686b")
+            title.set_family("sen")
+            title.set_size(18)
             st.pyplot(fig2)
         if E_trans_ISDI1 > 0 or E_trans_ISDI2 > 0 or E_trans_ISDND > 0 or E_trans_ISDD > 0:
             labels3 = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
             sizes3 = [E_trans_ISDI1, E_trans_ISDI2, E_trans_ISDND, E_trans_ISDD]
             fig3, ax3 = plt.subplots()
-            ax3.set_title("Emissions de CO2e par déchet : 'transport'",color = "#f37121", fontfamily = 'sen', size = 'xx-large')
-            ax3.pie(sizes3, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "white"])
+            ax3.set_title("Emissions de CO2e par déchet : 'transport'",color = "#f37121", fontfamily = 'sen', size = 28)
+            ax3.pie(sizes3, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#F3D617"])
             ax3.axis('equal')
-            ax3.legend(labels3, title="Déchets", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+            legend = ax3.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
+            legend.set_title("Déchets")
+            title = legend.get_title()
+            title.set_color("#67686b")
+            title.set_family("sen")
+            title.set_size(18)
             st.pyplot(fig3)
     with col2:
         if E_ISDI1 + E_trans_ISDI1 > 0 or E_ISDI2 + E_trans_ISDI2 > 0 or E_ISDND + E_trans_ISDND > 0 or E_ISDD + E_trans_ISDD > 0:
@@ -761,19 +781,29 @@ with st.expander("Déchets"):
             sizes4 = [E_ISDI1 + E_trans_ISDI1, E_ISDI2 + E_trans_ISDI2, E_ISDND + E_trans_ISDND,
                       E_ISDD + E_trans_ISDD]
             fig4, ax4 = plt.subplots()
-            ax4.set_title("Emissions CO2e globales par déchet",color = "#f37121", fontfamily = 'sen', size = 'xx-large')
-            ax4.pie(sizes4, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "white"])
+            ax4.set_title("Emissions CO2e globales par déchet",color = "#f37121", fontfamily = 'sen', size = 28)
+            ax4.pie(sizes4, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#F3D617"])
             ax4.axis('equal')
-            ax4.legend(labels4, title="Déchets", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+            legend = ax4.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
+            legend.set_title("Déchets")
+            title = legend.get_title()
+            title.set_color("#67686b")
+            title.set_family("sen")
+            title.set_size(18)
             st.pyplot(fig4)
         if E_valo > 0 or E_trans > 0:
             labels5 = 'Traitement', 'Transport'
             sizes5 = [E_valo, E_trans]
             fig5, ax5 = plt.subplots()
-            ax5.set_title("Part des émissions de CO2e Traitement/Transport",color = "#f37121", fontfamily = 'sen', size = 'xx-large')
-            ax5.pie(sizes5, autopct='%1.1f%%', startangle=90, shadow=True, colors = ['#f37121', "#67686b"])
+            ax5.set_title("Part des émissions de CO2e Traitement/Transport",color = "#f37121", fontfamily = 'sen', size = 28)
+            ax5.pie(sizes5, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b"])
             ax5.axis('equal')
-            ax5.legend(labels5, title="Déchets", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+            legend = ax5.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
+            legend.set_title("Déchets")
+            title = legend.get_title()
+            title.set_color("#67686b")
+            title.set_family("sen")
+            title.set_size(18)
             st.pyplot(fig5)
 
 with st.expander("Réductions"):
@@ -782,9 +812,9 @@ with st.expander("Réductions"):
     actions = ["+ 10% de terres réutilisées", "+ 15% de camions 5 essieux", "+ 2t de chargement moyen",
                "- 10km distance chantier/exutoire", "Toutes les actions"]
     valeurs = [Ea1, Ea2, Ea3, Ea4, Ea5]
-    ax.set_title('Diminution des émissions CO2e par action',color = "#f37121", fontfamily = 'sen', size = 'xx-large')
-    ax.set_ylabel('tCO2e', color =  "#67686b", fontfamily = 'sen', size = 'x-large' )
-    ax.set_xlabel('Actions de réduction', color =  "#67686b", fontfamily = 'sen', size = 'x-large' )
+    ax.set_title('Diminution des émissions CO2e par action',color = "#f37121", fontfamily = 'sen', size = 28)
+    ax.set_ylabel('tCO2e', color =  "#67686b", fontfamily = 'sen', size = 18)
+    ax.set_xlabel('Actions de réduction', color =  "#67686b", fontfamily = 'sen', size = 18)
     plt.xticks(rotation=45)
     ax.bar(actions, valeurs, color="#f37121", edgecolor="#67686b")
     st.pyplot(fig)
@@ -904,9 +934,9 @@ with st.expander("Résultats 📊"):
             ax = fig.add_axes([0, 0, 1, 1])
             poste = df_S3d["Donnee"]
             es = df_S3d["Emissions GES (en tCO2e)"]
-            ax.set_title('Emissions GES liées au traitement des déchets', color = "#f37121", fontfamily = 'sen', size = 'xx-large')
-            ax.set_ylabel('Emissions (tCO2e)',color =  "#67686b", fontfamily = 'sen', size = 'x-large')
-            ax.set_xlabel('Déchets',color =  "#67686b", fontfamily = 'sen', size = 'x-large')
+            ax.set_title('Emissions GES liées au traitement des déchets', color = "#f37121", fontfamily = 'sen', size = 28)
+            ax.set_ylabel('Emissions (tCO2e)',color =  "#67686b", fontfamily = 'sen', size = 18)
+            ax.set_xlabel('Déchets',color =  "#67686b", fontfamily = 'sen', size = 18)
             plt.xticks(rotation=45)
             ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth = 3)
             st.pyplot(fig)
@@ -916,9 +946,9 @@ with st.expander("Résultats 📊"):
             ax = fig.add_axes([0, 0, 1, 1])
             poste = df_S3a["Donnee"]
             es = df_S3a["Emissions GES (en tCO2e)"]
-            ax.set_title('Emissions GES liées aux achats de biens ou services', color = "#f37121", fontfamily = 'sen', size = 'xx-large')
-            ax.set_ylabel('Emissions (tCO2e)',color =  "#67686b", fontfamily = 'sen', size = 'x-large')
-            ax.set_xlabel('Biens ou services',color =  "#67686b", fontfamily = 'sen', size = 'x-large')
+            ax.set_title('Emissions GES liées aux achats de biens ou services', color = "#f37121", fontfamily = 'sen', size = 28)
+            ax.set_ylabel('Emissions (tCO2e)',color =  "#67686b", fontfamily = 'sen', size = 18)
+            ax.set_xlabel('Biens ou services',color =  "#67686b", fontfamily = 'sen', size = 18)
             plt.xticks(rotation=45)
             ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth = 3)
             st.pyplot(fig)

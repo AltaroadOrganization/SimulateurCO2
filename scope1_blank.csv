@@ -1,2 +1,3 @@
 Scope,Donnee,Attribut,Quantite estimee,Unite,Emissions GES (en tCO2e)
-Scope1,['Combustible haute viscosité CHV'],['nan'],500.0,kg,1.82
+Scope1,,,,,
+Scope1,['Gazole non routier'],['GNR'],500.0,litre,1.58
