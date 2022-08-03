@@ -1,1 +1,2 @@
-Scope,Energie,Attribut,Quantite estimee,Unite,Emissions GES (en tCO2e)
+Scope,Donnee,Attribut,Quantite estimee,Unite,Emissions GES (en tCO2e)
+Scope2,['Electricité'],-,5000.0,kWh,0.28

@@ -196,7 +196,7 @@ with st.expander("Résultats 📊"):
         if tot_S1 > 0 or tot_S2 > 0:
             fig = plt.figure()
             ax = fig.add_axes([0, 0, 1, 1])
-            poste = df_S1et2["Energie"]
+            poste = df_S1et2["Donnee"]
             es = df_S1et2["Emissions GES (en tCO2e)"]
             st.write(es)
             ax.set_title('Emissions GES du Scope 1 et 2')
