@@ -1000,11 +1000,39 @@ with st.expander("Résultat 📊"):
 header5 = '''
 <head>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Synthèse du bilan CO2 simulé 📋</p>
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Bilan CO2 simulé 💨</p>
 </head>
 '''
 st.write('---------------------------------------------------')
 st.markdown(header5, unsafe_allow_html=True)
+with st.expander("Résultats 📊"):
+    E_S123 = EMISSIONS_ouv + E_tot + tot_S3 + tot_S1 + tot_S2
+    E_S3 = EMISSIONS_ouv + E_tot + tot_S3
+    st.write("Emissions GES, Scope 1 ⚡ : " + str(round(tot_S1, 1)) + " tCO2e ")
+    st.write("Emissions GES, Scope 2 🛢️ : " + str(round(tot_S2, 1)) + " tCO2e ")
+    st.write("Emissions GES, Scope 3 🗑️+🛒+🏗️ : " + str(round(E_S3, 1)) + " tCO2e ")
+    st.write("Emissions GES totales 💨 : " + str(round(E_S123, 1)) + " tCO2e ")
+    if E_S123 > 0:
+        fig = plt.figure()
+        ax = fig.add_axes([0, 0, 1, 1])
+        poste = ["1", "2", "3"]
+        es = [tot_S1, tot_S2, E_S3]
+        ax.set_title('Emissions GES par scope', color="#f37121", fontfamily='sen', size=28)
+        ax.set_ylabel('Emissions (tCO2e)', color="#67686b", fontfamily='sen', size=18)
+        ax.set_xlabel('Scopes', color="#67686b", fontfamily='sen', size=18)
+        plt.xticks(rotation=45)
+        ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth=3)
+        st.pyplot(fig)
+
+
+header6 = '''
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Synthèse du bilan CO2 simulé 📋</p>
+</head>
+'''
+st.write('---------------------------------------------------')
+st.markdown(header6, unsafe_allow_html=True)
 #st.header("Synthèse du bilan CO2 simulé 📋")
 st.write('Et hop! je télécharge un pdf de synthèse de ma simulation')
 pdf = FPDF()
@@ -1152,10 +1180,13 @@ pdf.set_font("Arial", 'B', size=14)
 pdf.cell(200, 10, txt="Total des émissions GES : " + str(int(E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) + " tCO2e",
          ln=5)
 pdf.set_font("Arial", size=12)
-pdf.cell(200, 10, txt="Scope 1 : " + str(round(tot_S1, 1)) + " tCO2e, soit " + str(round((tot_S1 / (E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) * 100, 1)) + " %", ln=5)
-pdf.cell(200, 10, txt="Scope 2 : " + str(round(tot_S2, 1)) + " tCO2e, soit " + str(round((tot_S2 / (E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) * 100, 1)) + " %", ln=5)
-pdf.cell(200, 10, txt="Scope 3 : " + str(round(E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a, 1)) + " tCO2e, soit " + str(
-    round(((E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a) / (E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) * 100, 1)) + " %", ln=5)
+if E_tot > 0:
+    pdf.cell(200, 10, txt="Scope 1 : " + str(round(tot_S1, 1)) + " tCO2e, soit " + str(round((tot_S1 / (E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) * 100, 1)) + " %", ln=5)
+    pdf.cell(200, 10, txt="Scope 2 : " + str(round(tot_S2, 1)) + " tCO2e, soit " + str(round((tot_S2 / (E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) * 100, 1)) + " %", ln=5)
+    pdf.cell(200, 10, txt="Scope 3 : " + str(round(E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a, 1)) + " tCO2e, soit " + str(
+        round(((E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a) / (E_tot + EMISSIONS_ouv + tot_S3d + tot_S3a + tot_S1et2)) * 100, 1)) + " %", ln=5)
+else:
+    pdf.cell(200, 10, txt="Aucune donnée saisie", ln=5)
 
 pdf = pdf.output("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf")
 with open("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf", "rb") as pdf_file:
