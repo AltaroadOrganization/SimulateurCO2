@@ -1015,6 +1015,8 @@ with st.expander("Résultats 📊"):
             ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth = 3)
             st.pyplot(fig)
 
+simulator_dict['Scope3d_tot_tCO2e']=tot_S3d
+simulator_dict['Scope3a_tot_tCO2e']=tot_S3a
 
 header4 = '''
 <head>
@@ -1043,7 +1045,6 @@ with st.expander("Données 👷"):
     df = df[df['Sous catégorie 1'].str.contains(str(sous_categorie1))]
     sous_categorie2 = st.selectbox('Choix de la sous-catégorie 2 :', df['Sous catégorie 2'].unique())
     df = df[df['Sous catégorie 2'].str.contains(str(sous_categorie2))]
-
     st.dataframe(df, 1000, 150)
     for u in df["Unité"]:
         u = u[7:].lower()
@@ -1058,6 +1059,13 @@ with st.expander("Données 👷"):
 with st.expander("Résultat 📊"):
     st.subheader("Emissions GES de l'ouvrage 💨 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
     st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
+
+simulator_dict['ouvrage'] = ouvrage
+simulator_dict['categorie_ouvrage'] = categorie
+simulator_dict['sous_categorie_ouvrage1'] = sous_categorie1
+simulator_dict['sous_categorie_ouvrage2'] = sous_categorie2
+simulator_dict['EMISSIONS_ouv'] = EMISSIONS_ouv
+simulator_dict['INCERTITUDE_ouv'] = INCERTITUDE_ouv
 
 header5 = '''
 <head>
@@ -1086,6 +1094,8 @@ with st.expander("Résultats 📊"):
         ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth=3)
         st.pyplot(fig)
 
+simulator_dict['E_S123'] = E_S123
+simulator_dict['E_S3'] = E_S3
 
 header6 = '''
 <head>
