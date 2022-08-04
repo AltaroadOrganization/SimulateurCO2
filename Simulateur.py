@@ -1444,6 +1444,6 @@ if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'util
 
 st.write("------------------------------------")
 st.caption("Les données sources utilisées sont référencées et disponible sur demande à Altaroad")
-st.caption("Développé par Altaroad - CONFIDENTIEL 2022 - https://www.altaroad.com")
+st.caption("SimulateurCO2 v0.0 - Développé par Altaroad - CONFIDENTIEL 2022 - https://www.altaroad.com")
 
 st.write(simulator_dict)
