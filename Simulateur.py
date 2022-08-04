@@ -49,13 +49,13 @@ def build_pdf_from_dict(the_input_dict):
     pdf.set_font("Arial", size=10)
     pdf.cell(200, 4, txt="Ce document résume l'estimation des émissions CO2", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="du chantier : " + the_input_dict["type_chantier"],ln=1)
+    pdf.cell(200, 4, txt="- Du chantier : " + the_input_dict["type_chantier"],ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="pour la construction de : " + the_input_dict["categorie_ouvrage"],ln=1)
+    pdf.cell(200, 4, txt="- Pour la construction de : " + the_input_dict["categorie_ouvrage"],ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Situé à : " + the_input_dict["lieu_chantier"], ln=1)
+    pdf.cell(200, 4, txt="- Situé à : " + the_input_dict["lieu_chantier"], ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="De taille : " + the_input_dict["taille_chantier"], ln=1)
+    pdf.cell(200, 4, txt="- De taille : " + the_input_dict["taille_chantier"], ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=16)
     pdf.cell(200, 10, txt="SCOPE 1&2 : Consommations d'énergies", ln=1)
@@ -64,11 +64,11 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="Estimations du bilan CO2 des Scopes 1 & 2", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Scope 1 : " + str(the_input_dict["tot_S1"]) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Scope 1 : " + str(the_input_dict["tot_S1"]) + " tCO2e", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Scope 2 : " + str(the_input_dict["tot_S2"]) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Scope 2 : " + str(the_input_dict["tot_S2"]) + " tCO2e", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Scopes 1 & 2 : " + str(the_input_dict["tot_S1et2"]) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Scopes 1 & 2 : " + str(the_input_dict["tot_S1et2"]) + " tCO2e", ln=1)
     pdf.cell(200, 4, txt="", ln=1)
     pdf.set_font("Arial", "B", size=16)
     pdf.cell(200, 10, txt="SCOPE 3 : Evacuation des déchets", ln=1)
@@ -77,69 +77,69 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="Données d'entrée", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Terres : " + str(the_input_dict["ISDI1"]) + " tonnes, chantier > exutoire : " + str(the_input_dict["dist_exuISDI1"]) + " km",
+    pdf.cell(200, 4, txt="- Terres : " + str(the_input_dict["ISDI1"]) + " tonnes, chantier > exutoire : " + str(the_input_dict["dist_exuISDI1"]) + " km",
              ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Gravats : " + str(the_input_dict["ISDI2"]) + " tonnes, chantier > exutoire : " + str(the_input_dict["dist_exuISDI2"]) + " km",
+    pdf.cell(200, 4, txt="- Gravats : " + str(the_input_dict["ISDI2"]) + " tonnes, chantier > exutoire : " + str(the_input_dict["dist_exuISDI2"]) + " km",
              ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Déchets non-dangereux : " + str(the_input_dict["ISDND"]) + " tonnes, chantier > exutoire : " + str(
+    pdf.cell(200, 4, txt="- Déchets non-dangereux : " + str(the_input_dict["ISDND"]) + " tonnes, chantier > exutoire : " + str(
         the_input_dict["dist_exuISDND"]) + " km", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4,
-             txt="Déchets dangereux : " + str(the_input_dict["ISDD"]) + " tonnes, chantier > exutoire : " + str(the_input_dict["dist_exuISDD"]) + " km",
+             txt="- Déchets dangereux : " + str(the_input_dict["ISDD"]) + " tonnes, chantier > exutoire : " + str(the_input_dict["dist_exuISDD"]) + " km",
              ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Nombre de passages quotidien : " + str(the_input_dict["pass_jour"]), ln=1)
+    pdf.cell(200, 4, txt="- Nombre de passages quotidien : " + str(the_input_dict["pass_jour"]), ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Taux de réemploi des terres : " + str(the_input_dict["repl_terres"]) + "%", ln=1)
+    pdf.cell(200, 4, txt="- Taux de réemploi des terres : " + str(the_input_dict["repl_terres"]) + "%", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Camions : 5 essieux articulés : " + str(the_input_dict["nb_cam5"]) + " soit " + str(int(the_input_dict["cam5"])) + " %", ln=1)
+    pdf.cell(200, 4, txt="- Camions 5 essieux articulés : " + str(the_input_dict["nb_cam5"]) + " soit " + str(int(the_input_dict["cam5"])) + " %", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Chargement moyen des 5 essieux : " + str(the_input_dict["load_cam5"]) + "T" , ln=1)
+    pdf.cell(200, 4, txt="- Chargement moyen des 5 essieux : " + str(the_input_dict["load_cam5"]) + "T" , ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="4 essieux porteurs : " + str(the_input_dict["nb_cam4"]) + " soit " + str(int(the_input_dict["cam4"])) + " %", ln=1)
+    pdf.cell(200, 4, txt="- Camions 4 essieux porteurs : " + str(the_input_dict["nb_cam4"]) + " soit " + str(int(the_input_dict["cam4"])) + " %", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="chargement moyen des 4 essieux : " + str(the_input_dict["load_cam4"])+"T", ln=1)
+    pdf.cell(200, 4, txt="- Chargement moyen des 4 essieux : " + str(the_input_dict["load_cam4"])+"T", ln=1)
     pdf.cell(10)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=10)
     pdf.cell(200, 4, txt="Données de sortie", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Distance totale à parcourir : " + str(int(the_input_dict["dist_tot"])) + " km", ln=1)
+    pdf.cell(200, 4, txt="- Distance totale à parcourir : " + str(int(the_input_dict["dist_tot"])) + " km", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Nombre total de passages : " + str(int(the_input_dict["pass_tot"])), ln=1)
+    pdf.cell(200, 4, txt="- Nombre total de passages : " + str(int(the_input_dict["pass_tot"])), ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Nombre de jours d'évacuation : " + str(int(the_input_dict["jours_evacuation"])), ln=1)
+    pdf.cell(200, 4, txt="- Nombre de jours d'évacuation : " + str(int(the_input_dict["jours_evacuation"])), ln=1)
     pdf.set_font("Arial", "B", size=10)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.cell(200, 4, txt="Bilan CO2e", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Emissions CO2e totales estimées : " + str(int(the_input_dict["E_tot"])) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Emissions CO2e totales estimées : " + str(int(the_input_dict["E_tot"])) + " tCO2e", ln=1)
     if the_input_dict["E_tot"] > 0:
-        pdf.cell(10)
-        pdf.cell(200, 4, txt="Emissions CO2e totales 'Transport' : " + str(int(the_input_dict["E_trans"])) + " tCO2e, soit " + str(
+        pdf.cell(20)
+        pdf.cell(200, 4, txt="- Emissions CO2e totales 'Transport' : " + str(int(the_input_dict["E_trans"])) + " tCO2e, soit " + str(
             int((the_input_dict["E_trans"] / the_input_dict["E_tot"]) * 100)) + " %", ln=1)
-        pdf.cell(10)
-        pdf.cell(200, 4, txt="Emissions CO2e totales 'Valorisation' : " + str(int(the_input_dict["E_valo"])) + " tCO2e, soit " + str(
+        pdf.cell(20)
+        pdf.cell(200, 4, txt="- Emissions CO2e totales 'Valorisation' : " + str(int(the_input_dict["E_valo"])) + " tCO2e, soit " + str(
             int((the_input_dict["E_valo"] / the_input_dict["E_tot"]) * 100)) + " %", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Emissions CO2e 'Terres' : "  "Transport = " + str(
+    pdf.cell(200, 4, txt="- Emissions CO2e 'Terres' : "  "Transport = " + str(
         int(the_input_dict["E_trans_ISDI1"])) + " tCO2e; Valorisation = " + str(int(the_input_dict["E_ISDI1"])) + " tCO2e; Total = " + str(
         int(the_input_dict["E_ISDI1"] + the_input_dict["E_trans_ISDI1"])) + " tCO2e", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Emissions CO2e 'Gravats' : "  "Transport = " + str(
+    pdf.cell(200, 4, txt="- Emissions CO2e 'Gravats' : "  "Transport = " + str(
         int(the_input_dict["E_trans_ISDI2"])) + " tCO2e; Valorisation = " + str(int(the_input_dict["E_ISDI2"])) + " tCO2e; Total = " + str(
         int(the_input_dict["E_ISDI2"] + the_input_dict["E_trans_ISDI2"])) + " tCO2e", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4,
-             txt="Emissions CO2e 'DND' : "  "Transport = " + str(int(the_input_dict["E_trans_ISDND"])) + " tCO2e; Valorisation = " + str(
+             txt="- Emissions CO2e 'DND' : "  "Transport = " + str(int(the_input_dict["E_trans_ISDND"])) + " tCO2e; Valorisation = " + str(
                  int(the_input_dict["E_ISDND"])) + " tCO2e; Total = " + str(int(the_input_dict["E_ISDND"] + the_input_dict["E_trans_ISDND"])) + " tCO2e", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4,
-             txt="Emissions CO2e 'DD' : "  "Transport = " + str(int(the_input_dict["E_trans_ISDD"])) + " tCO2e; Valorisation = " + str(
+             txt="- Emissions CO2e 'DD' : "  "Transport = " + str(int(the_input_dict["E_trans_ISDD"])) + " tCO2e; Valorisation = " + str(
                  int(the_input_dict["E_ISDD"])) + " tCO2e; Total = " + str(int(the_input_dict["E_ISDD"] + the_input_dict["E_trans_ISDD"])) + " tCO2e", ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=10)
@@ -148,52 +148,52 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(10)
     pdf.cell(200, 4, txt="+ 10% de réutilisation des terres sur site : ", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain CO2e = " + str(int(the_input_dict["Ea1"])) + " tCO2e;", ln=1)
+    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea1"])) + " tCO2e;", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain passages = " + str(
+    pdf.cell(200, 4, txt="- Gain passages = " + str(
         int(the_input_dict["pass_ISDI1"] - the_input_dict["new_pass_ISDI1"])) + " soit " + str(
         math.ceil(the_input_dict["jours_evacuation"] - (the_input_dict["new_pass_tot"] / the_input_dict["pass_jour"]))) + " jours;", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain économique = " + str(
+    pdf.cell(200, 4, txt="- Gain économique = " + str(
         math.ceil(the_input_dict["eco_c_Ea1"] + the_input_dict["eco_ISDI"])) + " euros", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="+ 15% de camions 5 essieux articulés : ", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain CO2e = " + str(int(the_input_dict["Ea2"])) + " tCO2e;", ln=1)
+    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea2"])) + " tCO2e;", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain passages = " + str(
+    pdf.cell(200, 4, txt="- Gain passages = " + str(
         int(the_input_dict["pass_tot"] - the_input_dict["new_pass_tot_Ea2"])) + " soit " + str(
         math.ceil(the_input_dict["jours_evacuation"] - (the_input_dict["new_pass_tot_Ea2"] / the_input_dict["pass_jour"]))) + " jours;", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain économique = " + str(
+    pdf.cell(200, 4, txt="- Gain économique = " + str(
         math.ceil(the_input_dict["eco_c_Ea2"] + the_input_dict["eco_D_tot_Ea2"])) + " euros", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="+ 2 tonnes de chargement moyen en + : ", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain CO2e = " + str(int(the_input_dict["Ea3"])) + " tCO2e;", ln=1)
+    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea3"])) + " tCO2e;", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain passages = " + str(
+    pdf.cell(200, 4, txt="- Gain passages = " + str(
         int(the_input_dict["pass_tot"] - the_input_dict["new_pass_tot_Ea3"])) + " soit " + str(
         math.ceil(the_input_dict["jours_evacuation"] - (the_input_dict["new_pass_tot_Ea3"] / the_input_dict["pass_jour"]))) + " jours;", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain économique = " + str(
+    pdf.cell(200, 4, txt="- Gain économique = " + str(
         math.ceil(the_input_dict["eco_c_Ea3"] + the_input_dict["eco_D_tot_Ea3"])) + " euros", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="- 10 km de distance à l'exutoire : ", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4,txt="Gain CO2e = " + str(int(the_input_dict["Ea4"])) + " tCO2e;",ln=1)
+    pdf.cell(200, 4,txt="- Gain CO2e = " + str(int(the_input_dict["Ea4"])) + " tCO2e;",ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4,txt="Gain économique = " + str(math.ceil(the_input_dict["eco_c_Ea4"])) + " euros",ln=1)
+    pdf.cell(200, 4,txt="- Gain économique = " + str(math.ceil(the_input_dict["eco_c_Ea4"])) + " euros",ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="Toutes les actions de réductions combinées : ", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain CO2e = " + str(int(the_input_dict["Ea5"])) + " tCO2e;", ln=1)
+    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea5"])) + " tCO2e;", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain passages = " + str(
+    pdf.cell(200, 4, txt="- Gain passages = " + str(
         int(the_input_dict["pass_tot"] - the_input_dict["new_pass_tot_Ea5"])) + " soit " + str(
         math.ceil(the_input_dict["jours_evacuation"] - (the_input_dict["new_pass_tot_Ea5"] / the_input_dict["pass_jour"]))) + " jours;", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="Gain économique = " + str(
+    pdf.cell(200, 4, txt="- Gain économique = " + str(
         math.ceil(the_input_dict["eco_c_Ea5"] + the_input_dict["eco_D_tot_Ea5"])) + " euros", ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=16)
@@ -203,9 +203,9 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="Estimations CO2 autres déchets et achats", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Emissions GES 'autres déchets' : " + str(the_input_dict["tot_S3d"]) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Emissions GES 'autres déchets' : " + str(the_input_dict["tot_S3d"]) + " tCO2e", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="Emissions GES 'achats' : " + str(the_input_dict["tot_S3a"]) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Emissions GES 'achats' : " + str(the_input_dict["tot_S3a"]) + " tCO2e", ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=16)
     pdf.cell(200, 10, txt="SCOPE 3 : Construction de l'ouvrage", ln=1)
@@ -232,14 +232,14 @@ def build_pdf_from_dict(the_input_dict):
     pdf.set_font("Arial", size=10)
     if E_tot > 0:
         pdf.cell(10)
-        pdf.cell(200, 4, txt="Scope 1 : " + str(round(the_input_dict["tot_S1"], 1)) + " tCO2e, soit " + str(
+        pdf.cell(200, 4, txt="- Scope 1 : " + str(round(the_input_dict["tot_S1"], 1)) + " tCO2e, soit " + str(
             round((the_input_dict["tot_S1"] / (the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) * 100, 1)) + " %", ln=1)
         pdf.cell(10)
-        pdf.cell(200, 4, txt="Scope 2 : " + str(round(the_input_dict["tot_S2"], 1)) + " tCO2e, soit " + str(
+        pdf.cell(200, 4, txt="- Scope 2 : " + str(round(the_input_dict["tot_S2"], 1)) + " tCO2e, soit " + str(
             round((the_input_dict["tot_S2"] / (the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) * 100, 1)) + " %", ln=1)
         pdf.cell(10)
         pdf.cell(200, 4,
-                 txt="Scope 3 : " + str(round(the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"], 1)) + " tCO2e, soit " + str(
+                 txt="- Scope 3 : " + str(round(the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"], 1)) + " tCO2e, soit " + str(
                      round(((the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"]) / (
                                  the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) * 100, 1)) + " %", ln=1)
     else:
