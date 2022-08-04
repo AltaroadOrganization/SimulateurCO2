@@ -1267,12 +1267,15 @@ with open("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf", "rb") as pdf_file:
 if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'utilisation de ce simulateur et j'indique mon email. "
                "Votre email ne sera pas diffusé en dehors de nos services."):
     email_user=st.text_input('indiquez votre email valide ici', value="", max_chars=None, key=None, type="default")
+    simulator_dict['email_user'] = email_user
     if email_user!='':
         if solve(email_user):
             st.download_button(label="Télécharger",
                                data=PDFbyte,
                                file_name="ALTAROAD_Simulateur_CO2_SYNTHESE.pdf",
                                mime='application/octet-stream')
+            #ici on envoie le dictionnaire sur un bucket S3 privé avec une clé de user qui a accès qu'à ce bucket
+            #code à faire
         else:
             st.write('{} est malheureusement une adresse email invalide'.format(email_user))
 
