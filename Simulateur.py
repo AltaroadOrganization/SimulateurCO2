@@ -18,6 +18,18 @@ def solve(s):
       return True
    return False
 
+#function to give a random equivalent to a Carbon gain
+def random_CO2_equivalent(Ea1):
+    v = random.choice([str(math.ceil(Ea1 * 138)) + " repas avec du boeuf 🥩",
+                       str(math.ceil(Ea1 * 5181)) + " km en voiture (" + str(
+                           math.ceil(Ea1 * 8)) + " trajets Paris-Marseille) 🚗",
+                       str(math.ceil(Ea1)) + " aller-retour Paris-NYC ✈️",
+                       str(math.ceil(Ea1 * 54)) + " jours de chauffage (gaz) 🌡️",
+                       str(math.ceil(Ea1 * 61)) + " smartphones 📱",
+                       str(math.ceil(Ea1 * 2208)) + " litres d'eau en bouteille 🧴",
+                       str(math.ceil(Ea1 * 43)) + " jeans en coton 👖"])
+    return v
+
 #all the inputs and outputs are saved in a dict
 simulator_dict={}
 
@@ -484,7 +496,7 @@ with st.expander("Passages :"):
     else:
         jours_evacuation = 0
         simulator_dict['jours_evacuation'] = jours_evacuation
-        st.subheader(jours_evacuation)
+    st.subheader(jours_evacuation)
     st.write("Nombre de passages pour l'évacuation des terres :")
     st.subheader(pass_ISDI1)
     st.write("Nombre de passages pour l'évacuation des gravats :")
@@ -519,14 +531,7 @@ eco_c_Ea1 = (conso_tot_Ea1 - new_conso_tot_Ea1) * prix_c
 eco_ISDI = (pass_ISDI1 - new_pass_ISDI1) * prix_ISDI1
 if action1:
     if valo_terres >= 10:
-        v = random.choice([str(math.ceil(Ea1 * 138)) + " repas avec du boeuf 🥩",
-                           str(math.ceil(Ea1 * 5181)) + " km en voiture (" + str(
-                               math.ceil(Ea1 * 8)) + " trajets Paris-Marseille) 🚗",
-                           str(math.ceil(Ea1)) + " aller-retour Paris-NYC ✈️",
-                           str(math.ceil(Ea1 * 54)) + " jours de chauffage (gaz) 🌡️",
-                           str(math.ceil(Ea1 * 61)) + " smartphones 📱",
-                           str(math.ceil(Ea1 * 2208)) + " litres d'eau en bouteille 🧴",
-                           str(math.ceil(Ea1 * 43)) + " jeans en coton 👖"])
+        v = random_CO2_equivalent(Ea1)
         with st.expander("Réduction des émissions carbone"):
             if E_tot > 0:
                 st.write("Cette action permet de réduire les émissions totales de :")
@@ -590,14 +595,7 @@ eco_ISDD_Ea2 = (pass_ISDD - new_pass_ISDD_Ea2) * prix_ISDD
 eco_D_tot_Ea2 = eco_ISDI1_Ea2 + eco_ISDI2_Ea2 + eco_ISDND_Ea2 + eco_ISDD_Ea2
 if action2:
     if cam5 <= 85:
-        w = random.choice([str(math.ceil(Ea2 * 138)) + " repas avec du boeuf 🥩",
-                           str(math.ceil(Ea2 * 5181)) + " km en voiture (" + str(
-                               math.ceil(Ea2 * 8)) + " trajets Paris-Marseille) 🚗",
-                           str(math.ceil(Ea2)) + " aller-retour Paris-NYC ✈️",
-                           str(math.ceil(Ea2 * 54)) + " jours de chauffage (gaz) 🌡️",
-                           str(math.ceil(Ea2 * 61)) + " smartphones 📱",
-                           str(math.ceil(Ea2 * 2208)) + " litres d'eau en bouteille 🧴",
-                           str(math.ceil(Ea2 * 43)) + " jeans en coton 👖"])
+        w = random_CO2_equivalent(Ea2)
         with st.expander("Réduction des émissions carbone"):
             if E_tot > 0:
                 st.write("Cette action permet de réduire les émissions totales de :")
