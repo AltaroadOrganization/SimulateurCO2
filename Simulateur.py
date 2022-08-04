@@ -118,12 +118,12 @@ def build_pdf_from_dict(the_input_dict):
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
     pdf.cell(200, 4, txt="Emissions CO2e totales estimées : " + str(int(the_input_dict["E_tot"])) + " tCO2e", ln=1)
-    if E_tot > 0:
+    if the_input_dict["E_tot"] > 0:
         pdf.cell(10)
         pdf.cell(200, 4, txt="Emissions CO2e totales 'Transport' : " + str(int(the_input_dict["E_trans"])) + " tCO2e, soit " + str(
             int((the_input_dict["E_trans"] / the_input_dict["E_tot"]) * 100)) + " %", ln=1)
         pdf.cell(10)
-        pdf.cell(200, 10, txt="Emissions CO2e totales 'Valorisation' : " + str(int(the_input_dict["E_valo"])) + " tCO2e, soit " + str(
+        pdf.cell(200, 4, txt="Emissions CO2e totales 'Valorisation' : " + str(int(the_input_dict["E_valo"])) + " tCO2e, soit " + str(
             int((the_input_dict["E_valo"] / the_input_dict["E_tot"]) * 100)) + " %", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="Emissions CO2e 'Terres' : "  "Transport = " + str(
