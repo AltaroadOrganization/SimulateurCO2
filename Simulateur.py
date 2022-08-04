@@ -529,6 +529,11 @@ conso_tot_Ea1 = conso_moy * pass_tot * dist_exuISDI1
 new_conso_tot_Ea1 = conso_moy * new_pass_tot * dist_exuISDI1
 eco_c_Ea1 = (conso_tot_Ea1 - new_conso_tot_Ea1) * prix_c
 eco_ISDI = (pass_ISDI1 - new_pass_ISDI1) * prix_ISDI1
+
+simulator_dict['Ea1'] = Ea1
+simulator_dict['eco_c_Ea1'] = math.ceil(eco_c_Ea1)
+simulator_dict['eco_ISDI'] = math.ceil(eco_ISDI)
+
 if action1:
     if valo_terres >= 10:
         v = random_CO2_equivalent(Ea1)
@@ -551,7 +556,6 @@ if action1:
             st.subheader(str(math.ceil(eco_ISDI)) + " €")
     else:
         st.error("Le taux de réutilisation des terres sur site est déjà supérieur à 90%")
-
 
 # Privilégier les camions 5 essieux (de 70% à 80%)
 action2 = st.checkbox("Utiliser 15% de camions 5 essieux en plus")
@@ -593,6 +597,11 @@ eco_ISDI2_Ea2 = (pass_ISDI2 - new_pass_ISDI2_Ea2) * prix_ISDI2
 eco_ISDND_Ea2 = (pass_ISDND - new_pass_ISDND_Ea2) * prix_ISDND
 eco_ISDD_Ea2 = (pass_ISDD - new_pass_ISDD_Ea2) * prix_ISDD
 eco_D_tot_Ea2 = eco_ISDI1_Ea2 + eco_ISDI2_Ea2 + eco_ISDND_Ea2 + eco_ISDD_Ea2
+
+simulator_dict['Ea2'] = Ea2
+simulator_dict['eco_c_Ea2'] = math.ceil(eco_c_Ea2)
+simulator_dict['eco_D_tot_Ea2'] = math.ceil(eco_D_tot_Ea2)
+
 if action2:
     if cam5 <= 85:
         w = random_CO2_equivalent(Ea2)
@@ -645,6 +654,11 @@ eco_ISDI2_Ea3 = (pass_ISDI2 - new_pass_ISDI2_Ea3) * prix_ISDI2
 eco_ISDND_Ea3 = (pass_ISDND - new_pass_ISDND_Ea3) * prix_ISDND
 eco_ISDD_Ea3 = (pass_ISDD - new_pass_ISDD_Ea3) * prix_ISDD
 eco_D_tot_Ea3 = eco_ISDI1_Ea3 + eco_ISDI2_Ea3 + eco_ISDND_Ea3 + eco_ISDD_Ea3
+
+simulator_dict['Ea3'] = Ea3
+simulator_dict['eco_c_Ea3'] = math.ceil(eco_c_Ea3)
+simulator_dict['eco_D_tot_Ea3'] = math.ceil(eco_D_tot_Ea3)
+
 if action3:
     if load_cam4 <= 18 and load_cam5 <= 27:
         x = random_CO2_equivalent(Ea3)
@@ -680,11 +694,15 @@ new_E_trans_Ea4 = FE_trans * (
         + new_dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND)
         + new_dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD))
 Ea4 = E_trans - new_E_trans_Ea4
-conso_tot__Ea4 = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
+conso_tot_Ea4 = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
         conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
 new_conso_tot_Ea4 = (conso_moy * pass_ISDI2 * new_dist_exuISDI2) + (conso_moy * pass_ISDI1 * new_dist_exuISDI1) + (
         conso_moy * pass_ISDND * new_dist_exuISDND) + (conso_moy * pass_ISDD * new_dist_exuISDD)
 eco_c_Ea4 = (conso_tot - new_conso_tot_Ea4) * prix_c
+
+simulator_dict['Ea4'] = Ea4
+simulator_dict['eco_c_Ea4'] = math.ceil(eco_c_Ea4)
+
 if action4:
     if dist_exuISDI1 >= 10 and dist_exuISDI2 >= 10 and dist_exuISDND >= 10 and dist_exuISDD >= 10:
         y = random_CO2_equivalent(Ea4)
@@ -704,7 +722,7 @@ if action4:
 
 # Toutes les actions combinées
 action5 = st.checkbox("Combiner toutes les actions de réduction")
-new_pass_ISDI1_Ea5 = round((new_ISDI1 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100)),1)
+new_pass_ISDI1_Ea5 = round((new_ISDI1 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
 new_pass_ISDI2_Ea5 = round((ISDI2 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
 new_pass_ISDND_Ea5 = round((ISDND / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
 new_pass_ISDD_Ea5 = round((ISDD / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
@@ -733,6 +751,11 @@ eco_ISDI2_Ea5 = (pass_ISDI2 - new_pass_ISDI2_Ea5) * prix_ISDI2
 eco_ISDND_Ea5 = (pass_ISDND - new_pass_ISDND_Ea5) * prix_ISDND
 eco_ISDD_Ea5 = (pass_ISDD - new_pass_ISDD_Ea5) * prix_ISDD
 eco_D_tot_Ea5 = eco_ISDI1_Ea5 + eco_ISDI2_Ea5 + eco_ISDND_Ea5 + eco_ISDD_Ea5
+
+simulator_dict['Ea5'] = Ea5
+simulator_dict['eco_c_Ea5'] = math.ceil(eco_c_Ea5)
+simulator_dict['eco_D_tot_Ea5'] = math.ceil(eco_D_tot_Ea5)
+
 if action5:
     z = random_CO2_equivalent(Ea5)
     with st.expander("Réduction des émissions carbone"):
@@ -1228,6 +1251,7 @@ else:
     pdf.cell(200, 10, txt="Aucune donnée saisie", ln=5)
 
 pdf = pdf.output("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf")
+
 with open("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf", "rb") as pdf_file:
     PDFbyte = pdf_file.read()
 if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'utilisation de ce simulateur et j'indique mon email. "
