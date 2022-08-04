@@ -633,11 +633,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
     with col1:
         st.subheader("Terres")
         st.write("CO2e traitement (en tCO2e):")
-        st.subheader(round(E_ISDI1),1)
+        st.subheader(round(E_ISDI1,1))
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(round(E_trans_ISDI1),1)
+        st.subheader(round(E_trans_ISDI1,1))
         st.write("CO2e total (en tCO2e):")
-        st.subheader(round(E_ISDI1 + E_trans_ISDI1),1)
+        st.subheader(round(E_ISDI1 + E_trans_ISDI1,1))
         if ISDI1 > 0:
             st.write("kgCO2e/tonne :")
             I_ISDI1_kgCO2T=round(((E_ISDI1 + E_trans_ISDI1) / ISDI1) * 1000,1)
@@ -648,11 +648,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
     with col2:
         st.subheader("Gravats")
         st.write("CO2e traitement (en tCO2e):")
-        st.subheader(round(E_ISDI2),1)
+        st.subheader(round(E_ISDI2,1))
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(round(E_trans_ISDI2),1)
+        st.subheader(round(E_trans_ISDI2,1))
         st.write("CO2e total (en tCO2e):")
-        st.subheader(round(E_ISDI2 + E_trans_ISDI2),1)
+        st.subheader(round(E_ISDI2 + E_trans_ISDI2,1))
         if ISDI2 > 0:
             st.write("kgCO2e/tonne :")
             I_ISDI2_kgCO2T = round(((E_ISDI2 + E_trans_ISDI2) / ISDI2) * 1000, 1)
@@ -663,11 +663,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
     with col3:
         st.subheader("DND")
         st.write("CO2e traitement (en tCO2e):")
-        st.subheader(round(E_ISDND),1)
+        st.subheader(round(E_ISDND,1))
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(round(E_trans_ISDND),1)
+        st.subheader(round(E_trans_ISDND,1))
         st.write("CO2e total (en tCO2e):")
-        st.subheader(round(E_ISDND + E_trans_ISDND),1)
+        st.subheader(round(E_ISDND + E_trans_ISDND,1))
         if ISDND > 0:
             st.write("kgCO2e/tonne :")
             I_ISDND_kgCO2T = round(((E_ISDND + E_trans_ISDND) / ISDND) * 1000, 1)
@@ -678,11 +678,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
     with col4:
         st.subheader("DD")
         st.write("CO2e traitement (en tCO2e):")
-        st.subheader(round(E_ISDD),1)
+        st.subheader(round(E_ISDD,1))
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(round(E_trans_ISDD),1)
+        st.subheader(round(E_trans_ISDD,1))
         st.write("CO2e total (en tCO2e):")
-        st.subheader(round(E_ISDD + E_trans_ISDD),1)
+        st.subheader(round(E_ISDD + E_trans_ISDD,1))
         if ISDD > 0:
             st.write("kgCO2e/tonne :")
             I_ISDD_kgCO2T = round(((E_ISDD + E_trans_ISDD) / ISDD) * 1000, 1)
@@ -783,7 +783,7 @@ if action1:
                 st.write("Merci d'entrer au minimum une quantité de déchets")
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages (évacuation des terres) de :")
-            st.subheader(str(pass_ISDI1 - new_pass_ISDI1) + " passages, " + str(
+            st.subheader(str(int(pass_ISDI1 - new_pass_ISDI1)) + " passages, " + str(
                 round(((jours_evacuation - (new_pass_tot / pass_jour))-1),1)) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
@@ -857,7 +857,7 @@ if action2:
                 st.write("Merci d'entrer au minimum une quantité de déchets")
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages de :")
-            st.subheader(str(pass_tot - new_pass_tot_Ea2) + " passages, " + str(
+            st.subheader(str(int(pass_tot - new_pass_tot_Ea2)) + " passages, " + str(
                 round(((jours_evacuation - (new_pass_tot_Ea2 / pass_jour))-1),1)) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
@@ -920,7 +920,7 @@ if action3:
                 st.write("Merci d'entrer au minimum une quantité de déchets")
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages de :")
-            st.subheader(str(pass_tot - new_pass_tot_Ea3) + " passages, " + str(
+            st.subheader(str(int(pass_tot - new_pass_tot_Ea3)) + " passages, " + str(
                 round(((jours_evacuation - (new_pass_tot_Ea3 / pass_jour))-1),1)) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
@@ -933,9 +933,9 @@ if action3:
 # Choix d'un exutoire 10 km plus proche
 action4 = st.checkbox("Choisir un exutoire 10 km plus proche")
 new_dist_exuISDI1 = dist_exuISDI1 - 10
-new_dist_exuISDI2 = dist_exuISDI1 - 10
-new_dist_exuISDND = dist_exuISDI1 - 10
-new_dist_exuISDD = dist_exuISDI1 - 10
+new_dist_exuISDI2 = dist_exuISDI2 - 10
+new_dist_exuISDND = dist_exuISDND - 10
+new_dist_exuISDD = dist_exuISDD - 10
 new_E_trans_Ea4 = FE_trans * (
         new_dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
         + new_dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2)
@@ -1022,7 +1022,7 @@ if action5:
             st.write("Merci d'entrer au minimum une quantité de déchets")
     with st.expander("Réduction du nombre de passages"):
         st.write("Cette action permet de réduire le nombre de passages de :")
-        st.subheader(str(pass_tot - new_pass_tot_Ea5) + " passages, " + str(
+        st.subheader(str(int(pass_tot - new_pass_tot_Ea5)) + " passages, " + str(
             round(((jours_evacuation - (new_pass_tot_Ea5 / pass_jour))-1),1)) + " jours")
     with st.expander("Estimation du gain économique €"):
         st.write("Gain € carburant : ")
