@@ -82,7 +82,6 @@ st.download_button(label="le Manifeste",
                    data=PDFbyte,
                    file_name="Guide_Simulateur.pdf",
                    mime='application/octet-stream')
-st.caption("Toutes les données sont issues de la Base Carbone® de l'ADEME")
 
 header0 = '''
 <head>
@@ -1443,7 +1442,8 @@ if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'util
             st.write('{} est malheureusement une adresse email invalide'.format(email_user))
 
 st.write("------------------------------------")
-st.caption("Les données sources utilisées sont référencées et disponible sur demande à Altaroad")
+st.caption("Les données de facteurs d'émissions sont issues de la Base Carbone® de l'ADEME")
+st.caption("Les autres données sources utilisées sont référencées et disponible sur demande à Altaroad")
 st.caption("SimulateurCO2 v0.0 - Développé par Altaroad - CONFIDENTIEL 2022 - https://www.altaroad.com")
 
 st.write(simulator_dict)
