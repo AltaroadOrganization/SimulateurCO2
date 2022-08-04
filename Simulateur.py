@@ -520,7 +520,7 @@ action1 = st.checkbox('Augmenter de 10% la réutilisation des terres sur site')
 new_valo_terres = valo_terres - 10
 new_ISDI1 = ISDI1brut * (new_valo_terres / 100)
 new_E_ISDI1 = (new_ISDI1 * FEterres) / 1000
-new_pass_ISDI1 = math.ceil(new_ISDI1 / (load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100)))
+new_pass_ISDI1 = round((new_ISDI1 / (load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100))),1)
 new_E_trans_ISDI1 = FE_trans * dist_exuISDI1 * (
         new_ISDI1 + mav5e * (cam5 / 100) * new_pass_ISDI1 + mav4e * (cam4 / 100) * new_pass_ISDI1)
 new_pass_tot = new_pass_ISDI1 + pass_ISDI2 + pass_ISDND + pass_ISDD
@@ -543,7 +543,7 @@ if action1:
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages (évacuation des terres) de :")
             st.subheader(str(pass_ISDI1 - new_pass_ISDI1) + " passages, " + str(
-                math.ceil((jours_evacuation - (new_pass_tot / pass_jour))-1)) + " jours")
+                round(((jours_evacuation - (new_pass_tot / pass_jour))-1),1) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea1)) + " €")
@@ -566,10 +566,10 @@ new_E_trans_ISDND_Ea2 = round(new_FE_trans * dist_exuISDND * (
         ISDND + mav5e * (new_cam5 / 100) * pass_ISDND + mav4e * (new_cam4 / 100) * pass_ISDND), 1)
 new_E_trans_ISDD_Ea2 = round(new_FE_trans * dist_exuISDD * (
         ISDD + mav5e * (new_cam5 / 100) * pass_ISDD + mav4e * (new_cam4 / 100) * pass_ISDD), 1)
-new_pass_ISDI1_Ea2 = math.ceil(ISDI1 / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100)))
-new_pass_ISDI2_Ea2 = math.ceil(ISDI2 / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100)))
-new_pass_ISDND_Ea2 = math.ceil(ISDND / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100)))
-new_pass_ISDD_Ea2 = math.ceil(ISDD / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100)))
+new_pass_ISDI1_Ea2 = round((ISDI1 / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100))),1)
+new_pass_ISDI2_Ea2 = round((ISDI2 / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100))),1)
+new_pass_ISDND_Ea2 = round((ISDND / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100))),1)
+new_pass_ISDD_Ea2 = round((ISDD / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100))),1)
 new_pass_tot_Ea2 = new_pass_ISDI1_Ea2 + new_pass_ISDI2_Ea2 + new_pass_ISDND_Ea2 + new_pass_ISDD_Ea2
 new_E_trans_Ea2 = new_FE_trans * (dist_exuISDI1 * (
         ISDI1 + mav5e * (new_cam5 / 100) * new_pass_ISDI1_Ea2 + mav4e * (new_cam4 / 100) * new_pass_ISDI1_Ea2)
@@ -607,7 +607,7 @@ if action2:
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages de :")
             st.subheader(str(pass_tot - new_pass_tot_Ea2) + " passages, " + str(
-                math.ceil((jours_evacuation - (new_pass_tot_Ea2 / pass_jour))-1)) + " jours")
+                round(((jours_evacuation - (new_pass_tot_Ea2 / pass_jour))-1),1) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea2)) + " €")
@@ -620,10 +620,10 @@ if action2:
 action3 = st.checkbox('Optimiser le chargement moyen des camions de 2 tonnes')
 new_load_cam5 = load_cam5 + 2
 new_load_cam4 = load_cam4 + 2
-new_pass_ISDI1_Ea3 = math.ceil(ISDI1 / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
-new_pass_ISDI2_Ea3 = math.ceil(ISDI2 / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
-new_pass_ISDND_Ea3 = math.ceil(ISDND / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
-new_pass_ISDD_Ea3 = math.ceil(ISDD / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100)))
+new_pass_ISDI1_Ea3 = round((ISDI1 / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100))),1)
+new_pass_ISDI2_Ea3 = round((ISDI2 / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100))),1)
+new_pass_ISDND_Ea3 = round((ISDND / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100))),1)
+new_pass_ISDD_Ea3 = round((ISDD / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100))),1)
 new_pass_tot_Ea3 = new_pass_ISDI1_Ea3 + new_pass_ISDI2_Ea3 + new_pass_ISDND_Ea3 + new_pass_ISDD_Ea3
 new_E_trans_Ea3 = FE_trans * (dist_exuISDI1 * (
         ISDI1 + mav5e * (cam5 / 100) * new_pass_ISDI1_Ea3 + mav4e * (cam4 / 100) * new_pass_ISDI1_Ea3)
@@ -659,7 +659,7 @@ if action3:
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages de :")
             st.subheader(str(pass_tot - new_pass_tot_Ea3) + " passages, " + str(
-                math.ceil((jours_evacuation - (new_pass_tot_Ea3 / pass_jour))-1)) + " jours")
+                round(((jours_evacuation - (new_pass_tot_Ea3 / pass_jour))-1),1) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea3)) + " €")
@@ -704,10 +704,10 @@ if action4:
 
 # Toutes les actions combinées
 action5 = st.checkbox("Combiner toutes les actions de réduction")
-new_pass_ISDI1_Ea5 = math.ceil(new_ISDI1 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100)))
-new_pass_ISDI2_Ea5 = math.ceil(ISDI2 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100)))
-new_pass_ISDND_Ea5 = math.ceil(ISDND / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100)))
-new_pass_ISDD_Ea5 = math.ceil(ISDD / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100)))
+new_pass_ISDI1_Ea5 = round((new_ISDI1 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100)),1)
+new_pass_ISDI2_Ea5 = round((ISDI2 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
+new_pass_ISDND_Ea5 = round((ISDND / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
+new_pass_ISDD_Ea5 = round((ISDD / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
 new_E_trans_Ea5 = FE_trans * (new_dist_exuISDI1 * (
         ISDI1 + mav5e * (new_cam5 / 100) * new_pass_ISDI1_Ea5 + mav4e * (new_cam4 / 100) * new_pass_ISDI1_Ea5)
                               + new_dist_exuISDI2 * (
@@ -746,7 +746,7 @@ if action5:
     with st.expander("Réduction du nombre de passages"):
         st.write("Cette action permet de réduire le nombre de passages de :")
         st.subheader(str(pass_tot - new_pass_tot_Ea5) + " passages, " + str(
-            math.ceil((jours_evacuation - (new_pass_tot_Ea5 / pass_jour))-1)) + " jours")
+            round(((jours_evacuation - (new_pass_tot_Ea5 / pass_jour))-1),1) + " jours")
     with st.expander("Estimation du gain économique €"):
         st.write("Gain € carburant : ")
         st.subheader(str(math.ceil(eco_c_Ea5)) + " €")
