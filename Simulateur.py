@@ -248,6 +248,11 @@ with col1:
     ISDI2 = st.number_input("Déchets inertes : Gravats (en tonnes)", step=1)
     ISDND = st.number_input("Déchets non-dangereux en mélange (en tonnes)", step=1)
     ISDD = st.number_input("Déchets dangereux (en tonnes)", step=1)
+    simulator_dict['ISDI1brut'] = ISDI1brut
+    simulator_dict['ISDI2'] = ISDI2
+    simulator_dict['ISDND'] = ISDND
+    simulator_dict['ISDD'] = ISDD
+
 
 with col2:
     subheader2 = '''
@@ -262,6 +267,10 @@ with col2:
     dist_exuISDI2 = st.number_input("Distance exutoire 2 (en km)", value=35, step=1)
     dist_exuISDND = st.number_input("Distance exutoire 3 (en km)", value=35, step=1)
     dist_exuISDD = st.number_input("Distance exutoire 4 (en km)", value=35, step=1)
+    simulator_dict['dist_exuISDI1'] = dist_exuISDI1
+    simulator_dict['dist_exuISDI2'] = dist_exuISDI2
+    simulator_dict['dist_exuISDND'] = dist_exuISDND
+    simulator_dict['dist_exuISDD'] = dist_exuISDD
 
 col1, col2 = st.columns(2)
 with col1:
@@ -274,6 +283,7 @@ with col1:
     st.markdown(subheader3, unsafe_allow_html=True)
     #st.subheader("Nombre de passages quotidiens 🔃")
     pass_jour = st.slider("Nombre de passages quotidien estimés", 10, 100, 50, step=5)
+    simulator_dict['pass_jour'] = pass_jour
 
 with col2:
     subheader4 = '''
@@ -287,6 +297,8 @@ with col2:
     repl_terres = st.slider("Réemploi des terres sur site (%)", 0, 100, 0, step=5)
     valo_terres = 100 - repl_terres
     ISDI1 = math.ceil(ISDI1brut * (valo_terres / 100))
+    simulator_dict['repl_terres'] = repl_terres
+    simulator_dict['ISDI1'] = ISDI1
 
 col1, col2 = st.columns(2)
 with col1:
@@ -302,6 +314,9 @@ with col1:
     nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=10, step=1)
     cam5 = (nb_cam5 / (nb_cam5 + nb_cam4)) * 100
     cam4 = (nb_cam4 / (nb_cam5 + nb_cam4)) * 100
+    simulator_dict['nb_cam5'] = nb_cam5
+    simulator_dict['nb_cam4'] = nb_cam4
+
 with col2:
     subheader6 = '''
     <head>
@@ -313,6 +328,8 @@ with col2:
     #st.subheader("Chargements 🚚")
     load_cam5 = st.slider("Chargement moyen des camions articulés (tonnes)", 15, 29, 25, step=1)
     load_cam4 = st.slider("Chargement moyen des camions porteurs (tonnes)", 10, 20, 15, step=1)
+    simulator_dict['load_cam5'] = load_cam5
+    simulator_dict['load_cam4'] = load_cam4
 
 pass_ISDI1 = math.ceil(ISDI1 / (load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100)))
 pass_ISDI2 = math.ceil(ISDI2 / (load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100)))
@@ -322,6 +339,14 @@ pass_tot = pass_ISDI1 + pass_ISDI2 + pass_ISDND + pass_ISDD
 FE_trans = FEmoy5e * (cam5 / 100) + FEmoy4e * (cam4 / 100)
 tot_D = ISDI1 + ISDI2 + ISDND + ISDD
 dist_tot = pass_ISDI1 * dist_exuISDI1 + pass_ISDI2 * dist_exuISDI2 + pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD
+simulator_dict['pass_ISDI1'] = pass_ISDI1
+simulator_dict['pass_ISDI2'] = pass_ISDI2
+simulator_dict['pass_ISDND'] = pass_ISDND
+simulator_dict['pass_ISDD'] = pass_ISDD
+simulator_dict['pass_tot'] = pass_tot
+simulator_dict['FE_trans'] = FE_trans
+simulator_dict['tot_D'] = tot_D
+simulator_dict['dist_tot'] = dist_tot
 
 subheader7 = '''
 <head>
@@ -348,9 +373,21 @@ E_trans = FE_trans * (
         + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2)
         + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND)
         + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD))
-
 E_valo = E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD
 E_tot = E_trans + E_valo
+simulator_dict['E_ISDI1'] = E_ISDI1
+simulator_dict['E_ISDI2'] = E_ISDI2
+simulator_dict['E_ISDND'] = E_ISDND
+simulator_dict['E_ISDD'] = E_ISDD
+simulator_dict['E_trans_ISDI1'] = E_trans_ISDI1
+simulator_dict['E_trans_ISDI2'] = E_trans_ISDI2
+simulator_dict['E_trans_ISDND'] = E_trans_ISDND
+simulator_dict['E_trans_ISDD'] = E_trans_ISDD
+simulator_dict['E_trans'] = E_trans
+simulator_dict['E_valo'] = E_valo
+simulator_dict['E_tot'] = E_tot
+
+
 with st.expander("Emissions de CO2e par types de déchets :"):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -363,7 +400,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
         st.subheader(int(E_ISDI1 + E_trans_ISDI1))
         if ISDI1 > 0:
             st.write("kgCO2e/tonne :")
-            st.subheader(int(((E_ISDI1 + E_trans_ISDI1) / ISDI1) * 1000))
+            I_ISDI1_kgCO2T=round(((E_ISDI1 + E_trans_ISDI1) / ISDI1) * 1000,1)
+            st.subheader(str(I_ISDI1_kgCO2T))
+            simulator_dict['I_ISDI1_kgCO2T'] = I_ISDI1_kgCO2T
+        else:
+            simulator_dict['I_ISDI1_kgCO2T'] = 0
     with col2:
         st.subheader("Gravats")
         st.write("CO2e traitement (en tCO2e):")
@@ -374,7 +415,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
         st.subheader(int(E_ISDI2 + E_trans_ISDI2))
         if ISDI2 > 0:
             st.write("kgCO2e/tonne :")
-            st.subheader(int(((E_ISDI2 + E_trans_ISDI2) / ISDI2) * 1000))
+            I_ISDI2_kgCO2T = round(((E_ISDI2 + E_trans_ISDI2) / ISDI2) * 1000, 1)
+            st.subheader(str(I_ISDI2_kgCO2T))
+            simulator_dict['I_ISDI2_kgCO2T'] = I_ISDI2_kgCO2T
+        else:
+            simulator_dict['I_ISDI2_kgCO2T'] = 0
     with col3:
         st.subheader("DND")
         st.write("CO2e traitement (en tCO2e):")
@@ -385,7 +430,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
         st.subheader(int(E_ISDND + E_trans_ISDND))
         if ISDND > 0:
             st.write("kgCO2e/tonne :")
-            st.subheader(int(((E_ISDND + E_trans_ISDND) / ISDND) * 1000))
+            I_ISDND_kgCO2T = round(((E_ISDND + E_trans_ISDND) / ISDND) * 1000, 1)
+            st.subheader(str(I_ISDND_kgCO2T))
+            simulator_dict['I_ISDND_kgCO2T'] = I_ISDND_kgCO2T
+        else:
+            simulator_dict['I_ISDND_kgCO2T'] = 0
     with col4:
         st.subheader("DD")
         st.write("CO2e traitement (en tCO2e):")
@@ -396,7 +445,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
         st.subheader(int(E_ISDD + E_trans_ISDD))
         if ISDD > 0:
             st.write("kgCO2e/tonne :")
-            st.subheader(int(((E_ISDD + E_trans_ISDD) / ISDD) * 1000))
+            I_ISDD_kgCO2T = round(((E_ISDD + E_trans_ISDD) / ISDD) * 1000, 1)
+            st.subheader(str(I_ISDD_kgCO2T))
+            simulator_dict['I_ISDD_kgCO2T'] = I_ISDD_kgCO2T
+        else:
+            simulator_dict['I_ISDD_kgCO2T'] = 0
 
 with st.expander("Emissions totales de CO2e (en tCO2e):"):
     col1, col2, col3, col4 = st.columns(4)
@@ -412,7 +465,11 @@ with st.expander("Emissions totales de CO2e (en tCO2e):"):
     with col4:
         if tot_D > 0:
             st.write("kgCO2e/tonne :")
-            st.subheader(int(((E_trans + E_valo) / tot_D) * 1000))
+            I_tot_kgCO2T = round(((E_trans + E_valo) / tot_D) * 1000, 1)
+            st.subheader(str(I_tot_kgCO2T))
+            simulator_dict['I_tot_kgCO2T'] = I_tot_kgCO2T
+        else:
+            simulator_dict['I_tot_kgCO2T'] = 0
 
 with st.expander("Distance à parcourir :"):
     st.subheader(str(dist_tot) + " km")
@@ -421,8 +478,13 @@ with st.expander("Passages :"):
     st.write("Total passages :")
     st.subheader(pass_tot)
     st.write("Total jours évacuation :")
-    jours_evacuation = math.ceil(pass_tot / pass_jour)
-    st.subheader(jours_evacuation)
+    if pass_jour>0:
+        jours_evacuation = math.ceil(pass_tot / pass_jour)
+        simulator_dict['jours_evacuation'] = jours_evacuation
+    else:
+        jours_evacuation = 0
+        simulator_dict['jours_evacuation'] = jours_evacuation
+        st.subheader(jours_evacuation)
     st.write("Nombre de passages pour l'évacuation des terres :")
     st.subheader(pass_ISDI1)
     st.write("Nombre de passages pour l'évacuation des gravats :")
