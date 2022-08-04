@@ -380,11 +380,11 @@ E_trans_ISDND = round(
     FE_trans * dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND), 1)
 E_trans_ISDD = round(
     FE_trans * dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD), 1)
-E_trans = FE_trans * (
+E_trans = round(FE_trans * (
         dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
         + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2)
         + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND)
-        + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD))
+        + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD)),1)
 E_valo = E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD
 E_tot = E_trans + E_valo
 simulator_dict['E_ISDI1'] = E_ISDI1
@@ -405,11 +405,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
     with col1:
         st.subheader("Terres")
         st.write("CO2e traitement (en tCO2e):")
-        st.subheader(E_ISDI1)
+        st.subheader(round(E_ISDI1),1)
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(E_trans_ISDI1)
+        st.subheader(round(E_trans_ISDI1),1)
         st.write("CO2e total (en tCO2e):")
-        st.subheader(E_ISDI1 + E_trans_ISDI1)
+        st.subheader(round(E_ISDI1 + E_trans_ISDI1),1)
         if ISDI1 > 0:
             st.write("kgCO2e/tonne :")
             I_ISDI1_kgCO2T=round(((E_ISDI1 + E_trans_ISDI1) / ISDI1) * 1000,1)
@@ -420,11 +420,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
     with col2:
         st.subheader("Gravats")
         st.write("CO2e traitement (en tCO2e):")
-        st.subheader(E_ISDI2)
+        st.subheader(round(E_ISDI2),1)
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(E_trans_ISDI2)
+        st.subheader(round(E_trans_ISDI2),1)
         st.write("CO2e total (en tCO2e):")
-        st.subheader(E_ISDI2 + E_trans_ISDI2)
+        st.subheader(round(E_ISDI2 + E_trans_ISDI2),1)
         if ISDI2 > 0:
             st.write("kgCO2e/tonne :")
             I_ISDI2_kgCO2T = round(((E_ISDI2 + E_trans_ISDI2) / ISDI2) * 1000, 1)
@@ -435,11 +435,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
     with col3:
         st.subheader("DND")
         st.write("CO2e traitement (en tCO2e):")
-        st.subheader(E_ISDND)
+        st.subheader(round(E_ISDND),1)
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(E_trans_ISDND)
+        st.subheader(round(E_trans_ISDND),1)
         st.write("CO2e total (en tCO2e):")
-        st.subheader(E_ISDND + E_trans_ISDND)
+        st.subheader(round(E_ISDND + E_trans_ISDND),1)
         if ISDND > 0:
             st.write("kgCO2e/tonne :")
             I_ISDND_kgCO2T = round(((E_ISDND + E_trans_ISDND) / ISDND) * 1000, 1)
@@ -450,11 +450,11 @@ with st.expander("Emissions de CO2e par types de déchets :"):
     with col4:
         st.subheader("DD")
         st.write("CO2e traitement (en tCO2e):")
-        st.subheader(E_ISDD)
+        st.subheader(round(E_ISDD),1)
         st.write("CO2e transport (en tCO2e):")
-        st.subheader(E_trans_ISDD)
+        st.subheader(round(E_trans_ISDD),1)
         st.write("CO2e total (en tCO2e):")
-        st.subheader(E_ISDD + E_trans_ISDD)
+        st.subheader(round(E_ISDD + E_trans_ISDD),1)
         if ISDD > 0:
             st.write("kgCO2e/tonne :")
             I_ISDD_kgCO2T = round(((E_ISDD + E_trans_ISDD) / ISDD) * 1000, 1)
@@ -467,13 +467,13 @@ with st.expander("Emissions totales de CO2e (en tCO2e):"):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.write("Transport :")
-        st.subheader(E_trans)
+        st.subheader(round(E_trans,1))
     with col2:
         st.write("Traitement :")
-        st.subheader(E_valo)
+        st.subheader(round(E_valo,1))
     with col3:
         st.write("Total des émissions :")
-        st.subheader(E_tot)
+        st.subheader(round(E_tot,1))
     with col4:
         if tot_D > 0:
             st.write("kgCO2e/tonne :")
