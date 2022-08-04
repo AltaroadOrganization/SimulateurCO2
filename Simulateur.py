@@ -86,11 +86,12 @@ st.download_button(label="le Manifeste",
 header0 = '''
 <head>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Entrer les infos du chantier</p>
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Les infos du chantier</p>
 </head>
 '''
 st.write('---------------------------------------------------')
 st.markdown(header0, unsafe_allow_html=True)
+st.write('Ici, vous entrez quelques infos sur le chantier que vous souhaitez simuler')
 type_chantier = st.text_input('type de chantier', value="par exemple: CONSTRUCTION / DEMOLITION / TERRASSEMENT", max_chars=None, key=None, type="default")
 lieu_chantier = st.text_input('le lieu du chantier', value="entrer une adresse", max_chars=None, key=None, type="default")
 taille_chantier = st.text_input('la taille du chantier', value="par exemple : PETIT (semaine) / MOYEN (mois) / GROS (année)", max_chars=None, key=None, type="default")
@@ -1074,6 +1075,7 @@ header5 = '''
 '''
 st.write('---------------------------------------------------')
 st.markdown(header5, unsafe_allow_html=True)
+st.write("Ici, vous retrouvez une synthèse macroscopique de votre simulation d'émissions")
 with st.expander("Résultats 📊"):
     E_S123 = EMISSIONS_ouv + E_tot + tot_S3 + tot_S1 + tot_S2
     E_S3 = EMISSIONS_ouv + E_tot + tot_S3
