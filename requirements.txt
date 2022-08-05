@@ -118,6 +118,7 @@ backcall==0.2.0
 backports.zoneinfo==0.2.1
 bleach==4.1.0
 blinker==1.4
+boto3==1.23.10
 cachetools==4.2.4
 certifi==2020.6.20
 cffi==1.15.0

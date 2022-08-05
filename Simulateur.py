@@ -8,6 +8,12 @@ import math
 import random
 import datetime
 import re
+import boto3
+import csv
+
+#get AWS access key and secret key
+ACCESS_KEY = st.secrets["my_access_key"]["ACCESS_KEY"]
+SECRET_KEY = st.secrets["my_access_key"]["SECRET_KEY"]
 
 #function to check if an email is valid
 def solve(s):
@@ -27,6 +33,21 @@ def random_CO2_equivalent(Ea1):
                        str(math.ceil(Ea1 * 2208)) + " litres d'eau en bouteille 🧴",
                        str(math.ceil(Ea1 * 43)) + " jeans en coton 👖"])
     return v
+
+#function to load the dict to a S3 bucket
+def read_write_S3(bucket_name, the_dict, access_key, secret_key):
+    '''
+    this function adds a "new simulator user file" to a bucket
+    '''
+    session = boto3.Session(aws_access_key_id=access_key, aws_secret_access_key=secret_key)
+    s3 = session.resource('s3')
+    heure=the_dict['date_heure']
+    object = s3.Object(bucket_name, 'simulatorco2/file_name_{}.txt'.format(heure))
+    st.write('found bucket')
+    #df=pd.DataFrame.from_dict(the_dict)
+    result = object.put(Body=str(the_dict))
+
+    st.write('updated file successfully')
 
 #function to create the pdf report
 def build_pdf_from_dict(the_input_dict):
@@ -268,9 +289,8 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="mais les résultats ne doivent pas être interprétés comme un Bilan Énergétique des Gaz à Effet de Serre (BEGES) certifié", ln=1)
     pdf.cell(200, 4, txt="dont la méthodologie est définie par l'ADEME et ne peut être délivré que par des experts accrédités. Il convient à l'utilisateur de renseigner ", ln=1)
     pdf.cell(200, 4, txt="les données les plus fiables possibles afin de réduire les incertitudes des résultats obtenus.", ln=1)
-
     pdf = pdf.output("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf")
-    return print("all_good")
+    return st.write("le rapport a été généré")
 
 #all the inputs and outputs are saved in a dict
 simulator_dict={}
@@ -1391,19 +1411,23 @@ if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'util
     email_user=st.text_input('indiquez votre email valide ici', value="", max_chars=None, key=None, type="default")
     simulator_dict['email_user'] = email_user
 
-    #we create the pdf from the dict of simulation
-    build_pdf_from_dict(simulator_dict)
-
     if email_user!='':
         if solve(email_user):
+            # we create the pdf from the dict of simulation
+            build_pdf_from_dict(simulator_dict)
             st.download_button(label="Télécharger",
                                data=PDFbyte,
                                file_name="ALTAROAD_Simulateur_CO2_SYNTHESE.pdf",
                                mime='application/octet-stream')
             #ici on envoie le dictionnaire sur un bucket S3 privé avec une clé de user qui a accès qu'à ce bucket
             #code à faire
+            bucket_name = 'dataset-altaroad-public'
+            #filename3 = 'simulatorco2/simulatorco2_records.csv'
+            read_write_S3(bucket_name, simulator_dict, ACCESS_KEY, SECRET_KEY)
         else:
             st.write('{} est malheureusement une adresse email invalide'.format(email_user))
+    else:
+        st.write("merci d'indiquer un email valide")
 else:
     simulator_dict['email_user'] = "empty_email_user"
 
