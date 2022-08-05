@@ -1,8 +1,6 @@
 import pandas as pd
 import streamlit as st
-import numpy as np
 import matplotlib.pyplot as plt
-import urllib.request
 from PIL import Image
 from csv import writer
 from fpdf import FPDF
