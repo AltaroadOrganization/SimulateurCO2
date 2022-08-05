@@ -1423,8 +1423,7 @@ if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'util
             read_write_S3(bucket_name, simulator_dict, ACCESS_KEY, SECRET_KEY)
         else:
             st.write('{} est malheureusement une adresse email invalide'.format(email_user))
-    else:
-        st.write("merci d'indiquer un email valide")
+
 else:
     simulator_dict['email_user'] = "empty_email_user"
 
