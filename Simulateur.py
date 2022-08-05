@@ -1410,5 +1410,3 @@ st.write("------------------------------------")
 st.caption("Les données de facteurs d'émissions sont issues de la Base Carbone® de l'ADEME")
 st.caption("Les autres données sources utilisées sont référencées et disponible sur demande à Altaroad")
 st.caption("SimulateurCO2 v0.0 - Développé par Altaroad - CONFIDENTIEL 2022 - https://www.altaroad.com")
-
-st.write(simulator_dict)
