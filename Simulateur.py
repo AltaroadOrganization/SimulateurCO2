@@ -801,7 +801,7 @@ if action1:
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages (évacuation des terres) de :")
             st.subheader(str(int(pass_ISDI1 - new_pass_ISDI1)) + " passages, " + str(
-                round(((jours_evacuation - (new_pass_tot / pass_jour))-1),1)) + " jours")
+                round((jours_evacuation - (new_pass_tot / pass_jour)),1)) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea1)) + " €")
