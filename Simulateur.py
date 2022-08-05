@@ -1071,7 +1071,7 @@ with st.expander("Déchets"):
             sizes = [ISDI1, ISDI2, ISDND, ISDD]
             fig1, ax1 = plt.subplots()
             ax1.set_title("Part des déchets par 'type'",color = "#f37121", fontfamily = 'sen', size = 28)
-            ax1.pie(sizes, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#F3D617"])
+            ax1.pie(sizes, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#D9D9D9"])
             ax1.axis('equal')
             legend = ax1.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
             legend.set_title("Déchets")
@@ -1085,7 +1085,7 @@ with st.expander("Déchets"):
             sizes2 = [E_ISDI1, E_ISDI2, E_ISDND, E_ISDD]
             fig2, ax2 = plt.subplots()
             ax2.set_title("Emissions de CO2 par déchet : 'traitement'",color = "#f37121", fontfamily = 'sen', size = 28)
-            ax2.pie(sizes2, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#F3D617"])
+            ax2.pie(sizes2, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#D9D9D9"])
             ax2.axis('equal')
             legend = ax2.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
             legend.set_title("Déchets")
@@ -1099,7 +1099,7 @@ with st.expander("Déchets"):
             sizes3 = [E_trans_ISDI1, E_trans_ISDI2, E_trans_ISDND, E_trans_ISDD]
             fig3, ax3 = plt.subplots()
             ax3.set_title("Emissions de CO2e par déchet : 'transport'",color = "#f37121", fontfamily = 'sen', size = 28)
-            ax3.pie(sizes3, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#F3D617"])
+            ax3.pie(sizes3, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#D9D9D9"])
             ax3.axis('equal')
             legend = ax3.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
             legend.set_title("Déchets")
@@ -1115,7 +1115,7 @@ with st.expander("Déchets"):
                       E_ISDD + E_trans_ISDD]
             fig4, ax4 = plt.subplots()
             ax4.set_title("Emissions CO2e globales par déchet",color = "#f37121", fontfamily = 'sen', size = 28)
-            ax4.pie(sizes4, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#F3D617"])
+            ax4.pie(sizes4, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#D9D9D9"])
             ax4.axis('equal')
             legend = ax4.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
             legend.set_title("Déchets")
