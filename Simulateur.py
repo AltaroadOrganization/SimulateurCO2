@@ -352,6 +352,7 @@ st.write('---------------------------------------------------')
 st.markdown(header1, unsafe_allow_html=True)
 #st.header("SCOPE 1&2 : Consommations d'énergies 🔋")
 st.write("Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
+st.write("Cliquer sur Rafraîchir avant de démarrer 🔄")
 if st.button('Rafraîchir Scope 1 et 2'):
     scope2 = "scope2_blank.csv"
     df_S2 = pd.read_csv(scope2, encoding="latin1", sep=",", decimal='.', index_col=0)
@@ -1162,7 +1163,7 @@ st.write('---------------------------------------------------')
 st.markdown(header3, unsafe_allow_html=True)
 #st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
 st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat de matières premières, équipements ou services")
-
+st.write("Cliquer sur Rafraîchir avant de démarrer 🔄")
 if st.button('Rafraîchir Scope 3'):
     scope3d = "scope3d_blank.csv"
     df_S3d = pd.read_csv(scope3d, encoding="latin1", sep=",", decimal='.', index_col=0)
