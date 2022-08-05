@@ -43,11 +43,8 @@ def read_write_S3(bucket_name, the_dict, access_key, secret_key):
     s3 = session.resource('s3')
     heure=the_dict['date_heure']
     object = s3.Object(bucket_name, 'simulatorco2/file_name_{}.txt'.format(heure))
-    st.write('found bucket')
     #df=pd.DataFrame.from_dict(the_dict)
     result = object.put(Body=str(the_dict))
-
-    st.write('updated file successfully')
 
 #function to create the pdf report
 def build_pdf_from_dict(the_input_dict):
