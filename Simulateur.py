@@ -875,7 +875,7 @@ if action2:
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages de :")
             st.subheader(str(int(pass_tot - new_pass_tot_Ea2)) + " passages, " + str(
-                round(((jours_evacuation - (new_pass_tot_Ea2 / pass_jour))-1),1)) + " jours")
+                round((jours_evacuation - (new_pass_tot_Ea2 / pass_jour)),1)) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea2)) + " €")
@@ -938,7 +938,7 @@ if action3:
         with st.expander("Réduction du nombre de passages"):
             st.write("Cette action permet de réduire le nombre de passages de :")
             st.subheader(str(int(pass_tot - new_pass_tot_Ea3)) + " passages, " + str(
-                round(((jours_evacuation - (new_pass_tot_Ea3 / pass_jour))-1),1)) + " jours")
+                round((jours_evacuation - (new_pass_tot_Ea3 / pass_jour)),1)) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea3)) + " €")
@@ -1040,7 +1040,7 @@ if action5:
     with st.expander("Réduction du nombre de passages"):
         st.write("Cette action permet de réduire le nombre de passages de :")
         st.subheader(str(int(pass_tot - new_pass_tot_Ea5)) + " passages, " + str(
-            round(((jours_evacuation - (new_pass_tot_Ea5 / pass_jour))-1),1)) + " jours")
+            round((jours_evacuation - (new_pass_tot_Ea5 / pass_jour)),1)) + " jours")
     with st.expander("Estimation du gain économique €"):
         st.write("Gain € carburant : ")
         st.subheader(str(math.ceil(eco_c_Ea5)) + " €")
