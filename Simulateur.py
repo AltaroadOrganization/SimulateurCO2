@@ -522,10 +522,10 @@ with col1:
     '''
     st.markdown(subheader1, unsafe_allow_html=True)
     #st.subheader("Quantité de déchets à évacuer 🚮")
-    ISDI1brut = st.number_input("Terres à excaver (en tonnes)", step=1)
-    ISDI2 = st.number_input("Déchets inertes : Gravats (en tonnes)", step=1)
-    ISDND = st.number_input("Déchets non-dangereux en mélange (en tonnes)", step=1)
-    ISDD = st.number_input("Déchets dangereux (en tonnes)", step=1)
+    ISDND = st.number_input("Déchets non-dangereux (Bois, Métaux, ...) (en T)", step=1)
+    ISDI1brut = st.number_input("Déchets inertes : Terres excavées (en T)", step=1)
+    ISDI2 = st.number_input("Déchets inertes : Gravats (en T)", step=1)
+    ISDD = st.number_input("Déchets dangereux (en T)", step=1)
     simulator_dict['ISDI1brut'] = ISDI1brut
     simulator_dict['ISDI2'] = ISDI2
     simulator_dict['ISDND'] = ISDND
@@ -540,10 +540,10 @@ with col2:
     </head>
     '''
     st.markdown(subheader2, unsafe_allow_html=True)
-    dist_exuISDI1 = st.number_input("Distance centre de collecte 1 (en km)", value=35, step=1)
-    dist_exuISDI2 = st.number_input("Distance centre de collecte 2 (en km)", value=35, step=1)
-    dist_exuISDND = st.number_input("Distance centre de collecte 3 (en km)", value=35, step=1)
-    dist_exuISDD = st.number_input("Distance centre de collecte 4 (en km)", value=35, step=1)
+    dist_exuISDND = st.number_input("Distance centre de collecte ISDND (en km)", value=35, step=1)
+    dist_exuISDI1 = st.number_input("Distance centre de collecte ISDI1 (en km)", value=35, step=1)
+    dist_exuISDI2 = st.number_input("Distance centre de collecte ISDI2 (en km)", value=35, step=1)
+    dist_exuISDD = st.number_input("Distance centre de collecte ISDD (en km)", value=35, step=1)
     simulator_dict['dist_exuISDI1'] = dist_exuISDI1
     simulator_dict['dist_exuISDI2'] = dist_exuISDI2
     simulator_dict['dist_exuISDND'] = dist_exuISDND
