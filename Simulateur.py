@@ -336,11 +336,11 @@ st.write("Cet outil permet de simuler les émissions carbone de votre chantier e
 st.write("")
 
 st.write("Pour plus d'information, téléchargez le Manifeste ici")
-with open('Guide_Simulateur.pdf', "rb") as pdf_file:
+with open('LeManifeste_SimulateurCO2_Altaroad.pdf', "rb") as pdf_file:
     PDFbyte = pdf_file.read()
 st.download_button(label="le Manifeste",
                    data=PDFbyte,
-                   file_name="Guide_Simulateur.pdf",
+                   file_name="LeManifeste_SimulateurCO2_Altaroad.pdf",
                    mime='application/octet-stream')
 
 header0 = '''
