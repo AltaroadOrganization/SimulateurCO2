@@ -9,7 +9,6 @@ import random
 import datetime
 import re
 import boto3
-import csv
 
 #get AWS access key and secret key
 ACCESS_KEY = st.secrets["my_access_key"]["ACCESS_KEY"]
@@ -80,6 +79,8 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="- Situé à : " + the_input_dict["lieu_chantier"], ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="- De taille : " + the_input_dict["taille_chantier"], ln=1)
+    pdf.cell(10)
+    pdf.cell(200, 4, txt="- D'une duréee de " + the_input_dict["duree_semaine_chantier"] + ' semaines', ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=16)
     pdf.set_text_color(128, 128, 128)
@@ -353,11 +354,14 @@ st.markdown(header0, unsafe_allow_html=True)
 st.write('Ici, vous entrez quelques infos sur le chantier que vous souhaitez simuler')
 type_chantier = st.selectbox("Type de chantier :", ['CONSTRUCTION','DEMOLITION','TERRASSEMENT'])
 lieu_chantier = st.text_input('le lieu du chantier (entrer une adresse)', value="", max_chars=None, key=None, type="default")
-taille_chantier = st.selectbox('la taille du chantier', ['PETIT (semaine)','MOYEN (mois)','GROS (année)'])
+col1,col2=st.columns(2)
+taille_chantier = col1.selectbox('la taille du chantier', ['PETIT','MOYEN','GROS'])
+duree_semaine_chantier=col2.text_input('durée en  semaines', value="", max_chars=None, key=None, type="default")
 
 simulator_dict['type_chantier']=type_chantier
 simulator_dict['lieu_chantier']=lieu_chantier
 simulator_dict['taille_chantier']=taille_chantier
+simulator_dict['duree_semaine_chantier']=duree_semaine_chantier
 
 header1 = '''
 <head>
