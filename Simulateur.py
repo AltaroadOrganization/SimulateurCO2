@@ -106,17 +106,17 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="Données d'entrée", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Terres : " + str(the_input_dict["ISDI1"]) + " tonnes, chantier > exutoire : " + str(the_input_dict["dist_exuISDI1"]) + " km",
+    pdf.cell(200, 4, txt="- Terres : " + str(the_input_dict["ISDI1"]) + " tonnes, chantier > centre de collecte : " + str(the_input_dict["dist_exuISDI1"]) + " km",
              ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Gravats : " + str(the_input_dict["ISDI2"]) + " tonnes, chantier > exutoire : " + str(the_input_dict["dist_exuISDI2"]) + " km",
+    pdf.cell(200, 4, txt="- Gravats : " + str(the_input_dict["ISDI2"]) + " tonnes, chantier > centre de collecte : " + str(the_input_dict["dist_exuISDI2"]) + " km",
              ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Déchets non-dangereux : " + str(the_input_dict["ISDND"]) + " tonnes, chantier > exutoire : " + str(
+    pdf.cell(200, 4, txt="- Déchets non-dangereux : " + str(the_input_dict["ISDND"]) + " tonnes, chantier > centre de collecte : " + str(
         the_input_dict["dist_exuISDND"]) + " km", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4,
-             txt="- Déchets dangereux : " + str(the_input_dict["ISDD"]) + " tonnes, chantier > exutoire : " + str(the_input_dict["dist_exuISDD"]) + " km",
+             txt="- Déchets dangereux : " + str(the_input_dict["ISDD"]) + " tonnes, chantier > centre de collecte : " + str(the_input_dict["dist_exuISDD"]) + " km",
              ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="- Nombre de passages quotidien : " + str(the_input_dict["pass_jour"]), ln=1)
@@ -208,7 +208,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="- Gain économique = " + str(
         math.ceil(the_input_dict["eco_c_Ea3"] + the_input_dict["eco_D_tot_Ea3"])) + " euros", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- 10 km de distance à l'exutoire : ", ln=1)
+    pdf.cell(200, 4, txt="- 10 km de distance au centre de collecte : ", ln=1)
     pdf.cell(20)
     pdf.cell(200, 4,txt="- Gain CO2e = " + str(int(the_input_dict["Ea4"])) + " tCO2e;",ln=1)
     pdf.cell(20)
@@ -332,7 +332,7 @@ prix_ISDND = 1500
 prix_ISDD = 5000
 conso_moy = 30 / 100
 st.write("")
-st.write("Cet outil permet de simuler les émissions carbone de votre chantier en intégrant tous les SCOPES avec les quantités d'énergie, de déchets et de matériaux nécessaires à l'ouvrage.")
+st.write("Cet outil permet de simuler les émissions carbone de votre chantier en intégrant tous les SCOPES avec les quantités d'énergie consommmée, de déchets générés et de matériaux nécessaires à l'ouvrage.")
 st.write("")
 
 st.write("Pour plus d'information, téléchargez le Manifeste ici")
@@ -535,15 +535,14 @@ with col2:
     subheader2 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Distance chantier-exutoire ↔</p>
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Distance chantier-centre de collecte</p>
     </head>
     '''
     st.markdown(subheader2, unsafe_allow_html=True)
-    #st.subheader("Distance chantier-exutoire ↔")
-    dist_exuISDI1 = st.number_input("Distance exutoire 1 (en km)", value=35, step=1)
-    dist_exuISDI2 = st.number_input("Distance exutoire 2 (en km)", value=35, step=1)
-    dist_exuISDND = st.number_input("Distance exutoire 3 (en km)", value=35, step=1)
-    dist_exuISDD = st.number_input("Distance exutoire 4 (en km)", value=35, step=1)
+    dist_exuISDI1 = st.number_input("Distance centre de collecte 1 (en km)", value=35, step=1)
+    dist_exuISDI2 = st.number_input("Distance centre de collecte 2 (en km)", value=35, step=1)
+    dist_exuISDND = st.number_input("Distance centre de collecte 3 (en km)", value=35, step=1)
+    dist_exuISDD = st.number_input("Distance centre de collecte 4 (en km)", value=35, step=1)
     simulator_dict['dist_exuISDI1'] = dist_exuISDI1
     simulator_dict['dist_exuISDI2'] = dist_exuISDI2
     simulator_dict['dist_exuISDND'] = dist_exuISDND
@@ -968,8 +967,8 @@ if action3:
     else:
         st.error("Le chargement maximal est dépassé")
 
-# Choix d'un exutoire 10 km plus proche
-action4 = st.checkbox("Choisir un exutoire 10 km plus proche")
+# Choix d'un centre de collecte 10 km plus proche
+action4 = st.checkbox("Choisir un centre de collecte 10 km plus proche")
 new_dist_exuISDI1 = dist_exuISDI1 - 10
 new_dist_exuISDI2 = dist_exuISDI2 - 10
 new_dist_exuISDND = dist_exuISDND - 10
@@ -1004,7 +1003,7 @@ if action4:
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea4)) + " €")
     else:
-        st.error("Un des exutoires se trouve déjà à moins de 10 km du chantier")
+        st.error("Un des centres de collecte se trouve déjà à moins de 10 km du chantier")
 
 # Toutes les actions combinées
 action5 = st.checkbox("Combiner toutes les actions de réduction")
@@ -1164,7 +1163,7 @@ with st.expander("Réductions"):
     fig = plt.figure()
     ax = fig.add_axes([0, 0, 1, 1])
     actions = ["+ 10% de terres réutilisées", "+ 15% de camions 5 essieux", "+ 2t de chargement moyen",
-               "- 10km distance chantier/exutoire", "Toutes les actions"]
+               "- 10km distance chantier/centre de collecte", "Toutes les actions"]
     valeurs = [Ea1, Ea2, Ea3, Ea4, Ea5]
     ax.set_title('Diminution des émissions CO2e par action',color = "#f37121", fontfamily = 'sen', size = 28)
     ax.set_ylabel('tCO2e', color =  "#67686b", fontfamily = 'sen', size = 18)
