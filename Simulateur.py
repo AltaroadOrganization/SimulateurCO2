@@ -332,7 +332,7 @@ prix_ISDND = 1500
 prix_ISDD = 5000
 conso_moy = 30 / 100
 st.write("")
-st.write("Cet outil permet de simuler les émissions carbone de votre chantier en intégrant tous les SCOPE avec les quantités d'énergie, de déchets et de matériaux nécessaires à l'ouvrage.")
+st.write("Cet outil permet de simuler les émissions carbone de votre chantier en intégrant tous les SCOPES avec les quantités d'énergie, de déchets et de matériaux nécessaires à l'ouvrage.")
 st.write("")
 
 st.write("Pour plus d'information, téléchargez le Manifeste ici")
@@ -366,7 +366,7 @@ simulator_dict['duree_semaine_chantier']=duree_semaine_chantier
 header1 = '''
 <head>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 1&2 : Consommations d'énergies 🔋</p>
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPES 1&2 : Consommations d'énergies 🔋</p>
 </head>
 '''
 st.write('---------------------------------------------------')
@@ -384,7 +384,7 @@ if st.button('Rafraîchir Scope 1 et 2'):
     df_S1[df_S1.columns]=""
     df_S1.to_csv('scope1_blank.csv')
 
-with st.expander("Energies fossiles 🛢️"):
+with st.expander("Scope1 - Energies fossiles 🛢️"):
     scope1 = "scope1_blank.csv"
     df_S1 = pd.read_csv(scope1, encoding="latin1", sep=",", decimal='.', index_col=0)
     df_S1=df_S1.dropna()
@@ -432,7 +432,7 @@ with st.expander("Energies fossiles 🛢️"):
             writer_object.writerow(new)
             f_object.close()
 
-with st.expander("Electricité ⚡"):
+with st.expander("Scope2 - Electricité ⚡"):
     scope2 = "scope2_blank.csv"
     elec_moy = 0.0569
     i2 = 10
@@ -460,11 +460,11 @@ with st.expander("Résultats 📊"):
     df_S1et2 = pd.concat([df_S1, df_S2])
     st.dataframe(df_S1et2)
     tot_S1 = round(df_S1["Emissions GES (en tCO2e)"].sum(), 1)
-    st.text("Total des émissions GES du scope 1 🛢️ 💨 : " + str(tot_S1) + " tCO2e")
+    st.text("Total des émissions GES du scope 1 🛢️ 🌍 : " + str(tot_S1) + " tCO2e")
     tot_S2 = round(df_S2["Emissions GES (en tCO2e)"].sum(), 1)
-    st.text("Total des émissions GES du scope 2 ⚡ 💨 : " + str(tot_S2) + " tCO2e")
+    st.text("Total des émissions GES du scope 2 ⚡ 🌍 : " + str(tot_S2) + " tCO2e")
     tot_S1et2 = round(df_S1et2["Emissions GES (en tCO2e)"].sum(), 1)
-    st.text("Total des émissions GES des scopes 1 & 2 🛢️+⚡ 💨 : " + str(tot_S1et2) + " tCO2e")
+    st.text("Total des émissions GES des scopes 1 & 2 🛢️+⚡ 🌍 : " + str(tot_S1et2) + " tCO2e")
     st.write(" ")
 
     col1, col2 = st.columns(2)
@@ -630,11 +630,10 @@ simulator_dict['dist_tot'] = dist_tot
 subheader7 = '''
 <head>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-<p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Données & Bilan CO2e 💨</p>
+<p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Données & Bilan CO2e 🌍</p>
 </head>
 '''
 st.markdown(subheader7, unsafe_allow_html=True)
-#st.subheader("Données & Bilan CO2e 💨")
 E_ISDI1 = round((ISDI1 * FEterres) / 1000, 1)
 E_ISDI2 = round((ISDI2 * FEgravats) / 1000, 1)
 E_ISDND = round((ISDND * FEdnd) / 1000, 1)
@@ -1258,7 +1257,7 @@ with st.expander("Type d'achat 🛒"):
     TRAIT_a = str(df['Spécificité 2'].unique())
     st.write(" ")
     st.write(" ")
-    st.text("Emissions GES de la donnée 🛒 💨 : " + str(EMISSIONS_a) + " tCO2e " + "(+ ou - " + str(
+    st.text("Emissions GES de la donnée 🛒 🌍 : " + str(EMISSIONS_a) + " tCO2e " + "(+ ou - " + str(
         INCERTITUDE_a) + " tCO2e)")
     if st.button("Ajout du poste d'émissions ➕   "):
         new = ["Scope 3", POSTE_a, TRAIT_a, str(DO_a), u, EMISSIONS_a]
@@ -1275,11 +1274,11 @@ with st.expander("Résultats 📊"):
     df_S3 = pd.concat([df_S3d, df_S3a])
     st.dataframe(df_S3)
     tot_S3d = round(df_S3d["Emissions GES (en tCO2e)"].sum(), 1)
-    st.text("Total des émissions GES 🗑️ 💨 : " + str(tot_S3d) + " tCO2e")
+    st.text("Total des émissions GES 🗑️ 🌍 : " + str(tot_S3d) + " tCO2e")
     tot_S3a = round(df_S3a["Emissions GES (en tCO2e)"].sum(), 1)
-    st.text("Total des émissions GES 🛒 💨 : " + str(tot_S3a) + " tCO2e")
+    st.text("Total des émissions GES 🛒 🌍 : " + str(tot_S3a) + " tCO2e")
     tot_S3 = round(df_S3["Emissions GES (en tCO2e)"].sum(), 1)
-    st.text("Total des émissions GES du scope 3 🗑️️+🛒 💨 : " + str(tot_S3) + " tCO2e")
+    st.text("Total des émissions GES du scope 3 🗑️️+🛒 🌍 : " + str(tot_S3) + " tCO2e")
     st.write(" ")
 
     col1, col2 = st.columns(2)
@@ -1350,7 +1349,7 @@ with st.expander("Données 👷"):
     INCERTITUDE_ouv = round(EMISSIONS_ouv * 0.01 * i, 2)
     st.write(" ")
 with st.expander("Résultat 📊"):
-    st.subheader("Emissions GES de l'ouvrage 💨 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
+    st.subheader("Emissions GES de l'ouvrage 🌍 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
     st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
 
 simulator_dict['ouvrage'] = ouvrage
@@ -1364,7 +1363,7 @@ simulator_dict['DO_ouv'] = DO_ouv
 header5 = '''
 <head>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Bilan CO2 simulé 💨</p>
+<p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Bilan CO2 simulé 🌍</p>
 </head>
 '''
 st.write('---------------------------------------------------')
@@ -1376,7 +1375,7 @@ with st.expander("Résultats 📊"):
     st.write("Emissions GES, Scope 1 ⚡ : " + str(round(tot_S1, 1)) + " tCO2e ")
     st.write("Emissions GES, Scope 2 🛢️ : " + str(round(tot_S2, 1)) + " tCO2e ")
     st.write("Emissions GES, Scope 3 🗑️+🛒+🏗️ : " + str(round(E_S3, 1)) + " tCO2e ")
-    st.write("Emissions GES totales 💨 : " + str(round(E_S123, 1)) + " tCO2e ")
+    st.write("Emissions GES totales 🌍 : " + str(round(E_S123, 1)) + " tCO2e ")
     if E_S123 > 0:
         fig = plt.figure()
         ax = fig.add_axes([0, 0, 1, 1])
