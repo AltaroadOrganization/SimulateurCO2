@@ -427,7 +427,7 @@ with st.expander("Scope1 - Energies fossiles 🛢️"):
     st.write(" ")
     st.write(" ")
     st.text(
-        "Emissions GES de la donnée 💨 : " + str(EMISSIONS) + " tCO2e " + "(+ ou - " + str(INCERTITUDE) + " tCO2e)")
+        "Emissions GES de la donnée 🌍 : " + str(EMISSIONS) + " tCO2e " + "(+ ou - " + str(INCERTITUDE) + " tCO2e)")
     if st.button("Ajout du poste d'émissions ➕"):
         new = ["Scope1",POSTE, ATT, str(DO), u, EMISSIONS]
         with open(scope1, 'a', newline='', encoding='latin1') as f_object:
@@ -446,7 +446,7 @@ with st.expander("Scope2 - Electricité ⚡"):
     POSTE2 = "['Electricité']"
     st.write(" ")
     st.write(" ")
-    st.text("Emissions GES de la donnée 💨 : " + str(EMISSIONS2) + " tCO2e " + "(+ ou - " + str(
+    st.text("Emissions GES de la donnée 🌍 : " + str(EMISSIONS2) + " tCO2e " + "(+ ou - " + str(
         INCERTITUDE2) + " tCO2e)")
     if st.button("Ajout du poste d'émissions ➕  "):
         new2 = ["Scope2",POSTE2, "-", str(DO2), u2, EMISSIONS2]
