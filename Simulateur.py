@@ -121,7 +121,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(10)
     pdf.cell(200, 4, txt="- Nombre de passages quotidien : " + str(the_input_dict["pass_jour"]), ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Taux de réemploi des terres : " + str(the_input_dict["repl_terres"]) + "%", ln=1)
+    pdf.cell(200, 4, txt="- Taux de réemploi des matériaux/déchets : " + str(the_input_dict["repl_terres"]) + "%", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="- Camions 5 essieux articulés : " + str(the_input_dict["nb_cam5"]) + " soit " + str(int(the_input_dict["cam5"])) + " %", ln=1)
     pdf.cell(10)
@@ -332,7 +332,8 @@ prix_ISDND = 1500
 prix_ISDD = 5000
 conso_moy = 30 / 100
 st.write("")
-st.write("Cet outil permet de simuler les émissions carbone de votre chantier en intégrant tous les SCOPES avec les quantités d'énergie consommmée, de déchets générés et de matériaux nécessaires à l'ouvrage.")
+st.write("Cet outil permet de simuler les émissions carbone de votre chantier en intégrant tous les SCOPES avec les "
+         "quantités d'énergie consommmée, de déchets générés et de matériaux nécessaires à l'ouvrage.")
 st.write("")
 
 st.write("Pour plus d'information, téléchargez le Manifeste ici")
@@ -565,12 +566,12 @@ with col2:
     subheader4 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Taux de réemploi des terres ♻</p>
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Réemploi des matériaux/déchets ♻</p>
     </head>
     '''
     st.markdown(subheader4, unsafe_allow_html=True)
     #st.subheader("Taux de réemploi des terres ♻️")
-    repl_terres = st.slider("Réemploi des terres sur site (%)", 0, 100, 0, step=5)
+    repl_terres = st.slider("Taux de réemploi moyen sur site (%)", 0, 100, 0, step=5)
     valo_terres = 100 - repl_terres
     ISDI1 = math.ceil(ISDI1brut * (valo_terres / 100))
     simulator_dict['repl_terres'] = repl_terres
@@ -828,7 +829,7 @@ if action1:
             st.write("Gain € évacuation terres : ")
             st.subheader(str(math.ceil(eco_ISDI)) + " €")
     else:
-        st.error("Le taux de réutilisation des terres sur site est déjà supérieur à 90%")
+        st.error("Le taux de réemploi des matériaux/déchets sur site est déjà supérieur à 90%")
 
 # Privilégier les camions 5 essieux (de 70% à 80%)
 action2 = st.checkbox("Utiliser 15% de camions 5 essieux en plus")
