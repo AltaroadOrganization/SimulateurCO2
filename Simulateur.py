@@ -41,8 +41,8 @@ def read_write_S3(bucket_name, the_dict, access_key, secret_key):
     '''
     session = boto3.Session(aws_access_key_id=access_key, aws_secret_access_key=secret_key)
     s3 = session.resource('s3')
-    heure=the_dict['date_heure']
-    object = s3.Object(bucket_name, 'simulatorco2/file_name_{}.txt'.format(heure))
+    heure=the_dict['date_heure'].replace('/','_').replace(' ','_')
+    object = s3.Object(bucket_name, 'simulatorco2/simulatorUserfile_{}.txt'.format(heure))
     #df=pd.DataFrame.from_dict(the_dict)
     result = object.put(Body=str(the_dict))
 
