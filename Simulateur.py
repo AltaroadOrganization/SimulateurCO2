@@ -1406,8 +1406,6 @@ st.markdown(header6, unsafe_allow_html=True)
 #st.header("Synthèse du bilan CO2 simulé 📋")
 st.write('Et hop! je télécharge un pdf de synthèse de ma simulation')
 
-with open("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf", "rb") as pdf_file:
-    PDFbyte = pdf_file.read()
 
 
 if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'utilisation de ce simulateur et j'indique mon email. "
@@ -1419,6 +1417,8 @@ if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'util
         if solve(email_user):
             # we create the pdf from the dict of simulation
             build_pdf_from_dict(simulator_dict)
+            with open("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf", "rb") as pdf_file:
+                PDFbyte = pdf_file.read()
             st.download_button(label="Télécharger",
                                data=PDFbyte,
                                file_name="ALTAROAD_Simulateur_CO2_SYNTHESE.pdf",
