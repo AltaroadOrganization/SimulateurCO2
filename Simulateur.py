@@ -175,7 +175,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="Actions de réduction et gains", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="+ 10% de réutilisation des terres sur site : ", ln=1)
+    pdf.cell(200, 4, txt="+ 10% de réutilisation des matériaux/déchets sur site : ", ln=1)
     pdf.cell(20)
     pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea1"])) + " tCO2e;", ln=1)
     pdf.cell(20)
@@ -321,10 +321,12 @@ FEterres = 4.58
 FEgravats = 12
 FEdnd = 84
 FEdd = 128
+FEmoy2e = 0.16 / 1000
 FEmoy5e = 0.0711 / 1000
 FEmoy4e = 0.105 / 1000
 mav5e = 15
 mav4e = 12
+mav2e = 9
 prix_c = 2
 prix_ISDI1 = 300
 prix_ISDI2 = 300
@@ -523,8 +525,8 @@ with col1:
     st.markdown(subheader1, unsafe_allow_html=True)
     #st.subheader("Quantité de déchets à évacuer 🚮")
     ISDND = st.number_input("Déchets non-dangereux (Bois, Métaux, ...) (en T)", step=1)
-    ISDI1brut = st.number_input("Déchets inertes : Terres excavées (en T)", step=1)
-    ISDI2 = st.number_input("Déchets inertes : Gravats (en T)", step=1)
+    ISDI1brut = st.number_input("Déchets inertes excavés (Terres) (en T)", step=1)
+    ISDI2 = st.number_input("Déchets inertes excavés (Gravats) (en T)", step=1)
     ISDD = st.number_input("Déchets dangereux (en T)", step=1)
     simulator_dict['ISDI1brut'] = ISDI1brut
     simulator_dict['ISDI2'] = ISDI2
@@ -589,12 +591,20 @@ with col1:
     #st.subheader("Types de camions 🚛")
     nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=20, step=1)
     nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=10, step=1)
-    cam5 = (nb_cam5 / (nb_cam5 + nb_cam4)) * 100
-    cam4 = (nb_cam4 / (nb_cam5 + nb_cam4)) * 100
-    simulator_dict['nb_cam5'] = nb_cam5
-    simulator_dict['nb_cam4'] = nb_cam4
-    simulator_dict['cam5'] = cam5
-    simulator_dict['cam4'] = cam4
+    nb_cam2 = st.number_input("Nombre de camions 2 essieux porteurs", value=4, step=1)
+    if (nb_cam5 + nb_cam4 + nb_cam2)>0:
+        cam5 = (nb_cam5 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
+        cam4 = (nb_cam4 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
+        cam2 = (nb_cam2 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
+        simulator_dict['nb_cam5'] = nb_cam5
+        simulator_dict['nb_cam4'] = nb_cam4
+        simulator_dict['nb_cam2'] = nb_cam2
+        simulator_dict['cam5'] = cam5
+        simulator_dict['cam4'] = cam4
+        simulator_dict['cam2'] = cam4
+    else:
+        st.write("rentrer au moins 1 camion")
+        cam2=cam5=cam4=0
 
 with col2:
     subheader6 = '''
@@ -604,28 +614,45 @@ with col2:
     </head>
     '''
     st.markdown(subheader6, unsafe_allow_html=True)
-    #st.subheader("Chargements 🚚")
-    load_cam5 = st.slider("Chargement moyen des camions articulés (tonnes)", 15, 29, 25, step=1)
-    load_cam4 = st.slider("Chargement moyen des camions porteurs (tonnes)", 10, 20, 15, step=1)
+    load_cam5 = st.slider("Chargement moyen des camions 5 essieux (tonnes)", 15, 29, 25, step=1)
+    load_cam4 = st.slider("Chargement moyen des camions 4 essieux (tonnes)", 10, 20, 15, step=1)
+    load_cam2 = st.slider("Chargement moyen des camions 2 essieux (tonnes)", 2, 15, 8, step=1)
     simulator_dict['load_cam5'] = load_cam5
     simulator_dict['load_cam4'] = load_cam4
+    simulator_dict['load_cam2'] = load_cam2
 
-pass_ISDI1 = math.ceil(ISDI1 / (load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100)))
-pass_ISDI2 = math.ceil(ISDI2 / (load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100)))
-pass_ISDND = math.ceil(ISDND / (load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100)))
-pass_ISDD = math.ceil(ISDD / (load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100)))
-pass_tot = pass_ISDI1 + pass_ISDI2 + pass_ISDND + pass_ISDD
-FE_trans = FEmoy5e * (cam5 / 100) + FEmoy4e * (cam4 / 100)
-tot_D = ISDI1 + ISDI2 + ISDND + ISDD
-dist_tot = pass_ISDI1 * dist_exuISDI1 + pass_ISDI2 * dist_exuISDI2 + pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD
-simulator_dict['pass_ISDI1'] = pass_ISDI1
-simulator_dict['pass_ISDI2'] = pass_ISDI2
-simulator_dict['pass_ISDND'] = pass_ISDND
-simulator_dict['pass_ISDD'] = pass_ISDD
-simulator_dict['pass_tot'] = pass_tot
-simulator_dict['FE_trans'] = FE_trans
-simulator_dict['tot_D'] = tot_D
-simulator_dict['dist_tot'] = dist_tot
+mean_load=(load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100) + load_cam2 * (cam2 / 100))
+
+if mean_load >0:
+    pass_ISDI1 = math.ceil(ISDI1 / mean_load)
+    pass_ISDI2 = math.ceil(ISDI2 / mean_load)
+    pass_ISDND = math.ceil(ISDND / mean_load)
+    pass_ISDD = math.ceil(ISDD / mean_load)
+    pass_tot = pass_ISDI1 + pass_ISDI2 + pass_ISDND + pass_ISDD
+    FE_trans = FEmoy5e * (cam5 / 100) + FEmoy4e * (cam4 / 100) + FEmoy2e * (cam2/100)
+    mav_trans = mav5e * (cam5 / 100) + mav4e * (cam4 / 100) + mav2e * (cam2/100)
+    tot_D = ISDI1 + ISDI2 + ISDND + ISDD
+    dist_tot = pass_ISDI1 * dist_exuISDI1 + pass_ISDI2 * dist_exuISDI2 + pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD
+    simulator_dict['pass_ISDI1'] = pass_ISDI1
+    simulator_dict['pass_ISDI2'] = pass_ISDI2
+    simulator_dict['pass_ISDND'] = pass_ISDND
+    simulator_dict['pass_ISDD'] = pass_ISDD
+    simulator_dict['pass_tot'] = pass_tot
+    simulator_dict['FE_trans'] = FE_trans
+    simulator_dict['mav_trans'] = mav_trans
+    simulator_dict['tot_D'] = tot_D
+    simulator_dict['dist_tot'] = dist_tot
+else:
+    st.write('rentrer au moins un camion et une masse de chargement')
+    pass_ISDI1 = 0
+    pass_ISDI2 = 0
+    pass_ISDND = 0
+    pass_ISDD = 0
+    pass_tot = 0
+    FE_trans = 0
+    mav_trans = 0
+    tot_D = 0
+    dist_tot = 0
 
 subheader7 = '''
 <head>
@@ -638,19 +665,11 @@ E_ISDI1 = round((ISDI1 * FEterres) / 1000, 1)
 E_ISDI2 = round((ISDI2 * FEgravats) / 1000, 1)
 E_ISDND = round((ISDND * FEdnd) / 1000, 1)
 E_ISDD = round((ISDD * FEdd) / 1000, 1)
-E_trans_ISDI1 = round(
-    FE_trans * dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1), 1)
-E_trans_ISDI2 = round(
-    FE_trans * dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2), 1)
-E_trans_ISDND = round(
-    FE_trans * dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND), 1)
-E_trans_ISDD = round(
-    FE_trans * dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD), 1)
-E_trans = round(FE_trans * (
-        dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
-        + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2)
-        + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND)
-        + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD)),1)
+E_trans_ISDI1 = round(FE_trans * dist_exuISDI1 * (ISDI1 + mav_trans * pass_ISDI1), 1)
+E_trans_ISDI2 = round(FE_trans * dist_exuISDI2 * (ISDI2 + mav_trans * pass_ISDI2), 1)
+E_trans_ISDND = round(FE_trans * dist_exuISDND * (ISDND + mav_trans * pass_ISDND), 1)
+E_trans_ISDD = round(FE_trans * dist_exuISDD * (ISDD + mav_trans * pass_ISDD), 1)
+E_trans = round(E_trans_ISDI1+E_trans_ISDI2+E_trans_ISDND+E_trans_ISDD, 1)
 E_valo = E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD
 E_tot = E_trans + E_valo
 simulator_dict['E_ISDI1'] = E_ISDI1
@@ -664,7 +683,6 @@ simulator_dict['E_trans_ISDD'] = E_trans_ISDD
 simulator_dict['E_trans'] = E_trans
 simulator_dict['E_valo'] = E_valo
 simulator_dict['E_tot'] = E_tot
-
 
 with st.expander("Emissions de CO2e par types de déchets"):
     col1, col2, col3, col4 = st.columns(4)
@@ -786,13 +804,12 @@ st.markdown(subheader8, unsafe_allow_html=True)
 #st.subheader("Actions de réduction et gains 📉")
 
 # Réutiliser 10% des terres sur site
-action1 = st.checkbox('Augmenter de 10% la réutilisation des terres sur site')
+action1 = st.checkbox('Augmenter de 10% la réutilisation des matériaux/déchets sur site')
 new_valo_terres = valo_terres - 10
 new_ISDI1 = ISDI1brut * (new_valo_terres / 100)
 new_E_ISDI1 = (new_ISDI1 * FEterres) / 1000
-new_pass_ISDI1 = round((new_ISDI1 / (load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100))),1)
-new_E_trans_ISDI1 = FE_trans * dist_exuISDI1 * (
-        new_ISDI1 + mav5e * (cam5 / 100) * new_pass_ISDI1 + mav4e * (cam4 / 100) * new_pass_ISDI1)
+new_pass_ISDI1 = round((new_ISDI1 / mean_load),1)
+new_E_trans_ISDI1 = FE_trans * dist_exuISDI1 * (new_ISDI1 + mav_trans * new_pass_ISDI1)
 new_pass_tot = new_pass_ISDI1 + pass_ISDI2 + pass_ISDND + pass_ISDD
 Ea1 = E_ISDI1 + E_trans_ISDI1 - new_E_ISDI1 - new_E_trans_ISDI1
 conso_tot_Ea1 = conso_moy * pass_tot * dist_exuISDI1
@@ -820,46 +837,40 @@ if action1:
             else:
                 st.write("Merci d'entrer au minimum une quantité de déchets")
         with st.expander("Réduction du nombre de passages"):
-            st.write("Cette action permet de réduire le nombre de passages (évacuation des terres) de :")
+            st.write("Cette action permet de réduire le nombre de passages d'évacuations de :")
             st.subheader(str(int(pass_ISDI1 - new_pass_ISDI1)) + " passages, " + str(
                 round((jours_evacuation - (new_pass_tot / pass_jour)),1)) + " jours")
         with st.expander("Estimation du gain économique €"):
             st.write("Gain € carburant : ")
             st.subheader(str(math.ceil(eco_c_Ea1)) + " €")
-            st.write("Gain € évacuation terres : ")
+            st.write("Gain € évacuations : ")
             st.subheader(str(math.ceil(eco_ISDI)) + " €")
     else:
         st.error("Le taux de réemploi des matériaux/déchets sur site est déjà supérieur à 90%")
 
-# Privilégier les camions 5 essieux (de 70% à 80%)
-action2 = st.checkbox("Utiliser 15% de camions 5 essieux en plus")
+action2 = st.checkbox("Avoir 15% de camions 5 essieux ajoutés à la flotte choisie")
 new_cam5 = cam5 + 15
-new_cam4 = 100 - new_cam5
-new_FE_trans = FEmoy5e * (new_cam5 / 100) + FEmoy4e * (new_cam4 / 100)
-new_E_trans_ISDI1_Ea2 = round(new_FE_trans * dist_exuISDI1 * (
-        ISDI1 + mav5e * (new_cam5 / 100) * pass_ISDI1 + mav4e * (new_cam4 / 100) * pass_ISDI1), 1)
-new_E_trans_ISDI2_Ea2 = round(new_FE_trans * dist_exuISDI2 * (
-        ISDI2 + mav5e * (new_cam5 / 100) * pass_ISDI2 + mav4e * (new_cam4 / 100) * pass_ISDI2), 1)
-new_E_trans_ISDND_Ea2 = round(new_FE_trans * dist_exuISDND * (
-        ISDND + mav5e * (new_cam5 / 100) * pass_ISDND + mav4e * (new_cam4 / 100) * pass_ISDND), 1)
-new_E_trans_ISDD_Ea2 = round(new_FE_trans * dist_exuISDD * (
-        ISDD + mav5e * (new_cam5 / 100) * pass_ISDD + mav4e * (new_cam4 / 100) * pass_ISDD), 1)
-new_pass_ISDI1_Ea2 = round((ISDI1 / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100))),1)
-new_pass_ISDI2_Ea2 = round((ISDI2 / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100))),1)
-new_pass_ISDND_Ea2 = round((ISDND / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100))),1)
-new_pass_ISDD_Ea2 = round((ISDD / (load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100))),1)
+new_cam4 = cam4 - 15/2
+new_cam2 = cam2 - 15/2
+new_FE_trans = FEmoy5e * (new_cam5 / 100) + FEmoy4e * (new_cam4 / 100) + FEmoy2e * (new_cam2 / 100)
+new_mav = mav5e * (new_cam5 / 100) + mav4e * (new_cam4 / 100) + mav2e * (new_cam2 / 100)
+new_E_trans_ISDI1_Ea2 = round(new_FE_trans * dist_exuISDI1 * (ISDI1 + new_mav * pass_ISDI1), 1)
+new_E_trans_ISDI2_Ea2 = round(new_FE_trans * dist_exuISDI2 * (ISDI2 + new_mav * pass_ISDI2), 1)
+new_E_trans_ISDND_Ea2 = round(new_FE_trans * dist_exuISDND * (ISDND + new_mav * pass_ISDND), 1)
+new_E_trans_ISDD_Ea2 = round(new_FE_trans * dist_exuISDD * (ISDD + new_mav * pass_ISDD), 1)
+
+new_mean_load = load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100) + load_cam2 * (new_cam2 / 100)
+
+new_pass_ISDI1_Ea2 = round((ISDI1 / new_mean_load),1)
+new_pass_ISDI2_Ea2 = round((ISDI2 / new_mean_load),1)
+new_pass_ISDND_Ea2 = round((ISDND / new_mean_load),1)
+new_pass_ISDD_Ea2 = round((ISDD / new_mean_load),1)
 new_pass_tot_Ea2 = new_pass_ISDI1_Ea2 + new_pass_ISDI2_Ea2 + new_pass_ISDND_Ea2 + new_pass_ISDD_Ea2
-new_E_trans_Ea2 = new_FE_trans * (dist_exuISDI1 * (
-        ISDI1 + mav5e * (new_cam5 / 100) * new_pass_ISDI1_Ea2 + mav4e * (new_cam4 / 100) * new_pass_ISDI1_Ea2)
-                                  + dist_exuISDI2 * (
-                                          ISDI2 + mav5e * (new_cam5 / 100) * new_pass_ISDI2_Ea2 + mav4e * (
-                                          new_cam4 / 100) * new_pass_ISDI2_Ea2)
-                                  + dist_exuISDND * (
-                                          ISDND + mav5e * (new_cam5 / 100) * new_pass_ISDND_Ea2 + mav4e * (
-                                          new_cam4 / 100) * new_pass_ISDND_Ea2)
-                                  + dist_exuISDD * (ISDD + mav5e * (new_cam5 / 100) * new_pass_ISDD_Ea2 + mav4e * (
-                new_cam4 / 100) * new_pass_ISDD_Ea2))
+
+new_E_trans_Ea2 = new_E_trans_ISDI1_Ea2 + new_E_trans_ISDI2_Ea2 + new_E_trans_ISDND_Ea2 + new_E_trans_ISDD_Ea2
+
 Ea2 = round(E_trans - new_E_trans_Ea2, 1)
+
 conso_tot = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
         conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
 new_conso_tot_Ea2 = (conso_moy * new_pass_ISDI2_Ea2 * dist_exuISDI2) + (
@@ -906,22 +917,20 @@ if action2:
         st.error("Le taux d'utilisation de 5 essieux est déjà supérieur à 85%")
 
 # Optimiser le chargement de 2 tonnes (borner l'action)
-action3 = st.checkbox('Optimiser le chargement moyen des camions de 2 tonnes')
+action3 = st.checkbox('Augmenter le chargement moyen des camions de 2 tonnes')
 new_load_cam5 = load_cam5 + 2
 new_load_cam4 = load_cam4 + 2
-new_pass_ISDI1_Ea3 = round((ISDI1 / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100))),1)
-new_pass_ISDI2_Ea3 = round((ISDI2 / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100))),1)
-new_pass_ISDND_Ea3 = round((ISDND / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100))),1)
-new_pass_ISDD_Ea3 = round((ISDD / (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100))),1)
+new_load_cam2 = load_cam2 + 2
+new_mean_load = (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100) + new_load_cam2 * (cam2 / 100))
+new_pass_ISDI1_Ea3 = round((ISDI1 / new_mean_load) , 1)
+new_pass_ISDI2_Ea3 = round((ISDI2 / new_mean_load) , 1)
+new_pass_ISDND_Ea3 = round((ISDND / new_mean_load) , 1)
+new_pass_ISDD_Ea3 = round((ISDD / new_mean_load) , 1)
 new_pass_tot_Ea3 = new_pass_ISDI1_Ea3 + new_pass_ISDI2_Ea3 + new_pass_ISDND_Ea3 + new_pass_ISDD_Ea3
-new_E_trans_Ea3 = FE_trans * (dist_exuISDI1 * (
-        ISDI1 + mav5e * (cam5 / 100) * new_pass_ISDI1_Ea3 + mav4e * (cam4 / 100) * new_pass_ISDI1_Ea3)
-                              + dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * new_pass_ISDI2_Ea3 + mav4e * (
-                cam4 / 100) * new_pass_ISDI2_Ea3)
-                              + dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * new_pass_ISDND_Ea3 + mav4e * (
-                cam4 / 100) * new_pass_ISDND_Ea3)
-                              + dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * new_pass_ISDD_Ea3 + mav4e * (
-                cam4 / 100) * new_pass_ISDD_Ea3))
+new_E_trans_Ea3 = FE_trans * (dist_exuISDI1 * (ISDI1 + mav_trans * new_pass_ISDI1_Ea3)
+                              + dist_exuISDI2 * (ISDI2 + mav_trans * new_pass_ISDI2_Ea3)
+                              + dist_exuISDND * (ISDND + mav_trans * new_pass_ISDND_Ea3)
+                              + dist_exuISDD * (ISDD + mav_trans * new_pass_ISDD_Ea3))
 Ea3 = E_trans - new_E_trans_Ea3
 conso_tot_Ea3 = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
         conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
@@ -975,10 +984,10 @@ new_dist_exuISDI2 = dist_exuISDI2 - 10
 new_dist_exuISDND = dist_exuISDND - 10
 new_dist_exuISDD = dist_exuISDD - 10
 new_E_trans_Ea4 = FE_trans * (
-        new_dist_exuISDI1 * (ISDI1 + mav5e * (cam5 / 100) * pass_ISDI1 + mav4e * (cam4 / 100) * pass_ISDI1)
-        + new_dist_exuISDI2 * (ISDI2 + mav5e * (cam5 / 100) * pass_ISDI2 + mav4e * (cam4 / 100) * pass_ISDI2)
-        + new_dist_exuISDND * (ISDND + mav5e * (cam5 / 100) * pass_ISDND + mav4e * (cam4 / 100) * pass_ISDND)
-        + new_dist_exuISDD * (ISDD + mav5e * (cam5 / 100) * pass_ISDD + mav4e * (cam4 / 100) * pass_ISDD))
+        new_dist_exuISDI1 * (ISDI1 + mav_trans * pass_ISDI1)
+        + new_dist_exuISDI2 * (ISDI2 + mav_trans * pass_ISDI2)
+        + new_dist_exuISDND * (ISDND + mav_trans * pass_ISDND)
+        + new_dist_exuISDD * (ISDD + mav_trans * pass_ISDD))
 Ea4 = E_trans - new_E_trans_Ea4
 conso_tot_Ea4 = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
         conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
@@ -1008,20 +1017,15 @@ if action4:
 
 # Toutes les actions combinées
 action5 = st.checkbox("Combiner toutes les actions de réduction")
-new_pass_ISDI1_Ea5 = round((new_ISDI1 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
-new_pass_ISDI2_Ea5 = round((ISDI2 / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
-new_pass_ISDND_Ea5 = round((ISDND / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
-new_pass_ISDD_Ea5 = round((ISDD / (new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100))),1)
-new_E_trans_Ea5 = FE_trans * (new_dist_exuISDI1 * (
-        ISDI1 + mav5e * (new_cam5 / 100) * new_pass_ISDI1_Ea5 + mav4e * (new_cam4 / 100) * new_pass_ISDI1_Ea5)
-                              + new_dist_exuISDI2 * (
-                                      ISDI2 + mav5e * (new_cam5 / 100) * new_pass_ISDI2_Ea5 + mav4e * (
-                                      new_cam4 / 100) * new_pass_ISDI2_Ea5)
-                              + new_dist_exuISDND * (
-                                      ISDND + mav5e * (new_cam5 / 100) * new_pass_ISDND_Ea5 + mav4e * (
-                                      new_cam4 / 100) * new_pass_ISDND_Ea5)
-                              + new_dist_exuISDD * (ISDD + mav5e * (new_cam5 / 100) * new_pass_ISDD_Ea5 + mav4e * (
-                new_cam4 / 100) * new_pass_ISDD_Ea5))
+new_mean_load_all = new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100) + new_load_cam2 * (new_cam2 / 100)
+new_pass_ISDI1_Ea5 = round((new_ISDI1 / new_mean_load_all),1)
+new_pass_ISDI2_Ea5 = round((ISDI2 / new_mean_load_all),1)
+new_pass_ISDND_Ea5 = round((ISDND / new_mean_load_all),1)
+new_pass_ISDD_Ea5 = round((ISDD / new_mean_load_all),1)
+new_E_trans_Ea5 = FE_trans * (new_dist_exuISDI1 * (ISDI1 + new_mav * new_pass_ISDI1_Ea5)
+                              + new_dist_exuISDI2 * (ISDI2 + new_mav * new_pass_ISDI2_Ea5)
+                              + new_dist_exuISDND * (ISDND + new_mav * new_pass_ISDND_Ea5)
+                              + new_dist_exuISDD * (ISDD + new_mav * new_pass_ISDD_Ea5))
 new_tot_D = new_ISDI1 + ISDI2 + ISDND + ISDD
 new_pass_tot_Ea5 = new_pass_ISDI1_Ea5 + new_pass_ISDI2_Ea5 + new_pass_ISDND_Ea5 + new_pass_ISDD_Ea5
 new_E_valo = round(new_E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD, 1)
