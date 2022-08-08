@@ -352,11 +352,11 @@ header0 = '''
 st.write('---------------------------------------------------')
 st.markdown(header0, unsafe_allow_html=True)
 st.write('Ici, vous entrez quelques infos sur le chantier que vous souhaitez simuler')
-type_chantier = st.selectbox("Type de chantier :", ['CONSTRUCTION','DEMOLITION','TERRASSEMENT'])
-lieu_chantier = st.text_input('le lieu du chantier (entrer une adresse)', value="", max_chars=None, key=None, type="default")
+type_chantier = st.selectbox("Type de chantier", ['CONSTRUCTION','DEMOLITION','TERRASSEMENT'])
+lieu_chantier = st.text_input('Le lieu du chantier (entrer une adresse)', value="", max_chars=None, key=None, type="default")
 col1,col2=st.columns(2)
-taille_chantier = col1.selectbox('la taille du chantier', ['PETIT','MOYEN','GROS'])
-duree_semaine_chantier=col2.text_input('durée en  semaines', value="", max_chars=None, key=None, type="default")
+taille_chantier = col1.selectbox('La taille du chantier', ['PETIT','MOYEN','GROS'])
+duree_semaine_chantier=col2.text_input('Durée en  semaines', value="", max_chars=None, key=None, type="default")
 
 simulator_dict['type_chantier']=type_chantier
 simulator_dict['lieu_chantier']=lieu_chantier
@@ -666,7 +666,7 @@ simulator_dict['E_valo'] = E_valo
 simulator_dict['E_tot'] = E_tot
 
 
-with st.expander("Emissions de CO2e par types de déchets :"):
+with st.expander("Emissions de CO2e par types de déchets"):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.subheader("Terres")
@@ -729,7 +729,7 @@ with st.expander("Emissions de CO2e par types de déchets :"):
         else:
             simulator_dict['I_ISDD_kgCO2T'] = 0
 
-with st.expander("Emissions totales de CO2e (en tCO2e):"):
+with st.expander("Emissions totales de CO2e (en tCO2e)"):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.write("Transport :")
@@ -749,10 +749,10 @@ with st.expander("Emissions totales de CO2e (en tCO2e):"):
         else:
             simulator_dict['I_tot_kgCO2T'] = 0
 
-with st.expander("Distance à parcourir :"):
+with st.expander("Distance à parcourir"):
     st.subheader(str(dist_tot) + " km")
 
-with st.expander("Passages :"):
+with st.expander("Passages"):
     st.write("Total passages :")
     st.subheader(pass_tot)
     st.write("Total jours évacuation :")
