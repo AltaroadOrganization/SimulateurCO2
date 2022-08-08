@@ -70,17 +70,19 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 10, txt="LE CHANTIER simulé", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.set_text_color(0, 0, 0)
-    pdf.cell(200, 4, txt="Ce document résume l'estimation des émissions CO2", ln=1)
+    pdf.cell(200, 4, txt="Ce document résume l'estimation des émissions CO2e", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="- Du chantier : " + the_input_dict["type_chantier"],ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="- Pour la construction de : " + the_input_dict["categorie_ouvrage"],ln=1)
     pdf.cell(10)
+    pdf.cell(200, 4, txt="- de dimensions : " + str(the_input_dict["DO_ouv"]) + " " + the_input_dict["u"],ln=1)
+    pdf.cell(10)
     pdf.cell(200, 4, txt="- Situé à : " + the_input_dict["lieu_chantier"], ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="- De taille : " + the_input_dict["taille_chantier"], ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- D'une duréee de " + the_input_dict["duree_semaine_chantier"] + ' semaines', ln=1)
+    pdf.cell(200, 4, txt="- D'une duréee de " + str(the_input_dict["duree_semaine_chantier"]) + ' semaines', ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=16)
     pdf.set_text_color(128, 128, 128)
@@ -88,14 +90,14 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_text_color(0, 0, 0)
     pdf.set_font("Arial", "B", size=10)
-    pdf.cell(200, 4, txt="Estimations du bilan CO2 des Scopes 1 & 2", ln=1)
+    pdf.cell(200, 4, txt="Estimations du bilan CO2e des Scopes 1 & 2", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Scope 1 : " + str(the_input_dict["tot_S1"]) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Scope 1 : " + str(the_input_dict["tot_S1"]) + " tonnes CO2e", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Scope 2 : " + str(the_input_dict["tot_S2"]) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Scope 2 : " + str(the_input_dict["tot_S2"]) + " tonnes CO2e", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Scopes 1 & 2 : " + str(the_input_dict["tot_S1et2"]) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Scopes 1 & 2 : " + str(the_input_dict["tot_S1et2"]) + " tonnes CO2e", ln=1)
     pdf.cell(200, 4, txt="", ln=1)
     pdf.set_text_color(128, 128, 128)
     pdf.set_font("Arial", "B", size=16)
@@ -125,11 +127,15 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(10)
     pdf.cell(200, 4, txt="- Camions 5 essieux articulés : " + str(the_input_dict["nb_cam5"]) + " soit " + str(int(the_input_dict["cam5"])) + " %", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Chargement moyen des 5 essieux : " + str(the_input_dict["load_cam5"]) + "T" , ln=1)
+    pdf.cell(200, 4, txt="- Chargement moyen des 5 essieux : " + str(the_input_dict["load_cam5"]) + "tonnes" , ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="- Camions 4 essieux porteurs : " + str(the_input_dict["nb_cam4"]) + " soit " + str(int(the_input_dict["cam4"])) + " %", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Chargement moyen des 4 essieux : " + str(the_input_dict["load_cam4"])+"T", ln=1)
+    pdf.cell(200, 4, txt="- Chargement moyen des 4 essieux : " + str(the_input_dict["load_cam4"])+"tonnes", ln=1)
+    pdf.cell(10)
+    pdf.cell(200, 4, txt="- Camions 2 essieux porteurs : " + str(the_input_dict["nb_cam2"]) + " soit " + str(int(the_input_dict["cam2"])) + " %", ln=1)
+    pdf.cell(10)
+    pdf.cell(200, 4, txt="- Chargement moyen des 2 essieux : " + str(the_input_dict["load_cam2"])+"tonnes", ln=1)
     pdf.cell(10)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=10)
@@ -146,30 +152,30 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="Bilan CO2e", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Emissions CO2e totales estimées : " + str(int(the_input_dict["E_tot"])) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Emissions CO2e totales estimées : " + str(int(the_input_dict["E_tot"])) + " tonnes CO2e", ln=1)
     if the_input_dict["E_tot"] > 0:
         pdf.cell(20)
-        pdf.cell(200, 4, txt="- Emissions CO2e totales 'Transport' : " + str(int(the_input_dict["E_trans"])) + " tCO2e, soit " + str(
+        pdf.cell(200, 4, txt="- Emissions CO2e totales 'Transport' : " + str(int(the_input_dict["E_trans"])) + " tonnes CO2e, soit " + str(
             int((the_input_dict["E_trans"] / the_input_dict["E_tot"]) * 100)) + " %", ln=1)
         pdf.cell(20)
-        pdf.cell(200, 4, txt="- Emissions CO2e totales 'Valorisation' : " + str(int(the_input_dict["E_valo"])) + " tCO2e, soit " + str(
+        pdf.cell(200, 4, txt="- Emissions CO2e totales 'Valorisation' : " + str(int(the_input_dict["E_valo"])) + " tonnes CO2e, soit " + str(
             int((the_input_dict["E_valo"] / the_input_dict["E_tot"]) * 100)) + " %", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="- Emissions CO2e 'Terres' : "  "Transport = " + str(
-        int(the_input_dict["E_trans_ISDI1"])) + " tCO2e; Valorisation = " + str(int(the_input_dict["E_ISDI1"])) + " tCO2e; Total = " + str(
-        int(the_input_dict["E_ISDI1"] + the_input_dict["E_trans_ISDI1"])) + " tCO2e", ln=1)
+        int(the_input_dict["E_trans_ISDI1"])) + " tonnes CO2e; Valorisation = " + str(int(the_input_dict["E_ISDI1"])) + " tonnes CO2e; Total = " + str(
+        int(the_input_dict["E_ISDI1"] + the_input_dict["E_trans_ISDI1"])) + " tonnes CO2e", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="- Emissions CO2e 'Gravats' : "  "Transport = " + str(
-        int(the_input_dict["E_trans_ISDI2"])) + " tCO2e; Valorisation = " + str(int(the_input_dict["E_ISDI2"])) + " tCO2e; Total = " + str(
-        int(the_input_dict["E_ISDI2"] + the_input_dict["E_trans_ISDI2"])) + " tCO2e", ln=1)
+        int(the_input_dict["E_trans_ISDI2"])) + " tonnes CO2e; Valorisation = " + str(int(the_input_dict["E_ISDI2"])) + " tonnes CO2e; Total = " + str(
+        int(the_input_dict["E_ISDI2"] + the_input_dict["E_trans_ISDI2"])) + " tonnes CO2e", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4,
-             txt="- Emissions CO2e 'DND' : "  "Transport = " + str(int(the_input_dict["E_trans_ISDND"])) + " tCO2e; Valorisation = " + str(
-                 int(the_input_dict["E_ISDND"])) + " tCO2e; Total = " + str(int(the_input_dict["E_ISDND"] + the_input_dict["E_trans_ISDND"])) + " tCO2e", ln=1)
+             txt="- Emissions CO2e 'DND' : "  "Transport = " + str(int(the_input_dict["E_trans_ISDND"])) + " tonnes CO2e; Valorisation = " + str(
+                 int(the_input_dict["E_ISDND"])) + " tonnes CO2e; Total = " + str(int(the_input_dict["E_ISDND"] + the_input_dict["E_trans_ISDND"])) + " tonnes CO2e", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4,
-             txt="- Emissions CO2e 'DD' : "  "Transport = " + str(int(the_input_dict["E_trans_ISDD"])) + " tCO2e; Valorisation = " + str(
-                 int(the_input_dict["E_ISDD"])) + " tCO2e; Total = " + str(int(the_input_dict["E_ISDD"] + the_input_dict["E_trans_ISDD"])) + " tCO2e", ln=1)
+             txt="- Emissions CO2e 'DD' : "  "Transport = " + str(int(the_input_dict["E_trans_ISDD"])) + " tonnes CO2e; Valorisation = " + str(
+                 int(the_input_dict["E_ISDD"])) + " tonnes CO2e; Total = " + str(int(the_input_dict["E_ISDD"] + the_input_dict["E_trans_ISDD"])) + " tonnes CO2e", ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=10)
     pdf.cell(200, 4, txt="Actions de réduction et gains", ln=1)
@@ -177,7 +183,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(10)
     pdf.cell(200, 4, txt="+ 10% de réutilisation des matériaux/déchets sur site : ", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea1"])) + " tCO2e;", ln=1)
+    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea1"])) + " tonnes CO2e;", ln=1)
     pdf.cell(20)
     pdf.cell(200, 4, txt="- Gain passages = " + str(
         int(the_input_dict["pass_ISDI1"] - the_input_dict["new_pass_ISDI1"])) + " soit " + str(
@@ -188,7 +194,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(10)
     pdf.cell(200, 4, txt="+ 15% de camions 5 essieux articulés : ", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea2"])) + " tCO2e;", ln=1)
+    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea2"])) + " tonnes CO2e;", ln=1)
     pdf.cell(20)
     pdf.cell(200, 4, txt="- Gain passages = " + str(
         int(the_input_dict["pass_tot"] - the_input_dict["new_pass_tot_Ea2"])) + " soit " + str(
@@ -199,7 +205,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(10)
     pdf.cell(200, 4, txt="+ 2 tonnes de chargement moyen en + : ", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea3"])) + " tCO2e;", ln=1)
+    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea3"])) + " tonnes CO2e;", ln=1)
     pdf.cell(20)
     pdf.cell(200, 4, txt="- Gain passages = " + str(
         int(the_input_dict["pass_tot"] - the_input_dict["new_pass_tot_Ea3"])) + " soit " + str(
@@ -210,13 +216,13 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(10)
     pdf.cell(200, 4, txt="- 10 km de distance au centre de collecte : ", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4,txt="- Gain CO2e = " + str(int(the_input_dict["Ea4"])) + " tCO2e;",ln=1)
+    pdf.cell(200, 4,txt="- Gain CO2e = " + str(int(the_input_dict["Ea4"])) + " tonnes CO2e;",ln=1)
     pdf.cell(20)
     pdf.cell(200, 4,txt="- Gain économique = " + str(math.ceil(the_input_dict["eco_c_Ea4"])) + " euros",ln=1)
     pdf.cell(10)
     pdf.cell(200, 4, txt="Toutes les actions de réductions combinées : ", ln=1)
     pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea5"])) + " tCO2e;", ln=1)
+    pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea5"])) + " tonnes CO2e;", ln=1)
     pdf.cell(20)
     pdf.cell(200, 4, txt="- Gain passages = " + str(
         int(the_input_dict["pass_tot"] - the_input_dict["new_pass_tot_Ea5"])) + " soit " + str(
@@ -231,12 +237,12 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=10)
     pdf.set_text_color(0, 0, 0)
-    pdf.cell(200, 4, txt="Estimations CO2 autres déchets et achats", ln=1)
+    pdf.cell(200, 4, txt="Estimations CO2e autres déchets et achats", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Emissions GES 'autres déchets' : " + str(the_input_dict["tot_S3d"]) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Emissions CO2e 'autres déchets' : " + str(the_input_dict["tot_S3d"]) + " tonnes CO2e", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- Emissions GES 'achats' : " + str(the_input_dict["tot_S3a"]) + " tCO2e", ln=1)
+    pdf.cell(200, 4, txt="- Emissions CO2e 'achats' : " + str(the_input_dict["tot_S3a"]) + " tonnes CO2e", ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=16)
     pdf.set_text_color(128, 128, 128)
@@ -244,37 +250,37 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=10)
     pdf.set_text_color(0, 0, 0)
-    pdf.cell(200, 4, txt="Estimations du bilan CO2 de la construction de l'ouvrage", ln=1)
+    pdf.cell(200, 4, txt="Estimations du bilan CO2e de la construction de l'ouvrage", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
     pdf.cell(200, 4, txt="Selon les données de l'ADEME, la construction de ce type d'ouvrage d'une surface de " + str(
         int(the_input_dict["DO_ouv"])) + " m²,", ln=1)
     pdf.cell(10)
     pdf.cell(200, 4,
-             txt="émettrait environ " + str(int(the_input_dict["EMISSIONS_ouv"])) + " tCO2e (+ ou - " + str(
-                 int(the_input_dict["INCERTITUDE_ouv"])) + " tCO2e).",
+             txt="émettrait environ " + str(int(the_input_dict["EMISSIONS_ouv"])) + " tonnes CO2e (+ ou - " + str(
+                 int(the_input_dict["INCERTITUDE_ouv"])) + " tonnes CO2e).",
              ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=16)
     pdf.set_text_color(128, 128, 128)
-    pdf.cell(200, 10, txt="Estimation du bilan CO2 total", ln=1)
+    pdf.cell(200, 10, txt="Estimation du bilan CO2e total", ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", 'B', size=10)
     pdf.set_text_color(0, 0, 0)
-    pdf.cell(200, 4, txt="Total des émissions GES : " + str(
-        int(the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) + " tCO2e",
+    pdf.cell(200, 4, txt="Total des émissions CO2e : " + str(
+        int(the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) + " tonnes CO2e",
              ln=1)
     pdf.set_font("Arial", size=10)
     if E_tot > 0:
         pdf.cell(10)
-        pdf.cell(200, 4, txt="- Scope 1 : " + str(round(the_input_dict["tot_S1"], 1)) + " tCO2e, soit " + str(
+        pdf.cell(200, 4, txt="- Scope 1 : " + str(round(the_input_dict["tot_S1"], 1)) + " tonnes CO2e, soit " + str(
             round((the_input_dict["tot_S1"] / (the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) * 100, 1)) + " %", ln=1)
         pdf.cell(10)
-        pdf.cell(200, 4, txt="- Scope 2 : " + str(round(the_input_dict["tot_S2"], 1)) + " tCO2e, soit " + str(
+        pdf.cell(200, 4, txt="- Scope 2 : " + str(round(the_input_dict["tot_S2"], 1)) + " tonnes CO2e, soit " + str(
             round((the_input_dict["tot_S2"] / (the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) * 100, 1)) + " %", ln=1)
         pdf.cell(10)
         pdf.cell(200, 4,
-                 txt="- Scope 3 : " + str(round(the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"], 1)) + " tCO2e, soit " + str(
+                 txt="- Scope 3 : " + str(round(the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"], 1)) + " tonnes CO2e, soit " + str(
                      round(((the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"]) / (
                                  the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) * 100, 1)) + " %", ln=1)
     else:
@@ -282,8 +288,8 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", size=8, style='I')
     pdf.set_text_color(128, 128, 128)
-    pdf.cell(200, 4, txt="Ce simulateur propose une estimation des émissions CO2 d'un chantier. Il s'agit d'un outil dont l'objectif", ln=1)
-    pdf.cell(200, 4, txt="est d'anticiper les émissions CO2 pour les éviter. Les calculs sont basés sur des données sources fiables", ln=1)
+    pdf.cell(200, 4, txt="Ce simulateur propose une estimation des émissions CO2e d'un chantier. Il s'agit d'un outil dont l'objectif", ln=1)
+    pdf.cell(200, 4, txt="est d'anticiper les émissions CO2e pour les éviter. Les calculs sont basés sur des données sources fiables", ln=1)
     pdf.cell(200, 4, txt="mais les résultats ne doivent pas être interprétés comme un Bilan Énergétique des Gaz à Effet de Serre (BEGES) certifié", ln=1)
     pdf.cell(200, 4, txt="dont la méthodologie est définie par l'ADEME et ne peut être délivré que par des experts accrédités. Il convient à l'utilisateur de renseigner ", ln=1)
     pdf.cell(200, 4, txt="les données les plus fiables possibles afin de réduire les incertitudes des résultats obtenus.", ln=1)
@@ -601,7 +607,7 @@ with col1:
         simulator_dict['nb_cam2'] = nb_cam2
         simulator_dict['cam5'] = cam5
         simulator_dict['cam4'] = cam4
-        simulator_dict['cam2'] = cam4
+        simulator_dict['cam2'] = cam2
     else:
         st.write("rentrer au moins 1 camion")
         cam2=cam5=cam4=0
@@ -1363,6 +1369,7 @@ simulator_dict['sous_categorie_ouvrage2'] = sous_categorie2
 simulator_dict['EMISSIONS_ouv'] = EMISSIONS_ouv
 simulator_dict['INCERTITUDE_ouv'] = INCERTITUDE_ouv
 simulator_dict['DO_ouv'] = DO_ouv
+simulator_dict['u'] = u
 
 header5 = '''
 <head>
