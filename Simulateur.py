@@ -351,9 +351,9 @@ header0 = '''
 st.write('---------------------------------------------------')
 st.markdown(header0, unsafe_allow_html=True)
 st.write('Ici, vous entrez quelques infos sur le chantier que vous souhaitez simuler')
-type_chantier = st.text_input('type de chantier', value="par exemple: CONSTRUCTION / DEMOLITION / TERRASSEMENT", max_chars=None, key=None, type="default")
-lieu_chantier = st.text_input('le lieu du chantier', value="entrer une adresse", max_chars=None, key=None, type="default")
-taille_chantier = st.text_input('la taille du chantier', value="par exemple : PETIT (semaine) / MOYEN (mois) / GROS (année)", max_chars=None, key=None, type="default")
+type_chantier = st.selectbox("Type de chantier :", ['CONSTRUCTION','DEMOLITION','TERRASSEMENT'])
+lieu_chantier = st.text_input('le lieu du chantier (entrer une adresse)', value="", max_chars=None, key=None, type="default")
+taille_chantier = st.selectbox('la taille du chantier', ['PETIT (semaine)','MOYEN (mois)','GROS (année)'])
 
 simulator_dict['type_chantier']=type_chantier
 simulator_dict['lieu_chantier']=lieu_chantier
