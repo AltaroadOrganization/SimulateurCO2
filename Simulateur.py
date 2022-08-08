@@ -582,7 +582,7 @@ with col1:
     subheader5 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Types de camions 🚛</p>
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Véhicules d'évacuation 🚛</p>
     </head>
     '''
     st.markdown(subheader5, unsafe_allow_html=True)
