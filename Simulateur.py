@@ -532,10 +532,10 @@ with col1:
     #st.subheader("Quantité de déchets à évacuer 🚮")
     ISDND = st.number_input("Déchets non-dangereux (Bois, Métaux, ...) (en T)", step=1)
     ISDI1brut = st.number_input("Déchets inertes excavés (Terres) (en T)", step=1)
-    ISDI2 = st.number_input("Déchets inertes excavés (Gravats) (en T)", step=1)
+    ISDI2brut = st.number_input("Déchets inertes excavés (Gravats) (en T)", step=1)
     ISDD = st.number_input("Déchets dangereux (en T)", step=1)
     simulator_dict['ISDI1brut'] = ISDI1brut
-    simulator_dict['ISDI2'] = ISDI2
+    simulator_dict['ISDI2brut'] = ISDI2brut
     simulator_dict['ISDND'] = ISDND
     simulator_dict['ISDD'] = ISDD
 
@@ -574,7 +574,7 @@ with col2:
     subheader4 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Réemploi des matériaux/déchets ♻</p>
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Réemploi des terres/gravats ♻</p>
     </head>
     '''
     st.markdown(subheader4, unsafe_allow_html=True)
@@ -582,8 +582,10 @@ with col2:
     repl_terres = st.slider("Taux de réemploi moyen sur site (%)", 0, 100, 0, step=5)
     valo_terres = 100 - repl_terres
     ISDI1 = math.ceil(ISDI1brut * (valo_terres / 100))
+    ISDI2 = math.ceil(ISDI2brut * (valo_terres / 100))
     simulator_dict['repl_terres'] = repl_terres
     simulator_dict['ISDI1'] = ISDI1
+    simulator_dict['ISDI2'] = ISDI2
 
 col1, col2 = st.columns(2)
 with col1:
