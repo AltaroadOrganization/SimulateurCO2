@@ -415,10 +415,14 @@ with st.expander("Scope1 - Energies fossiles 🛢️"):
     df = df[df['Sous catégorie 4'] == " Usage routier ou non-routier"]
     choix_fe = st.selectbox("Choix du facteur d'émissions :", df["Nom base français"].unique())
     df = df[df['Nom base français'] == choix_fe]
-    choix_attribut = st.selectbox("Choix de l'attribut :", df['Nom attribut français'].unique())
-    df = df[df["Nom attribut français"] == choix_attribut]
-    choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
-    df = df[df["Unité français"] == choix_unite]
+    if df['Nom attribut français'].str.contains('/').any():
+        choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
+        df = df[df["Unité français"] == choix_unite]
+    else:
+        choix_attribut = st.selectbox("Choix de l'attribut :", df['Nom attribut français'].unique())
+        df = df[df["Nom attribut français"] == choix_attribut]
+        choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
+        df = df[df["Unité français"] == choix_unite]
     for u in df["Unité français"]:
         u = u[7:].lower()
     DO = float(st.number_input("Quantité estimée (en " + u + ") : ", step=1))
@@ -1214,12 +1218,18 @@ with st.expander("Type de déchet ♻"):
     df = df[df['Poste'] == "Poste 11"]
     choix_fe = st.selectbox("Catégorie du déchet :", df["Nom base français"].unique())
     df = df[df['Nom base français'] == choix_fe]
-    choix_attribut = st.selectbox("Déchet :", df['Spécificité 1'].unique())
-    df = df[df["Spécificité 1"] == choix_attribut]
-    choix_specif = st.selectbox("Type de traitement :", df['Spécificité 2'].unique())
-    df = df[df["Spécificité 2"] == choix_specif]
-    choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
-    df = df[df["Unité français"] == choix_unite]
+    if df['Spécificité 1'].str.contains('/').any():
+        choix_specif = st.selectbox("Type de traitement :", df['Spécificité 2'].unique())
+        df = df[df["Spécificité 2"] == choix_specif]
+        choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
+        df = df[df["Unité français"] == choix_unite]
+    else:
+        choix_attribut = st.selectbox("Déchet :", df['Spécificité 1'].unique())
+        df = df[df["Spécificité 1"] == choix_attribut]
+        choix_specif = st.selectbox("Type de traitement :", df['Spécificité 2'].unique())
+        df = df[df["Spécificité 2"] == choix_specif]
+        choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
+        df = df[df["Unité français"] == choix_unite]
     for u in df["Unité français"]:
         u = u[7:].lower()
     DO = float(st.number_input("Quantité estimée (en " + u + ") : ", step=1))
@@ -1250,12 +1260,26 @@ with st.expander("Type d'achat 🛒"):
     df = df[df['Poste'] == "Poste 9"]
     choix_fe = st.selectbox("Catégorie du bien ou service :", df["Nom base français"].unique())
     df = df[df['Nom base français'] == choix_fe]
-    choix_attribut = st.selectbox("Bien ou service :", df['Spécificité 1'].unique())
-    df = df[df["Spécificité 1"] == choix_attribut]
-    choix_specif = st.selectbox("Spécificité :", df['Spécificité 2'].unique())
-    df = df[df["Spécificité 2"] == choix_specif]
-    choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
-    df = df[df["Unité français"] == choix_unite]
+    if df['Spécificité 1'].str.contains('/').any():
+        if df['Spécificité 2'].str.contains('/').any():
+            choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
+            df = df[df["Unité français"] == choix_unite]
+        else:
+            choix_specif = st.selectbox("Spécificité :", df['Spécificité 2'].unique())
+            df = df[df["Spécificité 2"] == choix_specif]
+            choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
+            df = df[df["Unité français"] == choix_unite]
+    else:
+        choix_attribut = st.selectbox("Bien ou service :", df['Spécificité 1'].unique())
+        df = df[df["Spécificité 1"] == choix_attribut]
+        if df['Spécificité 2'].str.contains('/').any():
+            choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
+            df = df[df["Unité français"] == choix_unite]
+        else:
+            choix_specif = st.selectbox("Spécificité :", df['Spécificité 2'].unique())
+            df = df[df["Spécificité 2"] == choix_specif]
+            choix_unite = st.selectbox("Choix de l'unité :", df['Unité français'].unique())
+            df = df[df["Unité français"] == choix_unite]
     for u in df["Unité français"]:
         u = u[7:].lower()
     DO_a = float(st.number_input("Quantité estimée (en " + u + ") :  ", step=1))

@@ -1,6 +1,6 @@
 Nom base français;Nom attribut français;Nom frontière français;Tags français;Unité français;Sous-localisation géographique français;Incertitude;Total poste non décomposé;Code de la catégorie;Sous catégorie 1;Sous catégorie 2;Sous catégorie 3;Sous catégorie 4
-Agglomérés de houille;;;combustible solide,charbon,agglomérés de houille;kgCO2e/kg;;20;3,35;Combustibles ; Fossiles ; Solides ; Charbons;
-Anthracite;;;combustible solide,charbon,anthracite;kgCO2e/kg;;20;2,87;Combustibles ; Fossiles ; Solides ; Charbons;
+Agglomérés de houille;/;;combustible solide,charbon,agglomérés de houille;kgCO2e/kg;;20;3,35;Combustibles ; Fossiles ; Solides ; Charbons;
+Anthracite;/;;combustible solide,charbon,anthracite;kgCO2e/kg;;20;2,87;Combustibles ; Fossiles ; Solides ; Charbons;
 Biodiesel;changement d'affectation des sols scénario maximum;;;kgCO2e/litre;;20;7,17;Combustibles ; Organiques ; Liquides;;
 Biodiesel;changement d'affectation des sols scénario maximum;;;kgCO2e/tonne;;20;8058;Combustibles ; Organiques ; Liquides;;
 Biodiesel;changement d'affectation des sols scénario optimiste;;;kgCO2e/litre;;20;0,434;Combustibles ; Organiques ; Liquides;;
@@ -38,7 +38,7 @@ Biopropane;à base de graisses animales;;combustible gazeux,biopropane,HVO,gaz,hu
 Biopropane;à base de graisses animales;;combustible gazeux,biopropane,HVO,gaz,huiles végétales hydro-traitées,graisse animale;kgCO2e/litre;;20;0,338;Combustibles ; Organiques ; Gazeux;;
 Biopropane;mix annuel 2020;;combustible gazeux,biopropane,HVO,gaz,huiles végétales hydro-traitées,mix;kgCO2e/kg;;20;0,944;Combustibles ; Organiques ; Gazeux;;
 Biopropane;mix annuel 2020;;combustible gazeux,biopropane,HVO,gaz,huiles végétales hydro-traitées,mix;kgCO2e/litre;;20;0,49;Combustibles ; Organiques ; Gazeux;;
-Briquette de lignite;;;combustible solide,charbon,briquettes de lignite;kgCO2e/kg;;20;1,84;Combustibles ; Fossiles ; Solides ; Charbons;
+Briquette de lignite;/;;combustible solide,charbon,briquettes de lignite;kgCO2e/kg;;20;1,84;Combustibles ; Fossiles ; Solides ; Charbons;
 Butane;inclus maritime;;combustible liquide,butane,Info GES;kgCO2e/kg;;5;3,44;Combustibles ; Fossiles ; Gazeux ; Propane et butane; Usage routier ou non-routier
 Butane;inclus maritime;;combustible liquide,butane;kgCO2e/litre;;5;2;Combustibles ; Fossiles ; Gazeux ; Propane et butane; Usage routier ou non-routier
 Carbureacteur;large coupe jet B;;combustible liquide,carbureacteur;kgCO2e/kg;;5;3,82;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage aérien
@@ -46,11 +46,11 @@ Carbureacteur;large coupe jet B;;combustible liquide,carbureacteur,Info GES;kgCO
 Charbon à coke;PCS supérieur à 23865 kJ/kg;;combustible solide,charbon,charbon à coke;kgCO2e/kg;;20;2,72;Combustibles ; Fossiles ; Solides ; Charbons;
 Charbon à vapeur;PCS supérieur à 23865 kJ/kg;;combustible solide,charbon,charbon à vapeur;kgCO2e/kg;;20;2,72;Combustibles ; Fossiles ; Solides ; Charbons;
 Charbon sous-bitumineux;PCS entre 17 435 et 23 865 kJ/kg;;combustible solide,charbon,charbon sous-bitumineux;kgCO2e/kg;;20;2,12;Combustibles ; Fossiles ; Solides ; Charbons;
-Coke de houille;;;combustible solide,coke de houille;kgCO2e/kg;;20;3,28;Combustibles ; Fossiles ; Solides ; Cokes;
-Coke de lignite;;;combustible solide,coke de lignite;kgCO2e/kg;;20;2,01;Combustibles ; Fossiles ; Solides ; Cokes;
-coke de pétrole;;;combustible solide,coke de pétrole;kgCO2e/kg;;20;3,49;Combustibles ; Fossiles ; Solides ; Cokes;
-Combustible haute viscosité CHV;;;combustible liquide,combustible haute viscosité chv;kgCO2e/kg;;20;3,65;Combustibles ; Fossiles ; Liquides ; Usage source fixe; Usage routier ou non-routier
-Connexes transformation bois écorces ou chutes issues de scierie ou papeterie;;;biocombustible,bois,Connexes transformation bois écorces ou chutes issues de scierie ou papeterie;kgCO2e/kg;;25;0,0256;Combustibles ; Organiques ; Solides;;
+Coke de houille;/;;combustible solide,coke de houille;kgCO2e/kg;;20;3,28;Combustibles ; Fossiles ; Solides ; Cokes;
+Coke de lignite;/;;combustible solide,coke de lignite;kgCO2e/kg;;20;2,01;Combustibles ; Fossiles ; Solides ; Cokes;
+coke de pétrole;/;;combustible solide,coke de pétrole;kgCO2e/kg;;20;3,49;Combustibles ; Fossiles ; Solides ; Cokes;
+Combustible haute viscosité CHV;/;;combustible liquide,combustible haute viscosité chv;kgCO2e/kg;;20;3,65;Combustibles ; Fossiles ; Liquides ; Usage source fixe; Usage routier ou non-routier
+Connexes transformation bois écorces ou chutes issues de scierie ou papeterie;/;;biocombustible,bois,Connexes transformation bois écorces ou chutes issues de scierie ou papeterie;kgCO2e/kg;;25;0,0256;Combustibles ; Organiques ; Solides;;
 Déchets bois;"""""""Adjuvantés"""" Broyat criblé sans Sortie du Statut Déchet classés non dangereux""";;biocombustible,bois,Déchets bois;kgCO2e/kg;;25;0,0588;Combustibles ; Organiques ; Solides;;
 Déchets bois;"""""""Propres"""" Broyat Sortie du Statut Déchet criblé""";;biocombustible,bois,Déchets bois;kgCO2e/kg;;25;0,0368;Combustibles ; Organiques ; Solides;;
 Electricité;2020 - mix moyen;consommation;Electricité,France continentale,Mix électrique;kgCO2e/kWh;;10;0,0599;Electricité ; Mix réseau électrique ; France continentale ; Moyen;
@@ -71,13 +71,13 @@ Essence;E10;;combustible liquide,essence,essence E10,Info GES;kgCO2e/litre;;10;2
 Essence;E10;;combustible liquide,essence,essence E10;kgCO2e/kg;;5;3,61;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
 Essence;E85;;combustible liquide,essence,essence E85,Info GES;kgCO2e/litre;;10;1,11;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
 Essence;E85;;combustible liquide,essence,essence E85;kgCO2e/tonne;;5;1481;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
-Essence aviation AvGas;;;combustible liquide,essence aviation avgas;kgCO2e/kg;;5;3,79;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage aérien
-Essence aviation AvGas;;;combustible liquide,essence aviation avgas,Info GES;kgCO2e/litre;;5;3,01;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage aérien
-Fioul domestique;;;combustible liquide,Fioul domestique;kgCO2e/kg;;5;3,85;Combustibles ; Fossiles ; Liquides ; Usage source fixe; Usage routier ou non-routier
-Fioul domestique;;;combustible liquide,Fioul domestique;kgCO2e/litre;;5;3,25;Combustibles ; Fossiles ; Liquides ; Usage source fixe; Usage routier ou non-routier
+Essence aviation AvGas;/;;combustible liquide,essence aviation avgas;kgCO2e/kg;;5;3,79;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage aérien
+Essence aviation AvGas;/;;combustible liquide,essence aviation avgas,Info GES;kgCO2e/litre;;5;3,01;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage aérien
+Fioul domestique;/;;combustible liquide,Fioul domestique;kgCO2e/kg;;5;3,85;Combustibles ; Fossiles ; Liquides ; Usage source fixe; Usage routier ou non-routier
+Fioul domestique;/;;combustible liquide,Fioul domestique;kgCO2e/litre;;5;3,25;Combustibles ; Fossiles ; Liquides ; Usage source fixe; Usage routier ou non-routier
 Fioul Lourd;commercial;;combustible liquide,fioul lourd;kgCO2e/kg;;5;3,64;Combustibles ; Fossiles ; Liquides ; Usage source fixe; Usage routier ou non-routier
 Fioul Lourd;commercial;;combustible liquide,fioul lourd;kgCO2e/litre;;5;3,28;Combustibles ; Fossiles ; Liquides ; Usage source fixe; Usage routier ou non-routier
-Gaz naturel;;;combustible gazeux,gaz naturel;kgCO2e/m3;Type H, France continentale sauf nord;5;2,53;Combustibles ; Fossiles ; Gazeux ; Gaz naturel; Usage routier ou non-routier
+Gaz naturel;/;;combustible gazeux,gaz naturel;kgCO2e/m3;Type H, France continentale sauf nord;5;2,53;Combustibles ; Fossiles ; Gazeux ; Gaz naturel; Usage routier ou non-routier
 Gaz naturel - 2015;mix moyen;consommation;combustible gazeux,gaz naturel;kgCO2e/m3;France;5;2,2;Combustibles ; Fossiles ; Gazeux ; Gaz naturel; Usage routier ou non-routier
 Gazole;B30;;combustible liquide,Gazole,gasoil,diesel,gazole B30;kgCO2e/tonne;;5;3527;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
 Gazole;B30;;combustible liquide,Gazole,gasoil,diesel,gazole B30,Info GES;kgCO2e/litre;;10;2,64;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
@@ -87,12 +87,12 @@ Gazole routier;B10;;combustible liquide,Gazole,gasoil,diesel,B10;kgCO2e/Litre;;5
 Gazole routier;B100;;combustible liquide,Gazole,gasoil,diesel,B100;kgCO2e/Litre;;5;1,21;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
 Gazole routier;B7;;combustible liquide,Gazole,gasoil,diesel,gazole routier,Info GES;kgCO2e/litre;;10;3,1;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
 Gazole routier;B7;;combustible liquide,Gazole,gasoil,diesel;kgCO2e/tonne;;5;4153;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
-GNC, Gaz Naturel Comprimé pour véhicule routier;;;GNV,gaz naturel véhicule,GNC,Gaz Naturel Comprimé;kgCO2e/kg;;10;2,96;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
-GNC, Gaz Naturel Comprimé pour véhicule routier;;;GNV,gaz naturel véhicule,GNC,Gaz Naturel Comprimé;kgCO2e/m3;;10;2,33;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
+GNC, Gaz Naturel Comprimé pour véhicule routier;/;;GNV,gaz naturel véhicule,GNC,Gaz Naturel Comprimé;kgCO2e/kg;;10;2,96;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
+GNC, Gaz Naturel Comprimé pour véhicule routier;/;;GNV,gaz naturel véhicule,GNC,Gaz Naturel Comprimé;kgCO2e/m3;;10;2,33;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
 GNL, Gaz Naturel Liquéfié;inclus routier, maritime et fluvial;;combustible liquide,GNL,gaz naturel liquéfié;kgCO2e/Litre;;5;2,15;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
 GNL, Gaz Naturel Liquéfié;inclus routier, maritime et fluvial;;combustible liquide,GNL,gaz naturel liquéfié;kgCO2e/kg;;5;3,28;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
-GPL pour véhicule routier;;;combustible liquide,GPL,gaz de pétrole liquefié;kgCO2e/kg;;5;3,45;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
-GPL pour véhicule routier;;;combustible liquide,GPL,gaz de pétrole liquefié,Info GES;kgCO2e/litre;;5;1,86;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
+GPL pour véhicule routier;/;;combustible liquide,GPL,gaz de pétrole liquefié;kgCO2e/kg;;5;3,45;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
+GPL pour véhicule routier;/;;combustible liquide,GPL,gaz de pétrole liquefié,Info GES;kgCO2e/litre;;5;1,86;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage routier ou non-routier
 Granulés;Blancs français issus de connexe de scierie;;biocombustible,bois,Granulés;kgCO2e/kg;;25;0,0469;Combustibles ; Organiques ; Solides;;
 HFO Heavy Fuel Oil;ISO 8217 classes RME à RMK;;combustible liquide,HFO heavy fuel oil,Info GES;kgCO2e/kg;;5;3,64;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage maritime et fluvial
 HFO Heavy Fuel Oil;ISO 8217 classes RME à RMK;;combustible liquide,HFO heavy fuel oil;kgCO2e/litre;;5;2,93;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage maritime et fluvial
@@ -104,7 +104,7 @@ LFO Light Fuel Oil;ISO 8217 classes RMA à RMD maritime;;combustible liquide,LFO 
 Lignite;PCS inférieur à 17435 kJ/kg;;combustible solide,charbon,lignite;kgCO2e/kg;;20;1,87;Combustibles ; Fossiles ; Solides ; Charbons;
 MDO Marine Diesel Oil;ISO 8217 classes DMX à DMC;;combustible liquide,MDO marine diesel oil,Info GES;kgCO2e/kg;;5;3,85;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage maritime et fluvial
 MDO Marine Diesel Oil;ISO 8217 classes DMX à DMC;;combustible liquide,MDO marine diesel oil;kgCO2e/litre;;5;3,05;Combustibles ; Fossiles ; Liquides ; Usage sources mobiles ; Usage maritime et fluvial
-Pétrole Brut;;;combustible liquide,pétrole brut;kgCO2e/kg;;5;3,34;Combustibles ; Fossiles ; Liquides ; Pétrole brut; Usage routier ou non-routier
+Pétrole Brut;/;;combustible liquide,pétrole brut;kgCO2e/kg;;5;3,34;Combustibles ; Fossiles ; Liquides ; Pétrole brut; Usage routier ou non-routier
 Plaquettes forestières;Humides 45% humidité;;biocombustible,bois,Plaquettes forestières;kgCO2e/kg;;25;0,0311;Combustibles ; Organiques ; Solides;;
 Plaquettes forestières;Sèches 25% humidité;;biocombustible,bois,Plaquettes forestières,;kgCO2e/kg;;25;0,0503;Combustibles ; Organiques ; Solides;;
 Propane;inclus maritime;;Propane,combustible liquide,Info GES;kgCO2e/kg;;5;3,46;Combustibles ; Fossiles ; Gazeux ; Propane et butane; Usage routier ou non-routier
@@ -981,7 +981,7 @@ Réseau de froid;93, Saint-Denis, Stade Energies SAS;2021;Réseau de froid,Saint-D
 Réseau de froid;94, Orly, Réseau froid ADP Orly;2021;Réseau de froid,Orly,Réseau froid ADP Orly;kgCO2e/kWh;Ile-de-France, Orly;30;0,017;Réseaux de chaleur / froid ; Île-de-France ; 94. Val de Marne;;
 Réseau de froid;95, ROISSY-EN-FRANCE, Réseau froid ADP Roissy;2021;Réseau de froid,ROISSY-EN-FRANCE,Réseau froid ADP Roissy;kgCO2e/kWh;Ile-de-France, ROISSY-EN-FRANCE;30;0,02;Réseaux de chaleur / froid ; Île-de-France ; 95. Val-d'Oise;;
 Réseau de froid;Autres réseaux de froid;2021;Réseau de froid,,Autres réseaux de froid;kgCO2e/kWh;France;30;0,12;Réseaux de chaleur / froid ; Autre;;;
-Tourbe;;;combustible solide,charbon,tourbe;kgCO2e/kg;;20;1,38;Combustibles ; Fossiles ; Solides ; Charbons;
+Tourbe;/;;combustible solide,charbon,tourbe;kgCO2e/kg;;20;1,38;Combustibles ; Fossiles ; Solides ; Charbons;
 Electricité;centrale charbon;production;Moyen de production d'électricité.centrale charbon;kgCO2e/kWh;;10;1,06;Electricité ; Moyen de production ; Conventionnels;;
 Electricité;centrale fioul;production;Moyen de production d'électricité.centrale fioul;kgCO2e/kWh;;10;0,73;Electricité ; Moyen de production ; Conventionnels;;
 Electricité;centrale gaz;production;Moyen de production d'électricité.centrale gaz;kgCO2e/kWh;;10;0,418;Electricité ; Moyen de production ; Conventionnels;;
