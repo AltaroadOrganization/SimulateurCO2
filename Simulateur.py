@@ -547,10 +547,10 @@ def show():
         '''
         st.markdown(subheader1, unsafe_allow_html=True)
         #st.subheader("Quantité de déchets à évacuer 🚮")
-        ISDND = st.number_input("Déchets non-dangereux (Bois, Métaux, ...) (en T)", step=1)
-        ISDI1brut = st.number_input("Déchets inertes excavés (Terres) (en T)", step=1)
-        ISDI2brut = st.number_input("Déchets inertes excavés (Gravats) (en T)", step=1)
-        ISDD = st.number_input("Déchets dangereux (en T)", step=1)
+        ISDND = st.number_input("Déchets non-dangereux (Bois, Métaux, ...) (en T)", value=st.session_state['ISDD'],step=1)
+        ISDI1brut = st.number_input("Déchets inertes excavés (Terres) (en T)", value=st.session_state['ISDI1brut'], step=1)
+        ISDI2brut = st.number_input("Déchets inertes excavés (Gravats) (en T)", value=st.session_state['ISDI2brut'], step=1)
+        ISDD = st.number_input("Déchets dangereux (en T)", value=st.session_state['ISDD'], step=1)
         simulator_dict['ISDI1brut'] = ISDI1brut
         simulator_dict['ISDI2brut'] = ISDI2brut
         simulator_dict['ISDND'] = ISDND
@@ -565,10 +565,10 @@ def show():
         </head>
         '''
         st.markdown(subheader2, unsafe_allow_html=True)
-        dist_exuISDND = st.number_input("Distance centre de collecte ISDND (en km)", value=35, step=1)
-        dist_exuISDI1 = st.number_input("Distance centre de collecte ISDI1 (en km)", value=35, step=1)
-        dist_exuISDI2 = st.number_input("Distance centre de collecte ISDI2 (en km)", value=35, step=1)
-        dist_exuISDD = st.number_input("Distance centre de collecte ISDD (en km)", value=35, step=1)
+        dist_exuISDND = st.number_input("Distance centre de collecte ISDND (en km)", value=st.session_state['dist_exuISDND'], step=1)
+        dist_exuISDI1 = st.number_input("Distance centre de collecte ISDI1 (en km)", value=st.session_state['dist_exuISDI1'], step=1)
+        dist_exuISDI2 = st.number_input("Distance centre de collecte ISDI2 (en km)", value=st.session_state['dist_exuISDI2'], step=1)
+        dist_exuISDD = st.number_input("Distance centre de collecte ISDD (en km)", value=st.session_state['dist_exuISDD'], step=1)
         simulator_dict['dist_exuISDI1'] = dist_exuISDI1
         simulator_dict['dist_exuISDI2'] = dist_exuISDI2
         simulator_dict['dist_exuISDND'] = dist_exuISDND
@@ -584,7 +584,7 @@ def show():
         '''
         st.markdown(subheader3, unsafe_allow_html=True)
         #st.subheader("Nombre de passages quotidiens 🔃")
-        pass_jour = st.slider("Nombre de passages quotidien estimés", 10, 100, 50, step=5)
+        pass_jour = st.slider("Nombre de passages quotidien estimés", 10, 100, value=st.session_state['pass_jour'], step=5)
         simulator_dict['pass_jour'] = pass_jour
 
     with col2:
@@ -596,7 +596,7 @@ def show():
         '''
         st.markdown(subheader4, unsafe_allow_html=True)
         #st.subheader("Taux de réemploi des terres ♻️")
-        repl_terres = st.slider("Taux de réemploi moyen sur site (%)", 0, 100, 0, step=5)
+        repl_terres = st.slider("Taux de réemploi moyen sur site (%)", 0, 100, value=st.session_state['repl_terres'], step=5)
         valo_terres = 100 - repl_terres
         ISDI1 = math.ceil(ISDI1brut * (valo_terres / 100))
         ISDI2 = math.ceil(ISDI2brut * (valo_terres / 100))
@@ -614,9 +614,9 @@ def show():
         '''
         st.markdown(subheader5, unsafe_allow_html=True)
         #st.subheader("Types de camions 🚛")
-        nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=20, step=1)
-        nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=10, step=1)
-        nb_cam2 = st.number_input("Nombre de camions 2 essieux porteurs", value=4, step=1)
+        nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=st.session_state['nb_cam5'], step=1)
+        nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=st.session_state['nb_cam4'], step=1)
+        nb_cam2 = st.number_input("Nombre de camions 2 essieux porteurs", value=st.session_state['nb_cam2'], step=1)
         if (nb_cam5 + nb_cam4 + nb_cam2)>0:
             cam5 = (nb_cam5 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
             cam4 = (nb_cam4 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
@@ -639,9 +639,9 @@ def show():
         </head>
         '''
         st.markdown(subheader6, unsafe_allow_html=True)
-        load_cam5 = st.slider("Chargement moyen des camions 5 essieux (tonnes)", 15, 29, 25, step=1)
-        load_cam4 = st.slider("Chargement moyen des camions 4 essieux (tonnes)", 10, 20, 15, step=1)
-        load_cam2 = st.slider("Chargement moyen des camions 2 essieux (tonnes)", 2, 15, 8, step=1)
+        load_cam5 = st.slider("Chargement moyen des camions 5 essieux (tonnes)", 15, 29, value=st.session_state['load_cam5'],step=1)
+        load_cam4 = st.slider("Chargement moyen des camions 4 essieux (tonnes)", 10, 20, value=st.session_state['load_cam4'], step=1)
+        load_cam2 = st.slider("Chargement moyen des camions 2 essieux (tonnes)", 2, 15, value=st.session_state['load_cam2'], step=1)
         simulator_dict['load_cam5'] = load_cam5
         simulator_dict['load_cam4'] = load_cam4
         simulator_dict['load_cam2'] = load_cam2
@@ -1160,7 +1160,6 @@ def show():
                 st.pyplot(fig3)
         with col2:
             if E_ISDI1 + E_trans_ISDI1 > 0 or E_ISDI2 + E_trans_ISDI2 > 0 or E_ISDND + E_trans_ISDND > 0 or E_ISDD + E_trans_ISDD > 0:
-                labels4 = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
                 sizes4 = [E_ISDI1 + E_trans_ISDI1, E_ISDI2 + E_trans_ISDI2, E_ISDND + E_trans_ISDND,
                           E_ISDD + E_trans_ISDD]
                 fig4, ax4 = plt.subplots()
@@ -1175,7 +1174,6 @@ def show():
                 title.set_size(18)
                 st.pyplot(fig4)
             if E_valo > 0 or E_trans > 0:
-                labels5 = 'Traitement', 'Transport'
                 sizes5 = [E_valo, E_trans]
                 fig5, ax5 = plt.subplots()
                 ax5.set_title("Part des émissions de CO2e Traitement/Transport",color = "#f37121", fontfamily = 'sen', size = 28)
@@ -1367,7 +1365,6 @@ def show():
     '''
     st.write('---------------------------------------------------')
     st.markdown(header4, unsafe_allow_html=True)
-    #st.header("SCOPE 3 : Construction de l'ouvrage 🏗️")
     st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface")
     bdd = "data_FE_ouvrages.csv"
     df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
@@ -1378,22 +1375,41 @@ def show():
     df["Unité"] = df["Unité"].astype(str)
 
     with st.expander("Données 👷"):
-        ouvrage = st.selectbox("Type d'ouvrage :", df["Type d'ouvrage"].unique())
+        list_ouvrage=list(df["Type d'ouvrage"].unique())
+        try:
+            ouvrage = st.selectbox("Type d'ouvrage :", list_ouvrage, list_ouvrage.index(st.session_state["ouvrage"]))
+        except:
+            ouvrage = st.selectbox("Type d'ouvrage :", list_ouvrage)
+
         df = df[df["Type d'ouvrage"].str.contains(str(ouvrage))]
-        categorie = st.selectbox('Choix catégorie :', df['Catégorie'].unique())
+        list_categorie=list(df['Catégorie'].unique())
+        try:
+            categorie = st.selectbox('Choix catégorie :', list_categorie, list_categorie.index(st.session_state["categorie_ouvrage"]))
+        except:
+            categorie = st.selectbox('Choix catégorie :', list_categorie)
+
         df = df[df['Catégorie'].str.contains(str(categorie))]
-        sous_categorie1 = st.selectbox('Choix de la sous-catégorie 1 :', df['Sous catégorie 1'].unique())
+        list_sous_categorie1=list(df['Sous catégorie 1'].unique())
+        try:
+            sous_categorie1 = st.selectbox('Choix de la sous-catégorie 1 :', list_sous_categorie1, list_sous_categorie1.index(st.session_state['sous_categorie_ouvrage1']))
+        except:
+            sous_categorie1 = st.selectbox('Choix de la sous-catégorie 1 :', list_sous_categorie1)
+
         df = df[df['Sous catégorie 1'].str.contains(str(sous_categorie1))]
         if df['Sous catégorie 2'].str.contains('/').any():
             sous_categorie2 = df['Sous catégorie 2'].unique()
             st.dataframe(df, 1000, 150)
         else:
-            sous_categorie2 = st.selectbox('Choix de la sous-catégorie 2 :', df['Sous catégorie 2'].unique())
+            list_sous_categorie2=list(df['Sous catégorie 2'].unique())
+            try:
+                sous_categorie2 = st.selectbox('Choix de la sous-catégorie 2 :', list_sous_categorie2, list_sous_categorie2.index(st.session_state['sous_categorie_ouvrage2']))
+            except:
+                sous_categorie2 = st.selectbox('Choix de la sous-catégorie 2 :', list_sous_categorie2)
             df = df[df['Sous catégorie 2'].str.contains(str(sous_categorie2))]
             st.dataframe(df, 1000, 150)
         for u in df["Unité"]:
             u = u[7:].lower()
-        DO_ouv = float(st.number_input("Donnée opérationnelle (en " + u + ") : ", step=1))
+        DO_ouv = float(st.number_input("Donnée opérationnelle (en " + u + ") : ", value=int(st.session_state['DO_ouv']),step=1))
         for x in df["FE"]:
             x = float(x)
         for i in df["Incertitude"]:
@@ -1459,7 +1475,7 @@ def show():
     if st.checkbox(
             "J'accepte d'être contacté par ALTAROAD dans le cadre de l'utilisation de ce simulateur et j'indique mon email. "
             "Votre email ne sera pas diffusé en dehors de nos services."):
-        email_user = st.text_input('indiquez votre email valide ici', value="", max_chars=None, key=None,
+        email_user = st.text_input('indiquez votre email valide ici', value=st.session_state['email_user'], max_chars=None, key=None,
                                    type="default")
         simulator_dict['email_user'] = email_user
 
@@ -1491,6 +1507,7 @@ def show():
 if __name__ == "__main__":
 
     initial_dict = {
+            "email_user": "",
             "nb_cam2": 4,
             "E_trans_ISDD": 0,
             "new_E_trans_Ea2": 0,
@@ -1615,8 +1632,4 @@ if __name__ == "__main__":
 
     if "download_done" not in st.session_state:
         st.session_state.download_done = False
-
-
-
-    st.write(st.session_state)
 
