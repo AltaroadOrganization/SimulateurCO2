@@ -1494,8 +1494,8 @@ def show():
             else:
                 st.write('{} est malheureusement une adresse email invalide'.format(email_user))
 
-        else:
-            simulator_dict['email_user'] = "empty_email_user"
+    else:
+        simulator_dict['email_user'] = "empty_email_user"
 
     st.write("------------------------------------")
     st.caption("Les données de facteurs d'émissions sont issues de la Base Carbone® de l'ADEME")
