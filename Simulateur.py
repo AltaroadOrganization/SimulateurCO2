@@ -361,7 +361,7 @@ header0 = '''
 st.write('---------------------------------------------------')
 st.markdown(header0, unsafe_allow_html=True)
 st.write('Ici, vous entrez quelques infos sur le chantier que vous souhaitez simuler')
-type_chantier = st.selectbox("Type de chantier", ['CONSTRUCTION','DEMOLITION','TERRASSEMENT'])
+type_chantier = st.selectbox("Type de chantier", ['CONSTRUCTION','DEMOLITION','TERRASSEMENT'], key=['type_chantier'])
 lieu_chantier = st.text_input('Le lieu du chantier (entrer une adresse)', value="", max_chars=None, key=None, type="default")
 col1,col2=st.columns(2)
 taille_chantier = col1.selectbox('La taille du chantier', ['PETIT','MOYEN','GROS'])
@@ -1463,7 +1463,6 @@ if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'util
             #ici on envoie le dictionnaire sur un bucket S3 privé avec une clé de user qui a accès qu'à ce bucket
             #code à faire
             bucket_name = 'dataset-altaroad-public'
-            #filename3 = 'simulatorco2/simulatorco2_records.csv'
             read_write_S3(bucket_name, simulator_dict, ACCESS_KEY, SECRET_KEY)
         else:
             st.write('{} est malheureusement une adresse email invalide'.format(email_user))
