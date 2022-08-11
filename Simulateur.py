@@ -547,10 +547,10 @@ def show():
         '''
         st.markdown(subheader1, unsafe_allow_html=True)
         #st.subheader("Quantité de déchets à évacuer 🚮")
-        ISDND = st.number_input("Déchets non-dangereux (Bois, Métaux, ...) (en T)", value=st.session_state['ISDD'],step=1)
-        ISDI1brut = st.number_input("Déchets inertes excavés (Terres) (en T)", value=st.session_state['ISDI1brut'], step=1)
-        ISDI2brut = st.number_input("Déchets inertes excavés (Gravats) (en T)", value=st.session_state['ISDI2brut'], step=1)
-        ISDD = st.number_input("Déchets dangereux (en T)", value=st.session_state['ISDD'], step=1)
+        ISDND = st.number_input("Déchets non-dangereux (Bois, Métaux, ...) (en T)", value=int(st.session_state['ISDD']),step=1)
+        ISDI1brut = st.number_input("Déchets inertes excavés (Terres) (en T)", value=int(st.session_state['ISDI1brut']), step=1)
+        ISDI2brut = st.number_input("Déchets inertes excavés (Gravats) (en T)", value=int(st.session_state['ISDI2brut']), step=1)
+        ISDD = st.number_input("Déchets dangereux (en T)", value=int(st.session_state['ISDD']), step=1)
         simulator_dict['ISDI1brut'] = ISDI1brut
         simulator_dict['ISDI2brut'] = ISDI2brut
         simulator_dict['ISDND'] = ISDND
@@ -565,10 +565,10 @@ def show():
         </head>
         '''
         st.markdown(subheader2, unsafe_allow_html=True)
-        dist_exuISDND = st.number_input("Distance centre de collecte ISDND (en km)", value=st.session_state['dist_exuISDND'], step=1)
-        dist_exuISDI1 = st.number_input("Distance centre de collecte ISDI1 (en km)", value=st.session_state['dist_exuISDI1'], step=1)
-        dist_exuISDI2 = st.number_input("Distance centre de collecte ISDI2 (en km)", value=st.session_state['dist_exuISDI2'], step=1)
-        dist_exuISDD = st.number_input("Distance centre de collecte ISDD (en km)", value=st.session_state['dist_exuISDD'], step=1)
+        dist_exuISDND = st.number_input("Distance centre de collecte ISDND (en km)", value=int(st.session_state['dist_exuISDND']), step=1)
+        dist_exuISDI1 = st.number_input("Distance centre de collecte ISDI1 (en km)", value=int(st.session_state['dist_exuISDI1']), step=1)
+        dist_exuISDI2 = st.number_input("Distance centre de collecte ISDI2 (en km)", value=int(st.session_state['dist_exuISDI2']), step=1)
+        dist_exuISDD = st.number_input("Distance centre de collecte ISDD (en km)", value=int(st.session_state['dist_exuISDD']), step=1)
         simulator_dict['dist_exuISDI1'] = dist_exuISDI1
         simulator_dict['dist_exuISDI2'] = dist_exuISDI2
         simulator_dict['dist_exuISDND'] = dist_exuISDND
@@ -584,7 +584,7 @@ def show():
         '''
         st.markdown(subheader3, unsafe_allow_html=True)
         #st.subheader("Nombre de passages quotidiens 🔃")
-        pass_jour = st.slider("Nombre de passages quotidien estimés", 10, 100, value=st.session_state['pass_jour'], step=5)
+        pass_jour = st.slider("Nombre de passages quotidien estimés", 10, 100, value=int(st.session_state['pass_jour']), step=5)
         simulator_dict['pass_jour'] = pass_jour
 
     with col2:
@@ -596,7 +596,7 @@ def show():
         '''
         st.markdown(subheader4, unsafe_allow_html=True)
         #st.subheader("Taux de réemploi des terres ♻️")
-        repl_terres = st.slider("Taux de réemploi moyen sur site (%)", 0, 100, value=st.session_state['repl_terres'], step=5)
+        repl_terres = st.slider("Taux de réemploi moyen sur site (%)", 0, 100, value=int(st.session_state['repl_terres']), step=5)
         valo_terres = 100 - repl_terres
         ISDI1 = math.ceil(ISDI1brut * (valo_terres / 100))
         ISDI2 = math.ceil(ISDI2brut * (valo_terres / 100))
@@ -614,9 +614,9 @@ def show():
         '''
         st.markdown(subheader5, unsafe_allow_html=True)
         #st.subheader("Types de camions 🚛")
-        nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=st.session_state['nb_cam5'], step=1)
-        nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=st.session_state['nb_cam4'], step=1)
-        nb_cam2 = st.number_input("Nombre de camions 2 essieux porteurs", value=st.session_state['nb_cam2'], step=1)
+        nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=int(st.session_state['nb_cam5']), step=1)
+        nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=int(st.session_state['nb_cam4']), step=1)
+        nb_cam2 = st.number_input("Nombre de camions 2 essieux porteurs", value=int(st.session_state['nb_cam2']), step=1)
         if (nb_cam5 + nb_cam4 + nb_cam2)>0:
             cam5 = (nb_cam5 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
             cam4 = (nb_cam4 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
@@ -639,9 +639,9 @@ def show():
         </head>
         '''
         st.markdown(subheader6, unsafe_allow_html=True)
-        load_cam5 = st.slider("Chargement moyen des camions 5 essieux (tonnes)", 15, 29, value=st.session_state['load_cam5'],step=1)
-        load_cam4 = st.slider("Chargement moyen des camions 4 essieux (tonnes)", 10, 20, value=st.session_state['load_cam4'], step=1)
-        load_cam2 = st.slider("Chargement moyen des camions 2 essieux (tonnes)", 2, 15, value=st.session_state['load_cam2'], step=1)
+        load_cam5 = st.slider("Chargement moyen des camions 5 essieux (tonnes)", 15, 29, value=int(st.session_state['load_cam5']),step=1)
+        load_cam4 = st.slider("Chargement moyen des camions 4 essieux (tonnes)", 10, 20, value=int(st.session_state['load_cam4']), step=1)
+        load_cam2 = st.slider("Chargement moyen des camions 2 essieux (tonnes)", 2, 15, value=int(st.session_state['load_cam2']), step=1)
         simulator_dict['load_cam5'] = load_cam5
         simulator_dict['load_cam4'] = load_cam4
         simulator_dict['load_cam2'] = load_cam2
