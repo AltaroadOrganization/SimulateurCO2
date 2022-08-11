@@ -1372,6 +1372,7 @@ with st.expander("Données 👷"):
     sous_categorie1 = st.selectbox('Choix de la sous-catégorie 1 :', df['Sous catégorie 1'].unique())
     df = df[df['Sous catégorie 1'].str.contains(str(sous_categorie1))]
     if df['Sous catégorie 2'].str.contains('/').any():
+        sous_categorie2 = df['Sous catégorie 2'].unique()
         st.dataframe(df, 1000, 150)
     else:
         sous_categorie2 = st.selectbox('Choix de la sous-catégorie 2 :', df['Sous catégorie 2'].unique())
