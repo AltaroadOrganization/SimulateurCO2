@@ -1596,6 +1596,11 @@ if __name__ == "__main__":
             "FE_trans": 0.00009152941176470588
         }
 
+    #gestion de session state
+    for my_key in initial_dict.keys():
+        if my_key not in st.session_state:
+            st.session_state[my_key] = initial_dict[my_key]
+
     simulator_dict=show()
 
     #gestion de session state
