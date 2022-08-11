@@ -372,11 +372,13 @@ def show():
     st.write('---------------------------------------------------')
     st.markdown(header0, unsafe_allow_html=True)
     st.write('Ici, vous entrez quelques infos sur le chantier que vous souhaitez simuler')
-    type_chantier = st.selectbox("Type de chantier", ['CONSTRUCTION','DEMOLITION','TERRASSEMENT'])
-    lieu_chantier = st.text_input('Le lieu du chantier (entrer une adresse)', value="", max_chars=None, key=None, type="default")
+    list_chantier=['CONSTRUCTION','DEMOLITION','TERRASSEMENT']
+    type_chantier = st.selectbox("Type de chantier", list_chantier, list_chantier.index(st.session_state["type_chantier"]))
+    lieu_chantier = st.text_input('Le lieu du chantier (entrer une adresse)', value=st.session_state["lieu_chantier"], max_chars=None, key=None, type="default")
     col1,col2=st.columns(2)
-    taille_chantier = col1.selectbox('La taille du chantier', ['PETIT','MOYEN','GROS'])
-    duree_semaine_chantier=col2.text_input('Durée en  semaines', value="", max_chars=None, key=None, type="default")
+    list_taille=['PETIT','MOYEN','GROS']
+    taille_chantier = col1.selectbox('La taille du chantier', list_taille, list_taille.index(st.session_state["taille_chantier"]))
+    duree_semaine_chantier=col2.text_input('Durée en  semaines', value=st.session_state["duree_semaine_chantier"], max_chars=None, key=None, type="default")
 
     simulator_dict['type_chantier']=type_chantier
     simulator_dict['lieu_chantier']=lieu_chantier
@@ -1487,17 +1489,127 @@ def show():
     return simulator_dict
 
 if __name__ == "__main__":
+
+    initial_dict = {
+            "nb_cam2": 4,
+            "E_trans_ISDD": 0,
+            "new_E_trans_Ea2": 0,
+            "eco_c_Ea4": 0,
+            "type_chantier": "CONSTRUCTION",
+            "E_valo": 0,
+            "ouvrage": " Bâtiments",
+            "nb_cam5": 20,
+            "tot_D": 0,
+            "new_pass_ISDI2_Ea3": 0,
+            "Ea3": 0,
+            "ISDND": 0,
+            "eco_D_tot_Ea5": 0,
+            "E_tot": 0,
+            "pass_jour": 50,
+            "new_pass_tot_Ea2": 0,
+            "repl_terres": 0,
+            "cam4": 29.411764705882355,
+            "Ea4": 0,
+            "new_pass_ISDND_Ea2": 0,
+            "new_pass_ISDD_Ea3": 0,
+            "EMISSIONS_ouv": 0,
+            "ISDI1": 0,
+            "eco_ISDI": 0,
+            "eco_c_Ea3": 0,
+            "u": "m²",
+            "eco_c_Ea1": 0,
+            "eco_c_Ea2": 0,
+            "eco_c_Ea5": 0,
+            "I_ISDI1_kgCO2T": 0,
+            "eco_D_tot_Ea3": 0,
+            "E_trans_ISDND": 0,
+            "I_ISDD_kgCO2T": 0,
+            "new_pass_ISDI2_Ea2": 0,
+            "E_ISDD": 0,
+            "DO_ouv": 0,
+            "new_E_trans_ISDI1": 0,
+            "new_pass_tot_Ea3": 0,
+            "jours_evacuation": 0,
+            "taille_chantier": "PETIT",
+            "new_pass_tot_Ea5": 0,
+            "pass_ISDND": 0,
+            "INCERTITUDE_ouv": 0,
+            "dist_exuISDD": 35,
+            "E_trans": 0,
+            "load_cam5": 25,
+            "tot_S2": 0,
+            "ISDI1brut": 0,
+            "duree_semaine_chantier": "",
+            "E_trans_ISDI2": 0,
+            "eco_D_tot_Ea2": 0,
+            "new_pass_ISDI1_Ea3": 0,
+            "download_done": False,
+            "lieu_chantier": "",
+            "Ea2": 0,
+            "I_ISDI2_kgCO2T": 0,
+            "cam2": 11.76470588235294,
+            "pass_tot": 0,
+            "dist_exuISDI1": 35,
+            "E_ISDND": 0,
+            "tot_S1et2": 0,
+            "tot_S1": 0,
+            "dist_tot": 0,
+            "sous_categorie_ouvrage2": "array(['/'], dtype=object)",
+            "cam5": 58.82352941176471,
+            "new_pass_ISDD_Ea5": 0,
+            "mav_trans": 13.411764705882353,
+            "E_ISDI2": 0,
+            "new_E_trans_Ea3": 0,
+            "pass_ISDD": 0,
+            "load_cam2": 8,
+            "ISDD": 0,
+            "pass_ISDI1": 0,
+            "tot_S3a": 0,
+            "new_pass_ISDI1_Ea2": 0,
+            "sous_categorie_ouvrage1": "structure en béton",
+            "E_S3": 0,
+            "new_pass_ISDND_Ea3": 0,
+            "ISDI2brut": 0,
+            "E_ISDI1": 0,
+            "load_cam4": 15,
+            "new_pass_ISDI1_Ea5": 0,
+            "new_pass_ISDD_Ea2": 0,
+            "dist_exuISDI2": 35,
+            "dist_exuISDND": 35,
+            "E_trans_ISDI1": 0,
+            "E_S123": 0,
+            "I_tot_kgCO2T": 0,
+            "Ea1": 0,
+            "nb_cam4": 10,
+            "ISDI2": 0,
+            "Ea5": 0,
+            "new_pass_tot": 0,
+            "pass_ISDI2": 0,
+            "tot_S3d": 0,
+            "categorie_ouvrage": "Bâtiment agricole",
+            "date_heure": "11/08/2022 16:29:18",
+            "new_pass_ISDND_Ea5": 0,
+            "I_ISDND_kgCO2T": 0,
+            "new_E_trans_Ea5": 0,
+            "new_pass_ISDI1": 0,
+            "new_pass_ISDI2_Ea5": 0,
+            "FE_trans": 0.00009152941176470588
+        }
+
+    #gestion de session state
+    for my_key in initial_dict.keys():
+        if my_key not in st.session_state:
+            st.session_state[my_key] = initial_dict[my_key]
+        else:
+            try:
+                st.session_state[my_key]=simulator_dict[my_key]
+            except:
+                st.session_state[my_key] = initial_dict[my_key]
+
     if "download_done" not in st.session_state:
         st.session_state.download_done = False
 
     simulator_dict=show()
-
-    #gestion de session state
-    for my_key in simulator_dict.keys():
-        if my_key not in st.session_state:
-            st.session_state[my_key] = False
-        else:
-            st.session_state[my_key]=simulator_dict[my_key]
 
     st.write(st.session_state)
 
