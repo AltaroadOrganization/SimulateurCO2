@@ -14,6 +14,12 @@ import boto3
 ACCESS_KEY = st.secrets["my_access_key"]["ACCESS_KEY"]
 SECRET_KEY = st.secrets["my_access_key"]["SECRET_KEY"]
 
+if "download_done" not in st.session_state:
+    st.session_state.download_done = False
+
+def download_state_management():
+    st.session_state.download_done=True
+
 #function to check if an email is valid
 def solve(s):
    pat = "^[a-zA-Z0-9-_.]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
@@ -1459,11 +1465,13 @@ if st.checkbox("J'accepte d'être contacté par ALTAROAD dans le cadre de l'util
             st.download_button(label="Télécharger",
                                data=PDFbyte,
                                file_name="ALTAROAD_Simulateur_CO2_SYNTHESE.pdf",
-                               mime='application/octet-stream')
+                               mime='application/octet-stream', on_click=download_state_management)
             #ici on envoie le dictionnaire sur un bucket S3 privé avec une clé de user qui a accès qu'à ce bucket
-            #code à faire
-            bucket_name = 'dataset-altaroad-public'
-            read_write_S3(bucket_name, simulator_dict, ACCESS_KEY, SECRET_KEY)
+            if st.session_state.download_done==False:
+                bucket_name = 'dataset-altaroad-public'
+                read_write_S3(bucket_name, simulator_dict, ACCESS_KEY, SECRET_KEY)
+            else:
+                pass
         else:
             st.write('{} est malheureusement une adresse email invalide'.format(email_user))
 
