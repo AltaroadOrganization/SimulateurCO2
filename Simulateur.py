@@ -90,9 +90,9 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(10)
     pdf.cell(200, 4, txt="- Situé à : " + the_input_dict["lieu_chantier"], ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- De taille : " + the_input_dict["taille_chantier"], ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="- D'une duréee de " + str(the_input_dict["duree_semaine_chantier"]) + ' semaines', ln=1)
+    #pdf.cell(200, 4, txt="- De taille : " + the_input_dict["taille_chantier"], ln=1)
+    #pdf.cell(10)
+    pdf.cell(200, 4, txt="- D'une durée de " + str(the_input_dict["duree_semaine_chantier"]) + ' semaines', ln=1)
     pdf.cell(200, 2, txt="", ln=1)
     pdf.set_font("Arial", "B", size=16)
     pdf.set_text_color(128, 128, 128)
@@ -376,14 +376,14 @@ def show():
     list_chantier=['CONSTRUCTION','DEMOLITION','TERRASSEMENT']
     type_chantier = st.selectbox("Type de chantier", list_chantier, list_chantier.index(st.session_state["type_chantier"]))
     lieu_chantier = st.text_input('Le lieu du chantier (entrer une adresse)', value=st.session_state["lieu_chantier"], max_chars=None, key=None, type="default")
-    col1,col2=st.columns(2)
-    list_taille=['PETIT','MOYEN','GROS']
-    taille_chantier = col1.selectbox('La taille du chantier', list_taille, list_taille.index(st.session_state["taille_chantier"]))
-    duree_semaine_chantier=col2.text_input('Durée en  semaines', value=st.session_state["duree_semaine_chantier"], max_chars=None, key=None, type="default")
+    #col1,col2=st.columns(2)
+    #list_taille=['PETIT','MOYEN','GROS']
+    #taille_chantier = col1.selectbox('La taille du chantier', list_taille, list_taille.index(st.session_state["taille_chantier"]))
+    duree_semaine_chantier=st.text_input('Durée en  semaines', value=st.session_state["duree_semaine_chantier"], max_chars=None, key=None, type="default")
 
     simulator_dict['type_chantier']=type_chantier
     simulator_dict['lieu_chantier']=lieu_chantier
-    simulator_dict['taille_chantier']=taille_chantier
+    #simulator_dict['taille_chantier']=taille_chantier
     simulator_dict['duree_semaine_chantier']=duree_semaine_chantier
 
     header2 = '''
