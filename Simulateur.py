@@ -353,6 +353,7 @@ def show():
     st.write("")
     st.write("Cet outil permet de simuler et réaliser une première approximation des émissions carbone de votre chantier sur l'ensemble des SCOPES, et notamment le SCOPE 3.")
     st.write("Le simulateur offre la possibilité de modifier de nombreux paramètres afin d'optimiser les émissions carbone liées à l'évacuation et au traitement de vos déchets, il donne ainsi un aperçu des nombreux avantages et gains potentiels relatifs à l'utilisation de la plateforme Digitrack proposée par Altaroad.")
+    st.write("https://www.altaroad.com/digitrack/")
     st.write("")
 
     st.write("Pour plus d'information, téléchargez le Manifeste ici")
