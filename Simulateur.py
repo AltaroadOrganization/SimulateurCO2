@@ -356,13 +356,17 @@ def show():
     st.write("https://www.altaroad.com/digitrack/")
     st.write("")
 
-    st.write("Pour plus d'information, téléchargez le Manifeste ici")
+    col1, col2=st.columns(2)
+    col1.write("Pour plus d'information, téléchargez le Manifeste ici")
     with open('LeManifeste_SimulateurCO2_Altaroad.pdf', "rb") as pdf_file:
         PDFbyte = pdf_file.read()
-    st.download_button(label="le Manifeste",
+    col2.download_button(label="le Manifeste",
                        data=PDFbyte,
                        file_name="LeManifeste_SimulateurCO2_Altaroad.pdf",
                        mime='application/octet-stream')
+
+    link = '[Une question ? Contactez-nous !](https://www.altaroad.com/demander-une-demo/)'
+    st.markdown(link, unsafe_allow_html=True)
 
     header0 = '''
     <head>
@@ -686,9 +690,18 @@ def show():
     '''
     st.markdown(subheader8, unsafe_allow_html=True)
     #st.subheader("Actions de réduction et gains 📉")
+    action0_1 = st.checkbox("ACTION 1 - Utiliser la solution CamTrack d'Altaroad pour identifier les véhicules les + économes")
+    if action0_1:
+        with st.expander("Réduction de -3% à -6% de CO2e SCOPE3 total"):
+            st.write("Par l'utilisation du système CamTrack d'Altaroad, nos clients ont pu identifier des réductions de CO2e immédiates de 3 à 6% par le choix d'une flotte plus économe")
+
+    action0_2 = st.checkbox("ACTION 2 - Utiliser la solution TopTrack d'Altaroad pour optimiser le chargement des véhicules")
+    if action0_2:
+        with st.expander("Réduction de -2% à -5% de CO2e SCOPE3 total"):
+            st.write("Par l'utilisation du système TopTrack d'Altaroad, nos clients ont pu identifier des réductions de CO2e immédiates de 2 à 5% par l'optimisation du chargement des camions")
 
     # Réutiliser 10% des terres sur site
-    action1 = st.checkbox('Augmenter de 10% la réutilisation des matériaux/déchets sur site')
+    action1 = st.checkbox("ACTION 3 - + 10% de réutilisation des matériaux/déchets directement sur le site d'extraction")
     new_valo_terres = valo_terres - 10
     new_ISDI1 = ISDI1brut * (new_valo_terres / 100)
     new_E_ISDI1 = (new_ISDI1 * FEterres) / 1000
@@ -707,7 +720,6 @@ def show():
     simulator_dict['new_pass_ISDI1'] = new_pass_ISDI1
     simulator_dict['new_E_trans_ISDI1'] = new_E_trans_ISDI1
     simulator_dict['new_pass_tot'] = new_pass_tot
-
 
     if action1:
         if valo_terres >= 10:
@@ -732,7 +744,7 @@ def show():
         else:
             st.error("Le taux de réemploi des matériaux/déchets sur site est déjà supérieur à 90%")
 
-    action2 = st.checkbox("Avoir 15% de camions 5 essieux ajoutés à la flotte choisie")
+    action2 = st.checkbox("ACTION 4 - Avoir 15% de camions 5 essieux ajoutés à la flotte choisie")
     new_cam5 = cam5 + 15
     new_cam4 = cam4 - 15/2
     new_cam2 = cam2 - 15/2
@@ -801,7 +813,7 @@ def show():
             st.error("Le taux d'utilisation de 5 essieux est déjà supérieur à 85%")
 
     # Optimiser le chargement de 2 tonnes (borner l'action)
-    action3 = st.checkbox('Augmenter le chargement moyen des camions de 2 tonnes')
+    action3 = st.checkbox('ACTION 5 - Augmenter le chargement moyen des camions de 2 tonnes')
     new_load_cam5 = load_cam5 + 2
     new_load_cam4 = load_cam4 + 2
     new_load_cam2 = load_cam2 + 2
@@ -862,7 +874,7 @@ def show():
             st.error("Le chargement maximal est dépassé")
 
     # Choix d'un centre de collecte 10 km plus proche
-    action4 = st.checkbox("Choisir un centre de collecte 10 km plus proche")
+    action4 = st.checkbox("ACTION 6 - Choisir un centre de collecte 10 km plus proche")
     new_dist_exuISDI1 = dist_exuISDI1 - 10
     new_dist_exuISDI2 = dist_exuISDI2 - 10
     new_dist_exuISDND = dist_exuISDND - 10
@@ -900,7 +912,7 @@ def show():
             st.error("Un des centres de collecte se trouve déjà à moins de 10 km du chantier")
 
     # Toutes les actions combinées
-    action5 = st.checkbox("Combiner toutes les actions de réduction")
+    action5 = st.checkbox("ACTION 7 - Combiner les actions de réduction 3-4-5-6")
     new_mean_load_all = new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100) + new_load_cam2 * (new_cam2 / 100)
     new_pass_ISDI1_Ea5 = round((new_ISDI1 / new_mean_load_all),1)
     new_pass_ISDI2_Ea5 = round((ISDI2 / new_mean_load_all),1)
