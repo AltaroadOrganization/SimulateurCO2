@@ -736,6 +736,7 @@ def show():
                    "et le type de chassis, le facteur d'émission CO2e d'un camion peut varier de +/-20%. Des réductions de CO2e "
                    "totales de -3 à -6% ont alors été obtenues par le choix d'une flotte de camions plus économe. Les offres de produits Altaroad (Digitrack, Camtrack et Toptrack) "
                    "permettent par la traçabilité temps réel d'identifier ces meilleures flottes.")
+        st.caption("Les meilleurs camions pour chaque type de chassis sont utilisés")
         w = random_CO2_equivalent(Ea2)
         with st.expander("Réduction des émissions carbone"):
             if E_tot > 0:
