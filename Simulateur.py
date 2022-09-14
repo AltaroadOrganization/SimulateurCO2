@@ -320,7 +320,7 @@ def show():
     date_heure = result.strftime("%d/%m/%Y %H:%M:%S")
     date = result.strftime("%d/%m/%Y")
     heure = result.strftime("%H:%M:%S")
-    st.text("début de session - Date et heure : {}".format(date_heure))
+    st.write("début de session - Date et heure : {}".format(date_heure))
     simulator_dict['date_heure']=date_heure
 
     with col1:
@@ -352,8 +352,7 @@ def show():
     conso_moy = 30 / 100
     st.write("")
     st.write("Cet outil permet de simuler et réaliser une première approximation des émissions carbone de votre chantier sur l'ensemble des SCOPES, et notamment le SCOPE 3.")
-    st.write("Le simulateur offre la possibilité de modifier de nombreux paramètres afin d'optimiser les émissions carbone liées à l'évacuation et au traitement de vos déchets, il donne ainsi un aperçu des nombreux avantages et gains potentiels relatifs à l'utilisation de la plateforme Digitrack proposée par Altaroad.")
-    st.write("https://www.altaroad.com/digitrack/")
+    st.write("Le simulateur offre la possibilité de modifier de nombreux paramètres afin d'optimiser les émissions carbone liées à l'évacuation et au traitement de vos déchets, il donne ainsi un aperçu des nombreux avantages et gains potentiels relatifs à l'utilisation de la plateforme Digitrack proposée par Altaroad (https://www.altaroad.com/digitrack/)")
     st.write("")
 
     col1, col2=st.columns(2)
@@ -477,9 +476,9 @@ def show():
         '''
         st.markdown(subheader5, unsafe_allow_html=True)
         #st.subheader("Types de camions 🚛")
-        nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=int(st.session_state['nb_cam5']), step=1)
-        nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=int(st.session_state['nb_cam4']), step=1)
-        nb_cam2 = st.number_input("Nombre de camions 2 essieux porteurs", value=int(st.session_state['nb_cam2']), step=1)
+        nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=int(st.session_state['nb_cam5']), step=1, help="Important: Le facteur d'émission CO2e d'un véhicule varie selon son modèle")
+        nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=int(st.session_state['nb_cam4']), step=1, help="Important: Le facteur d'émission CO2e d'un véhicule varie selon son modèle")
+        nb_cam2 = st.number_input("Nombre de camions 2 essieux porteurs", value=int(st.session_state['nb_cam2']), step=1, help="Important: Le facteur d'émission CO2e d'un véhicule varie selon son modèle")
         if (nb_cam5 + nb_cam4 + nb_cam2)>0:
             cam5 = (nb_cam5 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
             cam4 = (nb_cam4 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
@@ -502,9 +501,9 @@ def show():
         </head>
         '''
         st.markdown(subheader6, unsafe_allow_html=True)
-        load_cam5 = st.slider("Chargement moyen des camions 5 essieux (tonnes)", 15, 29, value=int(st.session_state['load_cam5']),step=1)
-        load_cam4 = st.slider("Chargement moyen des camions 4 essieux (tonnes)", 10, 20, value=int(st.session_state['load_cam4']), step=1)
-        load_cam2 = st.slider("Chargement moyen des camions 2 essieux (tonnes)", 2, 15, value=int(st.session_state['load_cam2']), step=1)
+        load_cam5 = st.slider("Chargement moyen des camions 5 essieux (tonnes)", 15, 29, value=int(st.session_state['load_cam5']),step=1, help="Important: optimiser le chargement permet de réduire le nombre de trajets et donc le CO2")
+        load_cam4 = st.slider("Chargement moyen des camions 4 essieux (tonnes)", 10, 20, value=int(st.session_state['load_cam4']), step=1, help="Important: optimiser le chargement permet de réduire le nombre de trajets et donc le CO2")
+        load_cam2 = st.slider("Chargement moyen des camions 2 essieux (tonnes)", 2, 15, value=int(st.session_state['load_cam2']), step=1, help="Important: optimiser le chargement permet de réduire le nombre de trajets et donc le CO2")
         simulator_dict['load_cam5'] = load_cam5
         simulator_dict['load_cam4'] = load_cam4
         simulator_dict['load_cam2'] = load_cam2
