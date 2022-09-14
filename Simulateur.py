@@ -320,7 +320,7 @@ def show():
     date_heure = result.strftime("%d/%m/%Y %H:%M:%S")
     date = result.strftime("%d/%m/%Y")
     heure = result.strftime("%H:%M:%S")
-    st.write("début de session - Date et heure : {}".format(date_heure))
+    st.caption("début de session - Date et heure : {}".format(date_heure))
     simulator_dict['date_heure']=date_heure
 
     with col1:
@@ -476,9 +476,9 @@ def show():
         '''
         st.markdown(subheader5, unsafe_allow_html=True)
         #st.subheader("Types de camions 🚛")
-        nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=int(st.session_state['nb_cam5']), step=1, help="Important: Le facteur d'émission CO2e d'un véhicule varie selon son modèle")
-        nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=int(st.session_state['nb_cam4']), step=1, help="Important: Le facteur d'émission CO2e d'un véhicule varie selon son modèle")
-        nb_cam2 = st.number_input("Nombre de camions 2 essieux porteurs", value=int(st.session_state['nb_cam2']), step=1, help="Important: Le facteur d'émission CO2e d'un véhicule varie selon son modèle")
+        nb_cam5 = st.number_input("Nombre de camions 5 essieux articulés", value=int(st.session_state['nb_cam5']), step=1, help="Important: le facteur d'émission CO2e d'un véhicule varie selon son modèle")
+        nb_cam4 = st.number_input("Nombre de camions 4 essieux porteurs", value=int(st.session_state['nb_cam4']), step=1, help="Important: le facteur d'émission CO2e d'un véhicule varie selon son modèle")
+        nb_cam2 = st.number_input("Nombre de camions 2 essieux porteurs", value=int(st.session_state['nb_cam2']), step=1, help="Important: le facteur d'émission CO2e d'un véhicule varie selon son modèle")
         if (nb_cam5 + nb_cam4 + nb_cam2)>0:
             cam5 = (nb_cam5 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
             cam4 = (nb_cam4 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
@@ -689,83 +689,26 @@ def show():
     '''
     st.markdown(subheader8, unsafe_allow_html=True)
     #st.subheader("Actions de réduction et gains 📉")
-    action0_1 = st.checkbox("ACTION 1 - Utiliser la solution CamTrack d'Altaroad pour identifier les véhicules les + économes")
-    if action0_1:
-        with st.expander("Réduction de -3% à -6% de CO2e SCOPE3 total"):
-            st.write("Par l'utilisation du système CamTrack d'Altaroad, nos clients ont pu identifier des réductions de CO2e immédiates de 3 à 6% par le choix d'une flotte plus économe")
+    action1 = st.checkbox("ACTION 1 - Choisir une flotte de véhicules économes")
 
-    action0_2 = st.checkbox("ACTION 2 - Utiliser la solution TopTrack d'Altaroad pour optimiser le chargement des véhicules")
-    if action0_2:
-        with st.expander("Réduction de -2% à -5% de CO2e SCOPE3 total"):
-            st.write("Par l'utilisation du système TopTrack d'Altaroad, nos clients ont pu identifier des réductions de CO2e immédiates de 2 à 5% par l'optimisation du chargement des camions")
+    new_FEmoy5e=59.3/1000000
+    new_FEmoy4e=100/1000000 #à confirmer
+    new_FEmoy2e=140/1000000 #à confirmer
 
-    # Réutiliser 10% des terres sur site
-    action1 = st.checkbox("ACTION 3 - + 10% de réutilisation des matériaux/déchets directement sur le site d'extraction")
-    new_valo_terres = valo_terres - 10
-    new_ISDI1 = ISDI1brut * (new_valo_terres / 100)
-    new_E_ISDI1 = (new_ISDI1 * FEterres) / 1000
-    new_pass_ISDI1 = round((new_ISDI1 / mean_load),1)
-    new_E_trans_ISDI1 = FE_trans * dist_exuISDI1 * (new_ISDI1 + mav_trans * new_pass_ISDI1)
-    new_pass_tot = new_pass_ISDI1 + pass_ISDI2 + pass_ISDND + pass_ISDD
-    Ea1 = E_ISDI1 + E_trans_ISDI1 - new_E_ISDI1 - new_E_trans_ISDI1
-    conso_tot_Ea1 = conso_moy * pass_tot * dist_exuISDI1
-    new_conso_tot_Ea1 = conso_moy * new_pass_tot * dist_exuISDI1
-    eco_c_Ea1 = (conso_tot_Ea1 - new_conso_tot_Ea1) * prix_c
-    eco_ISDI = (pass_ISDI1 - new_pass_ISDI1) * prix_ISDI1
-
-    simulator_dict['Ea1'] = Ea1
-    simulator_dict['eco_c_Ea1'] = math.ceil(eco_c_Ea1)
-    simulator_dict['eco_ISDI'] = math.ceil(eco_ISDI)
-    simulator_dict['new_pass_ISDI1'] = new_pass_ISDI1
-    simulator_dict['new_E_trans_ISDI1'] = new_E_trans_ISDI1
-    simulator_dict['new_pass_tot'] = new_pass_tot
-
-    if action1:
-        if valo_terres >= 10:
-            v = random_CO2_equivalent(Ea1)
-            with st.expander("Réduction des émissions carbone"):
-                if E_tot > 0:
-                    st.write("Cette action permet de réduire les émissions totales de :")
-                    st.subheader(str(int(Ea1)) + " tCO2e, soit " + str(
-                        int((Ea1 / E_tot) * 100)) + " % des émissions totales estimées")
-                    st.write("soit " + v)
-                else:
-                    st.write("Merci d'entrer au minimum une quantité de déchets")
-            with st.expander("Réduction du nombre de passages"):
-                st.write("Cette action permet de réduire le nombre de passages d'évacuations de :")
-                st.subheader(str(int(pass_ISDI1 - new_pass_ISDI1)) + " passages, " + str(
-                    round((jours_evacuation - (new_pass_tot / pass_jour)),1)) + " jours")
-            with st.expander("Estimation du gain économique €"):
-                st.write("Gain € carburant : ")
-                st.subheader(str(math.ceil(eco_c_Ea1)) + " €")
-                st.write("Gain € évacuations : ")
-                st.subheader(str(math.ceil(eco_ISDI)) + " €")
-        else:
-            st.error("Le taux de réemploi des matériaux/déchets sur site est déjà supérieur à 90%")
-
-    action2 = st.checkbox("ACTION 4 - Avoir 15% de camions 5 essieux ajoutés à la flotte choisie")
-    new_cam5 = cam5 + 15
-    new_cam4 = cam4 - 15/2
-    new_cam2 = cam2 - 15/2
-    new_FE_trans = FEmoy5e * (new_cam5 / 100) + FEmoy4e * (new_cam4 / 100) + FEmoy2e * (new_cam2 / 100)
-    new_mav = mav5e * (new_cam5 / 100) + mav4e * (new_cam4 / 100) + mav2e * (new_cam2 / 100)
+    new_FE_trans = new_FEmoy5e * (cam5 / 100) + new_FEmoy4e * (cam4 / 100) + new_FEmoy2e * (cam2 / 100)
+    new_mav = mav5e * (cam5 / 100) + mav4e * (cam4 / 100) + mav2e * (cam2 / 100)
     new_E_trans_ISDI1_Ea2 = round(new_FE_trans * dist_exuISDI1 * (ISDI1 + new_mav * pass_ISDI1), 1)
     new_E_trans_ISDI2_Ea2 = round(new_FE_trans * dist_exuISDI2 * (ISDI2 + new_mav * pass_ISDI2), 1)
     new_E_trans_ISDND_Ea2 = round(new_FE_trans * dist_exuISDND * (ISDND + new_mav * pass_ISDND), 1)
     new_E_trans_ISDD_Ea2 = round(new_FE_trans * dist_exuISDD * (ISDD + new_mav * pass_ISDD), 1)
-
-    new_mean_load = load_cam5 * (new_cam5 / 100) + load_cam4 * (new_cam4 / 100) + load_cam2 * (new_cam2 / 100)
-
+    new_mean_load = load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100) + load_cam2 * (cam2 / 100)
     new_pass_ISDI1_Ea2 = round((ISDI1 / new_mean_load),1)
     new_pass_ISDI2_Ea2 = round((ISDI2 / new_mean_load),1)
     new_pass_ISDND_Ea2 = round((ISDND / new_mean_load),1)
     new_pass_ISDD_Ea2 = round((ISDD / new_mean_load),1)
     new_pass_tot_Ea2 = new_pass_ISDI1_Ea2 + new_pass_ISDI2_Ea2 + new_pass_ISDND_Ea2 + new_pass_ISDD_Ea2
-
     new_E_trans_Ea2 = new_E_trans_ISDI1_Ea2 + new_E_trans_ISDI2_Ea2 + new_E_trans_ISDND_Ea2 + new_E_trans_ISDD_Ea2
-
     Ea2 = round(E_trans - new_E_trans_Ea2, 1)
-
     conso_tot = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
             conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
     new_conso_tot_Ea2 = (conso_moy * new_pass_ISDI2_Ea2 * dist_exuISDI2) + (
@@ -777,7 +720,6 @@ def show():
     eco_ISDND_Ea2 = (pass_ISDND - new_pass_ISDND_Ea2) * prix_ISDND
     eco_ISDD_Ea2 = (pass_ISDD - new_pass_ISDD_Ea2) * prix_ISDD
     eco_D_tot_Ea2 = eco_ISDI1_Ea2 + eco_ISDI2_Ea2 + eco_ISDND_Ea2 + eco_ISDD_Ea2
-
     simulator_dict['Ea2'] = Ea2
     simulator_dict['eco_c_Ea2'] = math.ceil(eco_c_Ea2)
     simulator_dict['eco_D_tot_Ea2'] = math.ceil(eco_D_tot_Ea2)
@@ -788,31 +730,23 @@ def show():
     simulator_dict['new_pass_tot_Ea2'] = new_pass_tot_Ea2
     simulator_dict['new_E_trans_Ea2'] = new_E_trans_Ea2
 
-    if action2:
-        if cam5 <= 85:
-            w = random_CO2_equivalent(Ea2)
-            with st.expander("Réduction des émissions carbone"):
-                if E_tot > 0:
-                    st.write("Cette action permet de réduire les émissions totales de :")
-                    st.subheader(str(int(Ea2)) + " tCO2e, soit " + str(
-                        int((Ea2 / E_tot) * 100)) + " % des émissions totales estimées")
-                    st.write("soit " + w)
-                else:
-                    st.write("Merci d'entrer au minimum une quantité de déchets")
-            with st.expander("Réduction du nombre de passages"):
-                st.write("Cette action permet de réduire le nombre de passages de :")
-                st.subheader(str(int(pass_tot - new_pass_tot_Ea2)) + " passages, " + str(
-                    round((jours_evacuation - (new_pass_tot_Ea2 / pass_jour)),1)) + " jours")
-            with st.expander("Estimation du gain économique €"):
-                st.write("Gain € carburant : ")
-                st.subheader(str(math.ceil(eco_c_Ea2)) + " €")
-                st.write("Gain € évacuations : ")
-                st.subheader(str(math.ceil(eco_D_tot_Ea2)) + " €")
-        else:
-            st.error("Le taux d'utilisation de 5 essieux est déjà supérieur à 85%")
+    if action1:
+        st.caption("Retour d'expérience: Réduction possible de -3% à -6% du CO2e SCOPE3 total")
+        st.caption("Selon la marque, le modèle "
+                   "et le type de chassis, le facteur d'émission CO2e d'un camion peut varier de +/-20%. Des réductions de CO2e "
+                   "totales de -3 à -6% ont alors été obtenues par le choix d'une flotte de camions plus économe. Les offres de produits Altaroad (Digitrack, Camtrack et Toptrack) "
+                   "permettent par la traçabilité temps réel d'identifier ces meilleures flottes.")
+        w = random_CO2_equivalent(Ea2)
+        with st.expander("Réduction des émissions carbone"):
+            if E_tot > 0:
+                st.write("Cette action permet de réduire les émissions totales de :")
+                st.subheader(str(int(Ea2)) + " tCO2e, soit " + str(
+                    int((Ea2 / E_tot) * 100)) + " % des émissions totales estimées")
+                st.write("soit " + w)
+            else:
+                st.write("Merci d'entrer au minimum une quantité de déchets")
 
-    # Optimiser le chargement de 2 tonnes (borner l'action)
-    action3 = st.checkbox('ACTION 5 - Augmenter le chargement moyen des camions de 2 tonnes')
+    action2 = st.checkbox("ACTION 2 - Optimiser le chargement des camions")
     new_load_cam5 = load_cam5 + 2
     new_load_cam4 = load_cam4 + 2
     new_load_cam2 = load_cam2 + 2
@@ -849,7 +783,12 @@ def show():
     simulator_dict['new_pass_tot_Ea3'] = new_pass_tot_Ea3
     simulator_dict['new_E_trans_Ea3'] = new_E_trans_Ea3
 
-    if action3:
+    if action2:
+        st.caption("Retour d'expérience: Réduction possible de -2% à -5% du CO2e SCOPE3 total")
+        st.caption("Augmenter le chargement de la benne, "
+        "permet de réduire le nombre de trajets. Cette optimisation peut se faire par une information en temps réel de la masse de chaque camion."
+        " Le produit Altaroad Toptrack permet par l'information de pesée en temps réel de gagner +1 à +2T de chargement tout en évitant les surcharges.")
+        st.caption("Hypothèse: +2T de chargement sur chaque chargement")
         if load_cam4 <= 18 and load_cam5 <= 27:
             x = random_CO2_equivalent(Ea3)
             with st.expander("Réduction des émissions carbone"):
@@ -872,8 +811,53 @@ def show():
         else:
             st.error("Le chargement maximal est dépassé")
 
+    # Réutiliser 10% des terres sur site
+    action3 = st.checkbox("ACTION 3 - Augmenter le taux de réutilisation des matériaux/déchets directement sur le site d'extraction")
+    new_valo_terres = valo_terres - 10
+    new_ISDI1 = ISDI1brut * (new_valo_terres / 100)
+    new_E_ISDI1 = (new_ISDI1 * FEterres) / 1000
+    new_pass_ISDI1 = round((new_ISDI1 / mean_load),1)
+    new_E_trans_ISDI1 = FE_trans * dist_exuISDI1 * (new_ISDI1 + mav_trans * new_pass_ISDI1)
+    new_pass_tot = new_pass_ISDI1 + pass_ISDI2 + pass_ISDND + pass_ISDD
+    Ea1 = E_ISDI1 + E_trans_ISDI1 - new_E_ISDI1 - new_E_trans_ISDI1
+    conso_tot_Ea1 = conso_moy * pass_tot * dist_exuISDI1
+    new_conso_tot_Ea1 = conso_moy * new_pass_tot * dist_exuISDI1
+    eco_c_Ea1 = (conso_tot_Ea1 - new_conso_tot_Ea1) * prix_c
+    eco_ISDI = (pass_ISDI1 - new_pass_ISDI1) * prix_ISDI1
+
+    simulator_dict['Ea1'] = Ea1
+    simulator_dict['eco_c_Ea1'] = math.ceil(eco_c_Ea1)
+    simulator_dict['eco_ISDI'] = math.ceil(eco_ISDI)
+    simulator_dict['new_pass_ISDI1'] = new_pass_ISDI1
+    simulator_dict['new_E_trans_ISDI1'] = new_E_trans_ISDI1
+    simulator_dict['new_pass_tot'] = new_pass_tot
+
+    if action3:
+        if valo_terres >= 10:
+            v = random_CO2_equivalent(Ea1)
+            st.caption("Hypothèse: +10% sur le taux de valorisation choisi")
+            with st.expander("Réduction des émissions carbone"):
+                if E_tot > 0:
+                    st.write("Cette action permet de réduire les émissions totales de :")
+                    st.subheader(str(int(Ea1)) + " tCO2e, soit " + str(
+                        int((Ea1 / E_tot) * 100)) + " % des émissions totales estimées")
+                    st.write("soit " + v)
+                else:
+                    st.write("Merci d'entrer au minimum une quantité de déchets")
+            with st.expander("Réduction du nombre de passages"):
+                st.write("Cette action permet de réduire le nombre de passages d'évacuations de :")
+                st.subheader(str(int(pass_ISDI1 - new_pass_ISDI1)) + " passages, " + str(
+                    round((jours_evacuation - (new_pass_tot / pass_jour)),1)) + " jours")
+            with st.expander("Estimation du gain économique €"):
+                st.write("Gain € carburant : ")
+                st.subheader(str(math.ceil(eco_c_Ea1)) + " €")
+                st.write("Gain € évacuations : ")
+                st.subheader(str(math.ceil(eco_ISDI)) + " €")
+        else:
+            st.error("Le taux de réemploi des matériaux/déchets sur site est déjà supérieur à 90%")
+
     # Choix d'un centre de collecte 10 km plus proche
-    action4 = st.checkbox("ACTION 6 - Choisir un centre de collecte 10 km plus proche")
+    action4 = st.checkbox("ACTION 4 - Réduire les distances des trajets chargés")
     new_dist_exuISDI1 = dist_exuISDI1 - 10
     new_dist_exuISDI2 = dist_exuISDI2 - 10
     new_dist_exuISDND = dist_exuISDND - 10
@@ -894,6 +878,7 @@ def show():
     simulator_dict['eco_c_Ea4'] = math.ceil(eco_c_Ea4)
 
     if action4:
+        st.caption("Hypothèse: choisir des centres de collecte 10 km plus proche")
         if dist_exuISDI1 >= 10 and dist_exuISDI2 >= 10 and dist_exuISDND >= 10 and dist_exuISDD >= 10:
             y = random_CO2_equivalent(Ea4)
             with st.expander("Réduction des émissions carbone"):
@@ -911,13 +896,13 @@ def show():
             st.error("Un des centres de collecte se trouve déjà à moins de 10 km du chantier")
 
     # Toutes les actions combinées
-    action5 = st.checkbox("ACTION 7 - Combiner les actions de réduction 3-4-5-6")
-    new_mean_load_all = new_load_cam5 * (new_cam5 / 100) + new_load_cam4 * (new_cam4 / 100) + new_load_cam2 * (new_cam2 / 100)
+    action5 = st.checkbox("COMBINER les actions de réduction ci-dessus")
+    new_mean_load_all = new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100) + new_load_cam2 * (cam2 / 100)
     new_pass_ISDI1_Ea5 = round((new_ISDI1 / new_mean_load_all),1)
     new_pass_ISDI2_Ea5 = round((ISDI2 / new_mean_load_all),1)
     new_pass_ISDND_Ea5 = round((ISDND / new_mean_load_all),1)
     new_pass_ISDD_Ea5 = round((ISDD / new_mean_load_all),1)
-    new_E_trans_Ea5 = FE_trans * (new_dist_exuISDI1 * (ISDI1 + new_mav * new_pass_ISDI1_Ea5)
+    new_E_trans_Ea5 = new_FE_trans * (new_dist_exuISDI1 * (ISDI1 + new_mav * new_pass_ISDI1_Ea5)
                                   + new_dist_exuISDI2 * (ISDI2 + new_mav * new_pass_ISDI2_Ea5)
                                   + new_dist_exuISDND * (ISDND + new_mav * new_pass_ISDND_Ea5)
                                   + new_dist_exuISDD * (ISDD + new_mav * new_pass_ISDD_Ea5))
