@@ -303,6 +303,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="mais les résultats ne doivent pas être interprétés comme un Bilan Énergétique des Gaz à Effet de Serre (BEGES) certifié", ln=1)
     pdf.cell(200, 4, txt="dont la méthodologie est définie par l'ADEME et ne peut être délivré que par des experts accrédités. Il convient à l'utilisateur de renseigner ", ln=1)
     pdf.cell(200, 4, txt="les données les plus fiables possibles afin de réduire les incertitudes des résultats obtenus.", ln=1)
+    pdf.image('Banner_Linkedin.png',w=190)
     pdf = pdf.output("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf")
     return st.write("le rapport a été généré")
 
