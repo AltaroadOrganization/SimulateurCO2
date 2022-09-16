@@ -688,6 +688,9 @@ def show():
     </head>
     '''
     st.markdown(subheader8, unsafe_allow_html=True)
+
+    st.write("Sont ici proposées certaines des actions possibles pour la réduction du bilan CO2 SCOPE3. D'autres actions "
+             "sont possibles, comme le choix du carburant. Avec ses produits, Altaroad vous aide à les mettre en place.")
     #st.subheader("Actions de réduction et gains 📉")
     action1 = st.checkbox("ACTION 1 - Choisir une flotte de véhicules économes")
 
@@ -813,7 +816,7 @@ def show():
             st.error("Le chargement maximal est dépassé")
 
     # Réutiliser 10% des terres sur site
-    action3 = st.checkbox("ACTION 3 - Augmenter le taux de réutilisation des matériaux/déchets directement sur le site d'extraction")
+    action3 = st.checkbox("ACTION 3 - Augmenter le taux de réutilisation des matériaux/déchets sur le chantier")
     new_valo_terres = valo_terres - 10
     new_ISDI1 = ISDI1brut * (new_valo_terres / 100)
     new_E_ISDI1 = (new_ISDI1 * FEterres) / 1000
@@ -1046,7 +1049,7 @@ def show():
     with st.expander("Réductions"):
         fig = plt.figure()
         ax = fig.add_axes([0, 0, 1, 1])
-        actions = ["+ 10% de terres réutilisées", "+ 15% de camions 5 essieux", "+ 2t de chargement moyen",
+        actions = ["Flotte de véhicules économes", "Optimiser le chargement des camions", "+ 10% taux de valorisation",
                    "- 10km distance chantier/centre de collecte", "Toutes les actions"]
         valeurs = [Ea1, Ea2, Ea3, Ea4, Ea5]
         ax.set_title('Diminution des émissions CO2e par action',color = "#f37121", fontfamily = 'sen', size = 28)
