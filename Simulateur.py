@@ -191,7 +191,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="Actions de réduction et gains", ln=1)
     pdf.set_font("Arial", size=10)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="+ 10% de réutilisation des terres/gravats sur site : ", ln=1)
+    pdf.cell(200, 4, txt="Choix d'une flotte de véhicules économe : ", ln=1)
     pdf.cell(20)
     pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea1"])) + " tonnes CO2e;", ln=1)
     pdf.cell(20)
@@ -202,7 +202,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="- Gain économique = " + str(
         math.ceil(the_input_dict["eco_c_Ea1"] + the_input_dict["eco_ISDI"])) + " euros", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="+ 15% de camions 5 essieux articulés : ", ln=1)
+    pdf.cell(200, 4, txt="Optimisation du chargement des camions (+2T) : ", ln=1)
     pdf.cell(20)
     pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea2"])) + " tonnes CO2e;", ln=1)
     pdf.cell(20)
@@ -213,7 +213,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="- Gain économique = " + str(
         math.ceil(the_input_dict["eco_c_Ea2"] + the_input_dict["eco_D_tot_Ea2"])) + " euros", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="+ 2 tonnes de chargement moyen en + : ", ln=1)
+    pdf.cell(200, 4, txt="+10% de taux de valorisation des déchets : ", ln=1)
     pdf.cell(20)
     pdf.cell(200, 4, txt="- Gain CO2e = " + str(int(the_input_dict["Ea3"])) + " tonnes CO2e;", ln=1)
     pdf.cell(20)
@@ -224,7 +224,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf.cell(200, 4, txt="- Gain économique = " + str(
         math.ceil(the_input_dict["eco_c_Ea3"] + the_input_dict["eco_D_tot_Ea3"])) + " euros", ln=1)
     pdf.cell(10)
-    pdf.cell(200, 4, txt="- 10 km de distance au centre de collecte : ", ln=1)
+    pdf.cell(200, 4, txt="-10 km de distance au centre de collecte : ", ln=1)
     pdf.cell(20)
     pdf.cell(200, 4,txt="- Gain CO2e = " + str(int(the_input_dict["Ea4"])) + " tonnes CO2e;",ln=1)
     pdf.cell(20)
