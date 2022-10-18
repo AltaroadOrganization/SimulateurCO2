@@ -1500,9 +1500,8 @@ def show():
     st.image(Image_title)
     return simulator_dict
 
+@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 if __name__ == "__main__":
-    @st.cache(suppress_st_warning=True, allow_output_mutation=True)
-
     initial_dict = {
             "email_user": "",
             "nb_cam2": 4,
