@@ -1506,7 +1506,7 @@ def show():
     return simulator_dict
 
 if __name__ == "__main__":
-
+    @st.cache(suppress_st_warning=True, allow_output_mutation=True)
     initial_dict = {
             "email_user": "",
             "nb_cam2": 4,
