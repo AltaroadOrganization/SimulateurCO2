@@ -307,6 +307,7 @@ def build_pdf_from_dict(the_input_dict):
     pdf = pdf.output("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf")
     return st.write("le rapport a été généré")
 
+@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def show():
     #all the inputs and outputs are saved in a dict
     simulator_dict={}
@@ -1500,7 +1501,6 @@ def show():
     st.image(Image_title)
     return simulator_dict
 
-@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 if __name__ == "__main__":
     initial_dict = {
             "email_user": "",
