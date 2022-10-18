@@ -90,7 +90,7 @@ fpdf==1.7.2
 #Sphinx==4.2.0
 #squarify==0.4.3
 #statsmodels==0.12.2
-streamlit==1.9.0
+streamlit==1.13.0
 #strsimpy==0.2.1
 #tables==3.6.1
 #TBB==0.2
