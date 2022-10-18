@@ -307,7 +307,6 @@ def build_pdf_from_dict(the_input_dict):
     pdf = pdf.output("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf")
     return st.write("le rapport a été généré")
 
-@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def show():
     #all the inputs and outputs are saved in a dict
     simulator_dict={}
