@@ -1,47 +1,47 @@
 Type d'ouvrage;Catégorie;Sous catégorie 1;Sous catégorie 2;Unité;Incertitude;FE
- Bâtiments;Bâtiment agricole;structure en béton;/;kgCO2e/m²;50;656
- Bâtiments;Bâtiment agricole;structure métallique;/;kgCO2e/m²;50;220
- Bâtiments;Bâtiment industriel;structure en béton;/;kgCO2e/m²;50;825
- Bâtiments;Bâtiment industriel;structure métallique;/;kgCO2e/m²;50;275
- Bâtiments;Bâtiments de bureaux ;;/;kgCO2e/m² SHON;50;650
- Bâtiments;Centre de loisir;structure en béton;/;kgCO2e/m²;50;506
- Bâtiments;Centre de loisir;structure métallique;/;kgCO2e/m²;50;169
- Bâtiments;Commerce;structure en béton;/;kgCO2e/m²;50;550
- Bâtiments;Commerce;structure métallique;/;kgCO2e/m²;50;183
- Bâtiments;Etablissement d'enseignement;structure en béton;/;kgCO2e/m²;50;440
- Bâtiments;Etablissement de santé;structure en béton;/;kgCO2e/m²;50;440
- Bâtiments;Garage;structure en béton;/;kgCO2e/m²;50;656
- Bâtiments;Garage;structure métallique;/;kgCO2e/m²;50;220
- Voirie ;Glissière de sécurité;pour voirie de type TC5;/;kgCO2e/m de route;15;87,5
+ Bâtiments;Bâtiment agricole;structure en béton;/;kgCO2e/m2;50;656
+ Bâtiments;Bâtiment agricole;structure métallique;/;kgCO2e/m2;50;220
+ Bâtiments;Bâtiment industriel;structure en béton;/;kgCO2e/m2;50;825
+ Bâtiments;Bâtiment industriel;structure métallique;/;kgCO2e/m2;50;275
+ Bâtiments;Bâtiments de bureaux ;;/;kgCO2e/m2 SHON;50;650
+ Bâtiments;Centre de loisir;structure en béton;/;kgCO2e/m2;50;506
+ Bâtiments;Centre de loisir;structure métallique;/;kgCO2e/m2;50;169
+ Bâtiments;Commerce;structure en béton;/;kgCO2e/m2;50;550
+ Bâtiments;Commerce;structure métallique;/;kgCO2e/m2;50;183
+ Bâtiments;Etablissement d'enseignement;structure en béton;/;kgCO2e/m2;50;440
+ Bâtiments;Etablissement de santé;structure en béton;/;kgCO2e/m2;50;440
+ Bâtiments;Garage;structure en béton;/;kgCO2e/m2;50;656
+ Bâtiments;Garage;structure métallique;/;kgCO2e/m2;50;220
+ Voirie ;Glissière de sécurité;pour voirie de type TC5;/;kgCO2e/m de route;15;87
  Voirie ;Glissière de sécurité;pour voirie de type TC6;/;kgCO2e/m de route;15;280
  Voirie ;Glissière de sécurité;pour voirie de type TC7;/;kgCO2e/m de route;15;280
- Bâtiments;Immeubles de logements collectifs :IC ;;/;kgCO2e/m² SHON;50;525
- Bâtiments;Maison éco-construite « bois, paille, pierre, terre »;;/;kgCO2e/m2 SHON;30;144
- Bâtiments;Maisons individuelles :MI ;;/;kgCO2e/m² SHON;50;425
- Voirie ;Parking;aire de repos d'autoroute;béton armé;kgCO2e/m²;15;337
- Voirie ;Parking;aire de repos d'autoroute;bitume;kgCO2e/m²;15;92
- Voirie ;Parking;aire de repos d'autoroute;Semi rigide;kgCO2e/m²;15;165
- Voirie ;Parking;classique;béton armé;kgCO2e/m²;15;319
- Voirie ;Parking;classique;bitume;kgCO2e/m²;15;73
- Voirie ;Parking;classique;Semi rigide;kgCO2e/m²;15;165
- Voirie ;Voirie;de type TC1;béton armé;kgCO2e/m²;15;85
- Voirie ;Voirie;de type TC1;bitume;kgCO2e/m²;15;15
- Voirie ;Voirie;de type TC1;Semi rigide;kgCO2e/m²;15;40
- Voirie ;Voirie;de type TC2;béton armé;kgCO2e/m²;15;87
- Voirie ;Voirie;de type TC2;bitume;kgCO2e/m²;15;20
- Voirie ;Voirie;de type TC2;Semi rigide;kgCO2e/m²;15;45
- Voirie ;Voirie;de type TC3;béton armé;kgCO2e/m²;15;92
- Voirie ;Voirie;de type TC3;bitume;kgCO2e/m²;15;25
- Voirie ;Voirie;de type TC3;Semi rigide;kgCO2e/m²;15;45
- Voirie ;Voirie;de type TC4;béton armé;kgCO2e/m²;15;100
- Voirie ;Voirie;de type TC4;bitume;kgCO2e/m²;15;28
- Voirie ;Voirie;de type TC4;Semi rigide;kgCO2e/m²;15;54
- Voirie ;Voirie;de type TC5;béton armé;kgCO2e/m²;15;105
- Voirie ;Voirie;de type TC5;bitume;kgCO2e/m²;15;32
- Voirie ;Voirie;de type TC5;Semi rigide;kgCO2e/m²;15;57
- Voirie ;Voirie;de type TC6;béton armé;kgCO2e/m²;15;115
- Voirie ;Voirie;de type TC6;bitume;kgCO2e/m²;15;37
- Voirie ;Voirie;de type TC6;Semi rigide;kgCO2e/m²;15;60
- Voirie ;Voirie;de type TC7;béton armé;kgCO2e/m²;15;125
- Voirie ;Voirie;de type TC7;bitume;kgCO2e/m²;15;40
- Voirie ;Voirie;de type TC7;Semi rigide;kgCO2e/m²;15;65
+ Bâtiments;Immeubles de logements collectifs :IC ;;/;kgCO2e/m2 SHON;50;525
+ Bâtiments;Maison éco-construite « bois -paille-pierre-terre »;;/;kgCO2e/m2 SHON;30;144
+ Bâtiments;Maisons individuelles :MI ;;/;kgCO2e/m2 SHON;50;425
+ Voirie ;Parking;aire de repos d'autoroute;béton armé;kgCO2e/m2;15;337
+ Voirie ;Parking;aire de repos d'autoroute;bitume;kgCO2e/m2;15;92
+ Voirie ;Parking;aire de repos d'autoroute;Semi rigide;kgCO2e/m2;15;165
+ Voirie ;Parking;classique;béton armé;kgCO2e/m2;15;319
+ Voirie ;Parking;classique;bitume;kgCO2e/m2;15;73
+ Voirie ;Parking;classique;Semi rigide;kgCO2e/m2;15;165
+ Voirie ;Voirie;de type TC1;béton armé;kgCO2e/m2;15;85
+ Voirie ;Voirie;de type TC1;bitume;kgCO2e/m2;15;15
+ Voirie ;Voirie;de type TC1;Semi rigide;kgCO2e/m2;15;40
+ Voirie ;Voirie;de type TC2;béton armé;kgCO2e/m2;15;87
+ Voirie ;Voirie;de type TC2;bitume;kgCO2e/m2;15;20
+ Voirie ;Voirie;de type TC2;Semi rigide;kgCO2e/m2;15;45
+ Voirie ;Voirie;de type TC3;béton armé;kgCO2e/m2;15;92
+ Voirie ;Voirie;de type TC3;bitume;kgCO2e/m2;15;25
+ Voirie ;Voirie;de type TC3;Semi rigide;kgCO2e/m2;15;45
+ Voirie ;Voirie;de type TC4;béton armé;kgCO2e/m2;15;100
+ Voirie ;Voirie;de type TC4;bitume;kgCO2e/m2;15;28
+ Voirie ;Voirie;de type TC4;Semi rigide;kgCO2e/m2;15;54
+ Voirie ;Voirie;de type TC5;béton armé;kgCO2e/m2;15;105
+ Voirie ;Voirie;de type TC5;bitume;kgCO2e/m2;15;32
+ Voirie ;Voirie;de type TC5;Semi rigide;kgCO2e/m2;15;57
+ Voirie ;Voirie;de type TC6;béton armé;kgCO2e/m2;15;115
+ Voirie ;Voirie;de type TC6;bitume;kgCO2e/m2;15;37
+ Voirie ;Voirie;de type TC6;Semi rigide;kgCO2e/m2;15;60
+ Voirie ;Voirie;de type TC7;béton armé;kgCO2e/m2;15;125
+ Voirie ;Voirie;de type TC7;bitume;kgCO2e/m2;15;40
+ Voirie ;Voirie;de type TC7;Semi rigide;kgCO2e/m2;15;65
