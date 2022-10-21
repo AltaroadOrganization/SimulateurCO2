@@ -365,19 +365,18 @@ def show():
     '''
     st.write('---------------------------------------------------')
     st.markdown(header0, unsafe_allow_html=True)
-    st.write('Ici, vous entrez quelques infos sur le chantier que vous souhaitez simuler')
-    list_chantier=['CONSTRUCTION','DEMOLITION','TERRASSEMENT']
-    type_chantier = st.selectbox("Type de chantier", list_chantier, list_chantier.index(st.session_state["type_chantier"]))
-    lieu_chantier = st.text_input('Le lieu du chantier (entrer une adresse)', value=st.session_state["lieu_chantier"], max_chars=None, key=None, type="default")
-    #col1,col2=st.columns(2)
-    #list_taille=['PETIT','MOYEN','GROS']
-    #taille_chantier = col1.selectbox('La taille du chantier', list_taille, list_taille.index(st.session_state["taille_chantier"]))
-    duree_semaine_chantier=st.text_input('Durée en  semaines', value=st.session_state["duree_semaine_chantier"], max_chars=None, key=None, type="default")
-
-    simulator_dict['type_chantier']=type_chantier
-    simulator_dict['lieu_chantier']=lieu_chantier
-    #simulator_dict['taille_chantier']=taille_chantier
-    simulator_dict['duree_semaine_chantier']=duree_semaine_chantier
+    with st.expander('Ici, vous entrez quelques infos sur le chantier que vous souhaitez simuler'):
+        list_chantier=['CONSTRUCTION','DEMOLITION','TERRASSEMENT']
+        type_chantier = st.selectbox("Type de chantier", list_chantier, list_chantier.index(st.session_state["type_chantier"]))
+        lieu_chantier = st.text_input('Le lieu du chantier (entrer une adresse)', value=st.session_state["lieu_chantier"], max_chars=None, key=None, type="default")
+        #col1,col2=st.columns(2)
+        #list_taille=['PETIT','MOYEN','GROS']
+        #taille_chantier = col1.selectbox('La taille du chantier', list_taille, list_taille.index(st.session_state["taille_chantier"]))
+        duree_semaine_chantier=st.text_input('Durée en  semaines', value=st.session_state["duree_semaine_chantier"], max_chars=None, key=None, type="default")
+        simulator_dict['type_chantier']=type_chantier
+        simulator_dict['lieu_chantier']=lieu_chantier
+        #simulator_dict['taille_chantier']=taille_chantier
+        simulator_dict['duree_semaine_chantier']=duree_semaine_chantier
 
     header2 = '''
     <head>
