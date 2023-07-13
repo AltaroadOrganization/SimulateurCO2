@@ -9,292 +9,16 @@ import random
 import datetime
 import re
 import boto3
+from utils_simu import *
+import warnings
+import os
+import base64
+warnings.filterwarnings('ignore')
 
 #get AWS access key and secret key
 ACCESS_KEY = st.secrets["my_access_key"]["ACCESS_KEY"]
 SECRET_KEY = st.secrets["my_access_key"]["SECRET_KEY"]
 
-def download_state_management(simulator_dict, ACCESS_KEY, SECRET_KEY):
-    if 'download_done' not in st.session_state:
-        st.session_state.download_done = True
-    else:
-        if st.session_state.download_done == False:
-            bucket_name = 'dataset-altaroad-public'
-            read_write_S3(bucket_name, simulator_dict, ACCESS_KEY, SECRET_KEY)
-        else:
-            st.session_state.download_done=True
-
-#function to check if an email is valid
-def solve(s):
-   pat = "^[a-zA-Z0-9-_.]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
-   if re.match(pat,s):
-      return True
-   return False
-
-#function to give a random equivalent to a Carbon gain
-def random_CO2_equivalent(Ea1):
-    v = random.choice([str(math.ceil(Ea1 * 138)) + " repas avec du boeuf 🥩",
-                       str(math.ceil(Ea1 * 5181)) + " km en voiture (" + str(
-                           math.ceil(Ea1 * 8)) + " trajets Paris-Marseille) 🚗",
-                       str(math.ceil(Ea1)) + " aller-retour Paris-NYC ✈️",
-                       str(math.ceil(Ea1 * 54)) + " jours de chauffage (gaz) 🌡️",
-                       str(math.ceil(Ea1 * 61)) + " smartphones 📱",
-                       str(math.ceil(Ea1 * 2208)) + " litres d'eau en bouteille 🧴",
-                       str(math.ceil(Ea1 * 43)) + " jeans en coton 👖"])
-    return v
-
-#function to load the dict to a S3 bucket
-def read_write_S3(bucket_name, the_dict, access_key, secret_key):
-    '''
-    this function adds a "new simulator user file" to a bucket
-    '''
-    session = boto3.Session(aws_access_key_id=access_key, aws_secret_access_key=secret_key)
-    s3 = session.resource('s3')
-    heure=the_dict['date_heure'].replace('/','_').replace(' ','_')
-    object = s3.Object(bucket_name, 'simulatorco2/simulatorUserfile_{}.txt'.format(heure))
-    #df=pd.DataFrame.from_dict(the_dict)
-    result = object.put(Body=str(the_dict))
-
-#function to create the pdf report
-def build_pdf_from_dict(the_input_dict):
-    pdf = FPDF()
-    pdf.add_font('sen', '', 'sen.ttf', uni=True)
-    pdf.add_page()
-    pdf.image('Banner_Linkedin.png',w=190)
-    pdf.set_font("sen", "", size=2)
-    pdf.set_margins(10,10,10)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.image('logo.png',w=50,x=10)
-    pdf.set_font("sen", "", size=2)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.set_font("sen", "", size=24)
-    pdf.set_text_color(243, 113, 33)
-    pdf.cell(200, 10, txt="Simulateur CO2 du chantier", ln=1, align='C')
-    pdf.set_text_color(128, 128, 128)
-    pdf.set_font("sen", "", size=16)
-    pdf.cell(200, 10, txt="Synthèse des résultats", ln=1, align='C')
-    pdf.set_font("sen", size=8, style='')
-    pdf.set_text_color(0, 0, 0)
-    pdf.cell(200, 10, txt="Document généré automatiquement par ALTAROAD le "+the_input_dict["date_heure"], ln=1)
-    pdf.cell(200, 2, txt="", ln=2)
-    pdf.set_font("sen", "", size=16)
-    pdf.set_text_color(128, 128, 128)
-    pdf.cell(200, 10, txt="LE CHANTIER simulé", ln=1)
-    pdf.set_font("sen", size=10)
-    pdf.set_text_color(0, 0, 0)
-    str_text1="Ce document résume l'estimation des émissions de GES (exprimées en CO2e), du chantier " \
-              + the_input_dict["type_chantier"] + " opéré pour la construction de " \
-              + the_input_dict["categorie_ouvrage"]+" de dimensions de " + str(the_input_dict["DO_ouv"]) + " " \
-              + the_input_dict["u"] + " situé à : " + the_input_dict["lieu_chantier"]+" et d'une durée de " \
-              + str(the_input_dict["duree_semaine_chantier"]) + " semaines"
-    pdf.write(4, txt=str_text1)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.cell(200, 4, txt="", ln=1)
-    pdf.set_font("sen", "", size=16)
-    pdf.set_text_color(128, 128, 128)
-    pdf.cell(200, 10, txt="SCOPE 1&2 : Consommations d'énergies", ln=1)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.set_text_color(0, 0, 0)
-    pdf.set_font("sen", "", size=10)
-    pdf.cell(200, 4, txt="Estimations du bilan CO2e des Scopes 1 & 2: " + str(the_input_dict["tot_S1et2"]) + " tCO2e", ln=1)
-    pdf.set_font("sen", size=10)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="- Scope 1 : " + str(the_input_dict["tot_S1"]) + " tCO2e", ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="- Scope 2 : " + str(the_input_dict["tot_S2"]) + " tCO2e", ln=1)
-    pdf.cell(200, 4, txt="", ln=1)
-    pdf.set_text_color(128, 128, 128)
-    pdf.set_font("sen", "", size=16)
-    pdf.cell(200, 10, txt="SCOPE 3 : Evacuation des déchets", ln=1)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.set_font("sen", "", size=10)
-    pdf.set_text_color(0, 0, 0)
-    pdf.cell(200, 4, txt="Données d'entrée", ln=1)
-    pdf.set_font("sen", size=10)
-    pdf.cell(10)
-    if the_input_dict["ISDI1"]>0 :
-        pdf.cell(200, 4, txt="- Terres : " + str(the_input_dict["ISDI1"]) + " tonnes, chantier > centre de collecte : " + str(the_input_dict["dist_exuISDI1"]) + " km",ln=1)
-        pdf.cell(10)
-    if the_input_dict["ISDI2"]>0:
-        pdf.cell(200, 4, txt="- Gravats : " + str(the_input_dict["ISDI2"]) + " tonnes, chantier > centre de collecte : " + str(the_input_dict["dist_exuISDI2"]) + " km",
-             ln=1)
-        pdf.cell(10)
-    if the_input_dict["ISDND"]>0:
-        pdf.cell(200, 4, txt="- Déchets non-dangereux : " + str(the_input_dict["ISDND"]) + " tonnes, chantier > centre de collecte : " + str(
-            the_input_dict["dist_exuISDND"]) + " km", ln=1)
-        pdf.cell(10)
-    if the_input_dict["ISDD"]>0:
-        pdf.cell(200, 4,
-                 txt="- Déchets dangereux : " + str(the_input_dict["ISDD"]) + " tonnes, chantier > centre de collecte : " + str(the_input_dict["dist_exuISDD"]) + " km",
-                 ln=1)
-        pdf.cell(10)
-    pdf.cell(200, 4, txt="- Nombre de passages quotidien : " + str(the_input_dict["pass_jour"]), ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="- Taux de réemploi des terres/gravats : " + str(the_input_dict["repl_terres"]) + "%", ln=1)
-    pdf.cell(10)
-    if the_input_dict["nb_cam5"]>0:
-        pdf.cell(200, 4, txt="- Camions 5 essieux articulés : " + str(the_input_dict["nb_cam5"]) + " soit " + str(int(the_input_dict["cam5"])) + " %", ln=1)
-        pdf.cell(10)
-        pdf.cell(200, 4, txt="- Chargement moyen des 5 essieux : " + str(the_input_dict["load_cam5"]) + "t" , ln=1)
-        pdf.cell(10)
-    if the_input_dict["nb_cam4"]>0:
-        pdf.cell(200, 4, txt="- Camions 4 essieux porteurs : " + str(the_input_dict["nb_cam4"]) + " soit " + str(int(the_input_dict["cam4"])) + " %", ln=1)
-        pdf.cell(10)
-        pdf.cell(200, 4, txt="- Chargement moyen des 4 essieux : " + str(the_input_dict["load_cam4"])+"t", ln=1)
-        pdf.cell(10)
-    if the_input_dict["nb_cam2"]>0:
-        pdf.cell(200, 4, txt="- Camions 2 essieux porteurs : " + str(the_input_dict["nb_cam2"]) + " soit " + str(int(the_input_dict["cam2"])) + " %", ln=1)
-        pdf.cell(10)
-        pdf.cell(200, 4, txt="- Chargement moyen des 2 essieux : " + str(the_input_dict["load_cam2"])+"t", ln=1)
-        pdf.cell(10)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.set_font("sen", "", size=10)
-    pdf.cell(200, 4, txt="Données de sortie", ln=1)
-    pdf.set_font("sen", size=10)
-    str_text2= "La partie évacuation est évaluée à " + str(round(the_input_dict["dist_tot"],1)) + " km, effectuée en "+ str(int(the_input_dict["pass_tot"])) + " passages et " + str(round(the_input_dict["jours_evacuation"],1)) + " jours."
-    pdf.write(4, txt=str_text2)
-    pdf.set_font("sen", "", size=10)
-    pdf.cell(200, 10, txt="", ln=1)
-    pdf.cell(200, 4, txt="Bilan CO2e pour le SCOPE3 évacuation: " + str(round(the_input_dict["E_tot"],1)) + " tCO2e", ln=1)
-    pdf.set_font("sen", size=10)
-    if the_input_dict["E_tot"] > 0:
-        pdf.cell(10)
-        pdf.cell(200, 4, txt="- Emissions CO2e totales 'Transport' : " + str(round(the_input_dict["E_trans"],1)) + " tCO2e, soit " + str(
-            int((the_input_dict["E_trans"] / the_input_dict["E_tot"]) * 100)) + " %", ln=1)
-        pdf.cell(10)
-        pdf.cell(200, 4, txt="- Emissions CO2e totales 'Valorisation' : " + str(round(the_input_dict["E_valo"],1)) + " tCO2e, soit " + str(
-            int((the_input_dict["E_valo"] / the_input_dict["E_tot"]) * 100)) + " %", ln=1)
-        pdf.set_font("sen", "", size=10)
-        pdf.cell(200, 4, txt="", ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="- Emissions CO2e 'Terres' : "  +str(round(the_input_dict["E_ISDI1"] + the_input_dict["E_trans_ISDI1"],1)) + " tCO2e (Transport = " + str(
-        round(the_input_dict["E_trans_ISDI1"],1)) + " tCO2e; Valorisation = " + str(round(the_input_dict["E_ISDI1"],1)) + " tCO2e)", ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="- Emissions CO2e 'Gravats' : "+str(round(the_input_dict["E_ISDI2"] + the_input_dict["E_trans_ISDI2"],1)) + " tCO2e (Transport = " + str(
-        round(the_input_dict["E_trans_ISDI2"],1)) + " tCO2e; Valorisation = " + str(round(the_input_dict["E_ISDI2"],1)) + " tCO2e)", ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4,
-             txt="- Emissions CO2e 'DND' : " + str(round(the_input_dict["E_ISDND"] + the_input_dict["E_trans_ISDND"],1)) + " tCO2e (Transport = " + str(round(the_input_dict["E_trans_ISDND"],1)) + " tCO2e; Valorisation = " + str(
-                 round(the_input_dict["E_ISDND"],1)) + " tCO2e)", ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4,
-             txt="- Emissions CO2e 'DD' : " + str(round(the_input_dict["E_ISDD"] + the_input_dict["E_trans_ISDD"],1)) + " tCO2e (Transport = " + str(round(the_input_dict["E_trans_ISDD"],1)) + " tCO2e; Valorisation = " + str(
-                 round(the_input_dict["E_ISDD"],1)) + " tCO2e)", ln=1)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.set_font("sen", "", size=10)
-    pdf.cell(200, 4, txt="Actions de réduction et gains", ln=1)
-    pdf.set_font("sen", size=10)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="Choix d'une flotte de véhicules économe : ", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain CO2e = " + str(round(the_input_dict["Ea1"],1)) + " tCO2e;", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain passages = " + str(
-        int(the_input_dict["pass_ISDI1"] - the_input_dict["new_pass_ISDI1"])) + " soit " + str(
-        math.ceil(the_input_dict["jours_evacuation"] - (the_input_dict["new_pass_tot"] / the_input_dict["pass_jour"]))) + " jours;", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain économique = " + str(
-        math.ceil(the_input_dict["eco_c_Ea1"] + the_input_dict["eco_ISDI"])) + " euros", ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="Optimisation du chargement des camions (+2T) : ", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain CO2e = " + str(round(the_input_dict["Ea2"],1)) + " tCO2e;", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain passages = " + str(
-        int(the_input_dict["pass_tot"] - the_input_dict["new_pass_tot_Ea2"])) + " soit " + str(
-        math.ceil(the_input_dict["jours_evacuation"] - (the_input_dict["new_pass_tot_Ea2"] / the_input_dict["pass_jour"]))) + " jours;", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain économique = " + str(
-        math.ceil(the_input_dict["eco_c_Ea2"] + the_input_dict["eco_D_tot_Ea2"])) + " euros", ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="+10% de taux de valorisation des déchets : ", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain CO2e = " + str(round(the_input_dict["Ea3"],1)) + " tCO2e;", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain passages = " + str(
-        int(the_input_dict["pass_tot"] - the_input_dict["new_pass_tot_Ea3"])) + " soit " + str(
-        math.ceil(the_input_dict["jours_evacuation"] - (the_input_dict["new_pass_tot_Ea3"] / the_input_dict["pass_jour"]))) + " jours;", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain économique = " + str(
-        math.ceil(the_input_dict["eco_c_Ea3"] + the_input_dict["eco_D_tot_Ea3"])) + " euros", ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="-10 km de distance au centre de collecte : ", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4,txt="- Gain CO2e = " + str(round(the_input_dict["Ea4"],1)) + " tCO2e;",ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4,txt="- Gain économique = " + str(math.ceil(the_input_dict["eco_c_Ea4"])) + " euros",ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="Toutes les actions de réductions combinées : ", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain CO2e = " + str(round(the_input_dict["Ea5"],1)) + " tCO2e;", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain passages = " + str(
-        int(the_input_dict["pass_tot"] - the_input_dict["new_pass_tot_Ea5"])) + " soit " + str(
-        math.ceil(the_input_dict["jours_evacuation"] - (the_input_dict["new_pass_tot_Ea5"] / the_input_dict["pass_jour"]))) + " jours;", ln=1)
-    pdf.cell(20)
-    pdf.cell(200, 4, txt="- Gain économique = " + str(
-        math.ceil(the_input_dict["eco_c_Ea5"] + the_input_dict["eco_D_tot_Ea5"])) + " euros", ln=1)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.set_font("sen", "", size=16)
-    pdf.set_text_color(128, 128, 128)
-    pdf.cell(200, 10, txt="SCOPE 3 : Autres déchets & achats Matériaux", ln=1)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.set_font("sen", size=10)
-    pdf.set_text_color(0, 0, 0)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="- Emissions CO2e 'autres déchets' : " + str(the_input_dict["tot_S3d"]) + " tCO2e", ln=1)
-    pdf.cell(10)
-    pdf.cell(200, 4, txt="- Emissions CO2e 'achats Matériaux' : " + str(the_input_dict["tot_S3a"]) + " tCO2e", ln=1)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.set_font("sen", "", size=16)
-    pdf.set_text_color(128, 128, 128)
-    pdf.cell(200, 10, txt="SCOPE 3 : Construction de l'ouvrage ", ln=1)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.set_font("sen", size=10)
-    pdf.set_text_color(0, 0, 0)
-    str_text3="Selon les données de l'ADEME, la construction de ce type d'ouvrage d'une surface de " + str(
-        int(the_input_dict["DO_ouv"])) + " m2, émettrait environ " + str(round(the_input_dict["EMISSIONS_ouv"],1)) + " tCO2e (+ ou - " + str(
-                 int(the_input_dict["INCERTITUDE_ouv"])) + " tonnes CO2e)."
-    pdf.write(4, txt=str_text3)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.cell(200, 4, txt="", ln=1)
-    pdf.set_font("sen", "", size=16)
-    pdf.set_text_color(128, 128, 128)
-    pdf.cell(200, 10, txt="Estimation du bilan CO2e total", ln=1)
-    pdf.cell(200, 2, txt="", ln=1)
-    pdf.set_font("sen", '', size=10)
-    pdf.set_text_color(0, 0, 0)
-    pdf.cell(200, 4, txt="Total des émissions CO2e : " + str(
-        round(the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"],1)) + " tCO2e",
-             ln=1)
-    pdf.set_font("sen", '', size=10)
-    if the_input_dict["E_tot"] > 0:
-        pdf.cell(10)
-        pdf.cell(200, 4, txt="- Scope 1 : " + str(round(the_input_dict["tot_S1"], 1)) + " tCO2e, soit " + str(
-            round((the_input_dict["tot_S1"] / (the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) * 100, 1)) + " %", ln=1)
-        pdf.cell(10)
-        pdf.cell(200, 4, txt="- Scope 2 : " + str(round(the_input_dict["tot_S2"], 1)) + " tCO2e, soit " + str(
-            round((the_input_dict["tot_S2"] / (the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) * 100, 1)) + " %", ln=1)
-        pdf.cell(10)
-        pdf.cell(200, 4,
-                 txt="- Scope 3 : " + str(round(the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"], 1)) + " tCO2e, soit " + str(
-                     round(((the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"]) / (
-                                 the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) * 100, 1)) + " %", ln=1)
-    else:
-        pdf.cell(200, 10, txt="Aucune donnée saisie", ln=1)
-    pdf.cell(200, 10, txt="", ln=1)
-    pdf.set_font("sen", size=8, style='')
-    pdf.set_text_color(128, 128, 128)
-    str_textEnd="Ce simulateur propose une estimation des émissions CO2e d'un chantier. Il s'agit d'un outil dont l'objectif" \
-                " est d'anticiper les émissions CO2e pour les éviter. Les calculs sont basés sur des données sources fiables mais " \
-                "les résultats ne doivent pas être interprétés comme un Bilan Énergétique des Gaz à Effet de Serre (BEGES) certifié dont " \
-                "la méthodologie est définie par l'ADEME et ne peut être délivré que par des experts accrédités. Il convient à l'utilisateur " \
-                "de renseigner les données les plus fiables possibles afin de réduire les incertitudes des résultats obtenus."
-    pdf.write(4, txt=str_textEnd)
-    pdf.cell(200, 20, txt="", ln=1)
-    pdf.image('Banner_Linkedin.png',w=190)
-    pdf = pdf.output("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf")
-    return st.write("le rapport a été généré")
 
 def show():
     #all the inputs and outputs are saved in a dict
@@ -304,7 +28,7 @@ def show():
     st.image(Image_title)
 
     col1, col2 = st.columns([1, 1])
-    image = Image.open("logo.png")
+
     now = datetime.datetime.utcnow()
     result = now + datetime.timedelta(hours=2)
     date_heure = result.strftime("%d/%m/%Y %H:%M:%S")
@@ -322,24 +46,18 @@ def show():
         '''
         st.markdown(original_title, unsafe_allow_html=True)
     with col2:
-        st.image(image)
+        # insert altaroad logo
+        SC_alta = 'https://www.altaroad.com/'
+        # ebay banner
+        gif_html = get_img_with_href('logo.png', SC_alta)
+        st.markdown(gif_html, unsafe_allow_html=True)
 
-    FEterres = 4.58
-    FEgravats = 12
-    FEdnd = 84
-    FEdd = 128
-    FEmoy2e = 0.16 / 1000
-    FEmoy5e = 0.0711 / 1000
-    FEmoy4e = 0.105 / 1000
-    mav5e = 15
-    mav4e = 12
-    mav2e = 9
-    prix_c = 2
-    prix_ISDI1 = 300
-    prix_ISDI2 = 300
-    prix_ISDND = 1500
-    prix_ISDD = 5000
-    conso_moy = 30 / 100
+    constant_dict={"FEterres" : 12, "FEgravats" : 12, "FEdnd" : 84, "FEdd" : 128, "FEmoy2e" : 0.16 / 1000,
+                   "FEmoy5e" : 0.0711 / 1000, "FEmoy4e" : 0.105 / 1000,"mav5e" : 15, "mav4e" : 12, "mav2e" : 9,
+                   "prix_c" : 2, "prix_ISDI1": 300, "prix_ISDI2" : 300, "prix_ISDND" : 1500, "prix_ISDD" : 5000,
+                "conso_moy" : 30 / 100}
+
+
     st.write("")
     st.write("Cet outil permet de simuler et réaliser une première approximation des émissions carbone de votre chantier sur l'ensemble des SCOPES, et notamment le SCOPE 3.")
     st.write("Le simulateur offre la possibilité de modifier de nombreux paramètres afin d'optimiser les émissions carbone liées à l'évacuation et au traitement de vos déchets, il donne ainsi un aperçu des nombreux avantages et gains potentiels relatifs à l'utilisation de la plateforme Digitrack proposée par Altaroad (https://www.altaroad.com/digitrack/)")
@@ -505,8 +223,8 @@ def show():
         pass_ISDND = math.ceil(ISDND / mean_load)
         pass_ISDD = math.ceil(ISDD / mean_load)
         pass_tot = pass_ISDI1 + pass_ISDI2 + pass_ISDND + pass_ISDD
-        FE_trans = FEmoy5e * (cam5 / 100) + FEmoy4e * (cam4 / 100) + FEmoy2e * (cam2/100)
-        mav_trans = mav5e * (cam5 / 100) + mav4e * (cam4 / 100) + mav2e * (cam2/100)
+        FE_trans = constant_dict["FEmoy5e"] * (cam5 / 100) + constant_dict["FEmoy4e"] * (cam4 / 100) + constant_dict["FEmoy2e"] * (cam2/100)
+        mav_trans = constant_dict["mav5e"] * (cam5 / 100) + constant_dict["mav4e"] * (cam4 / 100) + constant_dict["mav2e"] * (cam2/100)
         tot_D = ISDI1 + ISDI2 + ISDND + ISDD
         dist_tot = pass_ISDI1 * dist_exuISDI1 + pass_ISDI2 * dist_exuISDI2 + pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD
         simulator_dict['pass_ISDI1'] = pass_ISDI1
@@ -537,10 +255,10 @@ def show():
     </head>
     '''
     st.markdown(subheader7, unsafe_allow_html=True)
-    E_ISDI1 = round((ISDI1 * FEterres) / 1000, 1)
-    E_ISDI2 = round((ISDI2 * FEgravats) / 1000, 1)
-    E_ISDND = round((ISDND * FEdnd) / 1000, 1)
-    E_ISDD = round((ISDD * FEdd) / 1000, 1)
+    E_ISDI1 = round((ISDI1 * constant_dict["FEterres"]) / 1000, 1)
+    E_ISDI2 = round((ISDI2 * constant_dict["FEgravats"]) / 1000, 1)
+    E_ISDND = round((ISDND * constant_dict["FEdnd"]) / 1000, 1)
+    E_ISDD = round((ISDD * constant_dict["FEdd"]) / 1000, 1)
     E_trans_ISDI1 = round(FE_trans * dist_exuISDI1 * (ISDI1 + mav_trans * pass_ISDI1), 1)
     E_trans_ISDI2 = round(FE_trans * dist_exuISDI2 * (ISDI2 + mav_trans * pass_ISDI2), 1)
     E_trans_ISDND = round(FE_trans * dist_exuISDND * (ISDND + mav_trans * pass_ISDND), 1)
@@ -688,7 +406,7 @@ def show():
     new_FEmoy2e=140/1000000 #à confirmer
 
     new_FE_trans = new_FEmoy5e * (cam5 / 100) + new_FEmoy4e * (cam4 / 100) + new_FEmoy2e * (cam2 / 100)
-    new_mav = mav5e * (cam5 / 100) + mav4e * (cam4 / 100) + mav2e * (cam2 / 100)
+    new_mav = constant_dict["mav5e"] * (cam5 / 100) + constant_dict["mav4e"] * (cam4 / 100) + constant_dict["mav2e"] * (cam2 / 100)
     new_E_trans_ISDI1_Ea2 = round(new_FE_trans * dist_exuISDI1 * (ISDI1 + new_mav * pass_ISDI1), 1)
     new_E_trans_ISDI2_Ea2 = round(new_FE_trans * dist_exuISDI2 * (ISDI2 + new_mav * pass_ISDI2), 1)
     new_E_trans_ISDND_Ea2 = round(new_FE_trans * dist_exuISDND * (ISDND + new_mav * pass_ISDND), 1)
@@ -701,16 +419,16 @@ def show():
     new_pass_tot_Ea2 = new_pass_ISDI1_Ea2 + new_pass_ISDI2_Ea2 + new_pass_ISDND_Ea2 + new_pass_ISDD_Ea2
     new_E_trans_Ea2 = new_E_trans_ISDI1_Ea2 + new_E_trans_ISDI2_Ea2 + new_E_trans_ISDND_Ea2 + new_E_trans_ISDD_Ea2
     Ea2 = round(E_trans - new_E_trans_Ea2, 1)
-    conso_tot = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
-            conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
-    new_conso_tot_Ea2 = (conso_moy * new_pass_ISDI2_Ea2 * dist_exuISDI2) + (
-            conso_moy * new_pass_ISDI1_Ea2 * dist_exuISDI1) + (conso_moy * new_pass_ISDND_Ea2 * dist_exuISDND) + (
-                                conso_moy * new_pass_ISDD_Ea2 * dist_exuISDD)
-    eco_c_Ea2 = (conso_tot - new_conso_tot_Ea2) * prix_c
-    eco_ISDI1_Ea2 = (pass_ISDI1 - new_pass_ISDI1_Ea2) * prix_ISDI1
-    eco_ISDI2_Ea2 = (pass_ISDI2 - new_pass_ISDI2_Ea2) * prix_ISDI2
-    eco_ISDND_Ea2 = (pass_ISDND - new_pass_ISDND_Ea2) * prix_ISDND
-    eco_ISDD_Ea2 = (pass_ISDD - new_pass_ISDD_Ea2) * prix_ISDD
+    conso_tot = constant_dict["conso_moy"]*(pass_ISDI2 * dist_exuISDI2 + pass_ISDI1 * dist_exuISDI1 +
+                                           pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD)
+    new_conso_tot_Ea2 = constant_dict["conso_moy"]*\
+                        ( new_pass_ISDI2_Ea2 * dist_exuISDI2 + new_pass_ISDI1_Ea2 * dist_exuISDI1 +
+                          new_pass_ISDND_Ea2 * dist_exuISDND + new_pass_ISDD_Ea2 * dist_exuISDD)
+    eco_c_Ea2 = (conso_tot - new_conso_tot_Ea2) * constant_dict["prix_c"]
+    eco_ISDI1_Ea2 = (pass_ISDI1 - new_pass_ISDI1_Ea2) * constant_dict["prix_ISDI1"]
+    eco_ISDI2_Ea2 = (pass_ISDI2 - new_pass_ISDI2_Ea2) * constant_dict["prix_ISDI2"]
+    eco_ISDND_Ea2 = (pass_ISDND - new_pass_ISDND_Ea2) * constant_dict["prix_ISDND"]
+    eco_ISDD_Ea2 = (pass_ISDD - new_pass_ISDD_Ea2) * constant_dict["prix_ISDD"]
     eco_D_tot_Ea2 = eco_ISDI1_Ea2 + eco_ISDI2_Ea2 + eco_ISDND_Ea2 + eco_ISDD_Ea2
     simulator_dict['Ea2'] = Ea2
     simulator_dict['eco_c_Ea2'] = math.ceil(eco_c_Ea2)
@@ -754,16 +472,17 @@ def show():
                                   + dist_exuISDND * (ISDND + mav_trans * new_pass_ISDND_Ea3)
                                   + dist_exuISDD * (ISDD + mav_trans * new_pass_ISDD_Ea3))
     Ea3 = E_trans - new_E_trans_Ea3
-    conso_tot_Ea3 = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
-            conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
-    new_conso_tot_Ea3 = (conso_moy * new_pass_ISDI2_Ea3 * dist_exuISDI2) + (
-            conso_moy * new_pass_ISDI1_Ea3 * dist_exuISDI1) + (conso_moy * new_pass_ISDND_Ea3 * dist_exuISDND) + (
-                                conso_moy * new_pass_ISDD_Ea3 * dist_exuISDD)
-    eco_c_Ea3 = (conso_tot - new_conso_tot_Ea3) * prix_c
-    eco_ISDI1_Ea3 = (pass_ISDI1 - new_pass_ISDI1_Ea3) * prix_ISDI1
-    eco_ISDI2_Ea3 = (pass_ISDI2 - new_pass_ISDI2_Ea3) * prix_ISDI2
-    eco_ISDND_Ea3 = (pass_ISDND - new_pass_ISDND_Ea3) * prix_ISDND
-    eco_ISDD_Ea3 = (pass_ISDD - new_pass_ISDD_Ea3) * prix_ISDD
+    conso_tot_Ea3 = constant_dict["conso_moy"] * ( pass_ISDI2 * dist_exuISDI2 + pass_ISDI1 * dist_exuISDI1 +
+                                                  pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD)
+    new_conso_tot_Ea3 = constant_dict["conso_moy"] * (new_pass_ISDI2_Ea3 * dist_exuISDI2 +
+                                                     new_pass_ISDI1_Ea3 * dist_exuISDI1 +
+                                                     new_pass_ISDND_Ea3 * dist_exuISDND +
+                                                     new_pass_ISDD_Ea3 * dist_exuISDD)
+    eco_c_Ea3 = (conso_tot - new_conso_tot_Ea3) * constant_dict["prix_c"]
+    eco_ISDI1_Ea3 = (pass_ISDI1 - new_pass_ISDI1_Ea3) * constant_dict["prix_ISDI1"]
+    eco_ISDI2_Ea3 = (pass_ISDI2 - new_pass_ISDI2_Ea3) * constant_dict["prix_ISDI2"]
+    eco_ISDND_Ea3 = (pass_ISDND - new_pass_ISDND_Ea3) * constant_dict["prix_ISDND"]
+    eco_ISDD_Ea3 = (pass_ISDD - new_pass_ISDD_Ea3) * constant_dict["prix_ISDD"]
     eco_D_tot_Ea3 = eco_ISDI1_Ea3 + eco_ISDI2_Ea3 + eco_ISDND_Ea3 + eco_ISDD_Ea3
 
     simulator_dict['Ea3'] = Ea3
@@ -808,15 +527,15 @@ def show():
     action3 = st.checkbox("ACTION 3 - Augmenter le taux de réutilisation des matériaux/déchets sur le chantier")
     new_valo_terres = valo_terres - 10
     new_ISDI1 = ISDI1brut * (new_valo_terres / 100)
-    new_E_ISDI1 = (new_ISDI1 * FEterres) / 1000
+    new_E_ISDI1 = (new_ISDI1 * constant_dict["FEterres"]) / 1000
     new_pass_ISDI1 = round((new_ISDI1 / mean_load),1)
     new_E_trans_ISDI1 = FE_trans * dist_exuISDI1 * (new_ISDI1 + mav_trans * new_pass_ISDI1)
     new_pass_tot = new_pass_ISDI1 + pass_ISDI2 + pass_ISDND + pass_ISDD
     Ea1 = E_ISDI1 + E_trans_ISDI1 - new_E_ISDI1 - new_E_trans_ISDI1
-    conso_tot_Ea1 = conso_moy * pass_tot * dist_exuISDI1
-    new_conso_tot_Ea1 = conso_moy * new_pass_tot * dist_exuISDI1
-    eco_c_Ea1 = (conso_tot_Ea1 - new_conso_tot_Ea1) * prix_c
-    eco_ISDI = (pass_ISDI1 - new_pass_ISDI1) * prix_ISDI1
+    conso_tot_Ea1 = constant_dict["conso_moy"] * pass_tot * dist_exuISDI1
+    new_conso_tot_Ea1 = constant_dict["conso_moy"] * new_pass_tot * dist_exuISDI1
+    eco_c_Ea1 = (conso_tot_Ea1 - new_conso_tot_Ea1) * constant_dict["prix_c"]
+    eco_ISDI = (pass_ISDI1 - new_pass_ISDI1) * constant_dict["prix_ISDI1"]
 
     simulator_dict['Ea1'] = Ea1
     simulator_dict['eco_c_Ea1'] = math.ceil(eco_c_Ea1)
@@ -861,11 +580,11 @@ def show():
             + new_dist_exuISDND * (ISDND + mav_trans * pass_ISDND)
             + new_dist_exuISDD * (ISDD + mav_trans * pass_ISDD))
     Ea4 = E_trans - new_E_trans_Ea4
-    conso_tot_Ea4 = (conso_moy * pass_ISDI2 * dist_exuISDI2) + (conso_moy * pass_ISDI1 * dist_exuISDI1) + (
-            conso_moy * pass_ISDND * dist_exuISDND) + (conso_moy * pass_ISDD * dist_exuISDD)
-    new_conso_tot_Ea4 = (conso_moy * pass_ISDI2 * new_dist_exuISDI2) + (conso_moy * pass_ISDI1 * new_dist_exuISDI1) + (
-            conso_moy * pass_ISDND * new_dist_exuISDND) + (conso_moy * pass_ISDD * new_dist_exuISDD)
-    eco_c_Ea4 = (conso_tot - new_conso_tot_Ea4) * prix_c
+    conso_tot_Ea4 = constant_dict["conso_moy"] * (pass_ISDI2 * dist_exuISDI2 + pass_ISDI1 * dist_exuISDI1 +
+                                                 pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD)
+    new_conso_tot_Ea4 = constant_dict["conso_moy"] * (pass_ISDI2 * new_dist_exuISDI2 + pass_ISDI1 * new_dist_exuISDI1 +
+                                                     pass_ISDND * new_dist_exuISDND + pass_ISDD * new_dist_exuISDD)
+    eco_c_Ea4 = (conso_tot - new_conso_tot_Ea4) * constant_dict["prix_c"]
 
     simulator_dict['Ea4'] = Ea4
     simulator_dict['eco_c_Ea4'] = math.ceil(eco_c_Ea4)
@@ -904,15 +623,15 @@ def show():
     new_E_valo = round(new_E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD, 1)
     new_E_tot_Ea5 = new_E_trans_Ea5 + new_E_valo
     Ea5 = E_tot - new_E_tot_Ea5
-    new_conso_tot_Ea5 = (conso_moy * new_pass_ISDI2_Ea5 * new_dist_exuISDI2) + (
-            conso_moy * new_pass_ISDI1_Ea5 * new_dist_exuISDI1) + (
-                                conso_moy * new_pass_ISDND_Ea5 * new_dist_exuISDND) + (
-                                conso_moy * new_pass_ISDD_Ea5 * new_dist_exuISDD)
-    eco_c_Ea5 = (conso_tot - new_conso_tot_Ea5) * prix_c
-    eco_ISDI1_Ea5 = (pass_ISDI1 - new_pass_ISDI1_Ea5) * prix_ISDI1
-    eco_ISDI2_Ea5 = (pass_ISDI2 - new_pass_ISDI2_Ea5) * prix_ISDI2
-    eco_ISDND_Ea5 = (pass_ISDND - new_pass_ISDND_Ea5) * prix_ISDND
-    eco_ISDD_Ea5 = (pass_ISDD - new_pass_ISDD_Ea5) * prix_ISDD
+    new_conso_tot_Ea5 = constant_dict["conso_moy"] * (new_pass_ISDI2_Ea5 * new_dist_exuISDI2 +
+                                                     new_pass_ISDI1_Ea5 * new_dist_exuISDI1 +
+                                                     new_pass_ISDND_Ea5 * new_dist_exuISDND +
+                                                     new_pass_ISDD_Ea5 * new_dist_exuISDD)
+    eco_c_Ea5 = (conso_tot - new_conso_tot_Ea5) * constant_dict["prix_c"]
+    eco_ISDI1_Ea5 = (pass_ISDI1 - new_pass_ISDI1_Ea5) * constant_dict["prix_ISDI1"]
+    eco_ISDI2_Ea5 = (pass_ISDI2 - new_pass_ISDI2_Ea5) * constant_dict["prix_ISDI2"]
+    eco_ISDND_Ea5 = (pass_ISDND - new_pass_ISDND_Ea5) * constant_dict["prix_ISDND"]
+    eco_ISDD_Ea5 = (pass_ISDD - new_pass_ISDD_Ea5) * constant_dict["prix_ISDD"]
     eco_D_tot_Ea5 = eco_ISDI1_Ea5 + eco_ISDI2_Ea5 + eco_ISDND_Ea5 + eco_ISDD_Ea5
 
     simulator_dict['Ea5'] = Ea5
@@ -1458,7 +1177,6 @@ def show():
     st.markdown(header6, unsafe_allow_html=True)
     # st.header("Synthèse du bilan CO2 simulé 📋")
     st.write('Et hop! je télécharge un pdf de synthèse de ma simulation')
-
     if st.checkbox(
             "J'accepte d'être contacté par ALTAROAD dans le cadre de l'utilisation de ce simulateur et j'indique mon email. "
             "Votre email ne sera pas diffusé en dehors de nos services."):
