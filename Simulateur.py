@@ -55,16 +55,20 @@ def show():
     constant_dict={"FEterres" : 12, "FEgravats" : 12, "FEdnd" : 84, "FEdd" : 128, "FEmoy2e" : 0.16 / 1000,
                    "FEmoy5e" : 0.0711 / 1000, "FEmoy4e" : 0.105 / 1000,"mav5e" : 15, "mav4e" : 12, "mav2e" : 9,
                    "prix_c" : 2, "prix_ISDI1": 300, "prix_ISDI2" : 300, "prix_ISDND" : 1500, "prix_ISDD" : 5000,
-                "conso_moy" : 30 / 100}
+                "conso_moy" : 30 / 100,"new_FEmoy5e" : 59.3/1000000, "new_FEmoy4e" :100/1000000, "new_FEmoy2e":140/1000000}
 
 
     st.write("")
-    st.write("Cet outil permet de simuler et réaliser une première approximation des émissions carbone de votre chantier sur l'ensemble des SCOPES, et notamment le SCOPE 3.")
-    st.write("Le simulateur offre la possibilité de modifier de nombreux paramètres afin d'optimiser les émissions carbone liées à l'évacuation et au traitement de vos déchets, il donne ainsi un aperçu des nombreux avantages et gains potentiels relatifs à l'utilisation de la plateforme Digitrack proposée par Altaroad (https://www.altaroad.com/digitrack/)")
+    st.write("Cet outil permet de simuler et réaliser une première approximation des émissions carbone de votre chantier "
+             "sur l'ensemble des SCOPES, et notamment le SCOPE 3.")
+    st.write("Le simulateur offre la possibilité de modifier de nombreux paramètres afin d'optimiser les émissions "
+             "carbone liées à l'évacuation et au traitement de vos déchets, il donne ainsi un aperçu des nombreux "
+             "avantages et gains potentiels relatifs à l'utilisation de la plateforme Digitrack proposée "
+             "par Altaroad (https://www.altaroad.com/digitrack/)")
     st.write("")
 
     col1, col2=st.columns(2)
-    col1.write("Pour plus d'information, téléchargez le Manifeste ici")
+    col1.write("Pour plus d'informations, téléchargez le Manifeste ici")
     with open('LeManifeste_SimulateurCO2_Altaroad.pdf', "rb") as pdf_file:
         PDFbyte = pdf_file.read()
     col2.download_button(label="le Manifeste",
@@ -398,14 +402,12 @@ def show():
 
     st.write("Sont ici proposées certaines des actions possibles pour la réduction du bilan CO2 SCOPE3. D'autres actions "
              "sont possibles, comme le choix du carburant. Avec ses produits, Altaroad vous aide à les mettre en place.")
-    #st.subheader("Actions de réduction et gains 📉")
-    action1 = st.checkbox("ACTION 1 - Choisir une flotte de véhicules économes")
 
-    new_FEmoy5e=59.3/1000000
-    new_FEmoy4e=100/1000000 #à confirmer
-    new_FEmoy2e=140/1000000 #à confirmer
 
-    new_FE_trans = new_FEmoy5e * (cam5 / 100) + new_FEmoy4e * (cam4 / 100) + new_FEmoy2e * (cam2 / 100)
+    action1 = st.checkbox("ACTION 1 - Choisir une flotte de véhicules plus économes")
+
+    new_FE_trans = constant_dict["new_FEmoy5e"] * (cam5 / 100) + constant_dict["new_FEmoy4e"] * (cam4 / 100) \
+                   + constant_dict["new_FEmoy2e"] * (cam2 / 100)
     new_mav = constant_dict["mav5e"] * (cam5 / 100) + constant_dict["mav4e"] * (cam4 / 100) + constant_dict["mav2e"] * (cam2 / 100)
     new_E_trans_ISDI1_Ea2 = round(new_FE_trans * dist_exuISDI1 * (ISDI1 + new_mav * pass_ISDI1), 1)
     new_E_trans_ISDI2_Ea2 = round(new_FE_trans * dist_exuISDI2 * (ISDI2 + new_mav * pass_ISDI2), 1)
@@ -462,17 +464,17 @@ def show():
     new_load_cam4 = load_cam4 + 2
     new_load_cam2 = load_cam2 + 2
     new_mean_load = (new_load_cam5 * (cam5 / 100) + new_load_cam4 * (cam4 / 100) + new_load_cam2 * (cam2 / 100))
-    new_pass_ISDI1_Ea3 = round((ISDI1 / new_mean_load) , 1)
-    new_pass_ISDI2_Ea3 = round((ISDI2 / new_mean_load) , 1)
-    new_pass_ISDND_Ea3 = round((ISDND / new_mean_load) , 1)
-    new_pass_ISDD_Ea3 = round((ISDD / new_mean_load) , 1)
+    new_pass_ISDI1_Ea3 = round((ISDI1 / new_mean_load), 1)
+    new_pass_ISDI2_Ea3 = round((ISDI2 / new_mean_load), 1)
+    new_pass_ISDND_Ea3 = round((ISDND / new_mean_load), 1)
+    new_pass_ISDD_Ea3 = round((ISDD / new_mean_load), 1)
     new_pass_tot_Ea3 = new_pass_ISDI1_Ea3 + new_pass_ISDI2_Ea3 + new_pass_ISDND_Ea3 + new_pass_ISDD_Ea3
     new_E_trans_Ea3 = FE_trans * (dist_exuISDI1 * (ISDI1 + mav_trans * new_pass_ISDI1_Ea3)
                                   + dist_exuISDI2 * (ISDI2 + mav_trans * new_pass_ISDI2_Ea3)
                                   + dist_exuISDND * (ISDND + mav_trans * new_pass_ISDND_Ea3)
                                   + dist_exuISDD * (ISDD + mav_trans * new_pass_ISDD_Ea3))
     Ea3 = E_trans - new_E_trans_Ea3
-    conso_tot_Ea3 = constant_dict["conso_moy"] * ( pass_ISDI2 * dist_exuISDI2 + pass_ISDI1 * dist_exuISDI1 +
+    conso_tot_Ea3 = constant_dict["conso_moy"] * (pass_ISDI2 * dist_exuISDI2 + pass_ISDI1 * dist_exuISDI1 +
                                                   pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD)
     new_conso_tot_Ea3 = constant_dict["conso_moy"] * (new_pass_ISDI2_Ea3 * dist_exuISDI2 +
                                                      new_pass_ISDI1_Ea3 * dist_exuISDI1 +
@@ -766,13 +768,13 @@ def show():
     header3 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Autres déchets 🗑️ & achats Matériaux 🛒</p>
+    <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Autres déchets 🗑️ & Livraison Matériaux 🛒</p>
     </head>
     '''
     st.write('---------------------------------------------------')
     st.markdown(header3, unsafe_allow_html=True)
     #st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
-    st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat de matières premières, équipements ou services")
+    st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat et livraison de matières premières, équipements ou services")
     st.write("Cliquer sur Rafraîchir avant de démarrer 🔄")
     if st.button('Rafraîchir Scope 3'):
         scope3d = "scope3d_blank.csv"
@@ -826,7 +828,7 @@ def show():
                 writer_object.writerow(new)
                 f_object.close()
 
-    with st.expander("Type d'achat Matériaux 🛒"):
+    with st.expander("Type de Matériaux livrés 🛒"):
         scope3a = "scope3a_blank.csv"
         df_S3a = pd.read_csv(scope3a, encoding="latin1", sep=",", decimal='.')
         bdd_a = "Base_Carbone_FE_S3.csv"
@@ -1202,7 +1204,7 @@ def show():
     st.write("------------------------------------")
     st.caption("Les données de facteurs d'émissions sont issues de la Base Carbone® de l'ADEME")
     st.caption("Les autres données sources utilisées sont référencées et disponible sur demande à Altaroad")
-    st.caption("SimulateurCO2 v0.0 - Développé par Altaroad - CONFIDENTIEL 2022 - https://www.altaroad.com")
+    st.caption("SimulateurCO2 v0.1 - Développé par Altaroad - CONFIDENTIEL 2023 - https://www.altaroad.com")
     st.image(Image_title)
     return simulator_dict
 
