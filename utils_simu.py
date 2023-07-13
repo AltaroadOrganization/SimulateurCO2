@@ -13,18 +13,19 @@ import os
 import base64
 
 #function to relaod the state
-@st.cache_data
-def download_state_management(simulator_dict, ACCESS_KEY, SECRET_KEY):
+@st.cache_data(show_spinner=False)
+def download_state_management(_simulator_dict, ACCESS_KEY, SECRET_KEY):
     if 'download_done' not in st.session_state:
         st.session_state.download_done = True
     else:
         if st.session_state.download_done == False:
             bucket_name = 'dataset-altaroad-public'
-            read_write_S3(bucket_name, simulator_dict, ACCESS_KEY, SECRET_KEY)
+            read_write_S3(bucket_name, _simulator_dict, ACCESS_KEY, SECRET_KEY)
         else:
             st.session_state.download_done=True
 
 #function to check if an email is valid
+
 def solve(s):
    pat = "^[a-zA-Z0-9-_.]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
    if re.match(pat,s):

@@ -19,10 +19,11 @@ warnings.filterwarnings('ignore')
 ACCESS_KEY = st.secrets["my_access_key"]["ACCESS_KEY"]
 SECRET_KEY = st.secrets["my_access_key"]["SECRET_KEY"]
 
+#we initiate results dict
+simulator_dict = {}
 
-def show():
+def show_header(simulator_dict):
     #all the inputs and outputs are saved in a dict
-    simulator_dict={}
 
     Image_title=Image.open("Banner_Linkedin.png")
     st.image(Image_title)
@@ -99,6 +100,15 @@ def show():
         simulator_dict['lieu_chantier']=lieu_chantier
         #simulator_dict['taille_chantier']=taille_chantier
         simulator_dict['duree_semaine_chantier']=duree_semaine_chantier
+
+    return simulator_dict
+
+@st.cache_resource(experimental_allow_widgets=True,show_spinner=False)
+def show_scope3_1(simulator_dict):
+    constant_dict={"FEterres" : 12, "FEgravats" : 12, "FEdnd" : 84, "FEdd" : 128, "FEmoy2e" : 0.16 / 1000,
+                   "FEmoy5e" : 0.0711 / 1000, "FEmoy4e" : 0.105 / 1000,"mav5e" : 15, "mav4e" : 12, "mav2e" : 9,
+                   "prix_c" : 2, "prix_ISDI1": 300, "prix_ISDI2" : 300, "prix_ISDND" : 1500, "prix_ISDD" : 5000,
+                "conso_moy" : 30 / 100,"new_FEmoy5e" : 59.3/1000000, "new_FEmoy4e" :100/1000000, "new_FEmoy2e":140/1000000}
 
     header2 = '''
     <head>
@@ -765,6 +775,10 @@ def show():
         ax.bar(actions, valeurs, color="#f37121", edgecolor="#67686b")
         st.pyplot(fig)
 
+    return simulator_dict
+
+#@st.cache_resource(experimental_allow_widgets=True)
+def show_scope3_2(simulator_dict):
     header3 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
@@ -921,7 +935,12 @@ def show():
 
     simulator_dict['tot_S3d']=tot_S3d
     simulator_dict['tot_S3a']=tot_S3a
+    simulator_dict['tot_S3']=tot_S3
 
+    return simulator_dict
+
+#@st.cache_resource(experimental_allow_widgets=True)
+def show_scope12(simulator_dict):
     header1 = '''
         <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
@@ -1065,6 +1084,11 @@ def show():
     simulator_dict['tot_S2'] = tot_S2
     simulator_dict['tot_S1et2'] = tot_S1et2
 
+    return simulator_dict
+
+#@st.cache_resource(experimental_allow_widgets=True)
+def show_scope3_construction(simulator_dict):
+
     header4 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
@@ -1138,6 +1162,9 @@ def show():
     simulator_dict['DO_ouv'] = DO_ouv
     simulator_dict['u'] = u
 
+    return simulator_dict
+
+def show_co2_results(simulator_dict):
     header5 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
@@ -1148,26 +1175,26 @@ def show():
     st.markdown(header5, unsafe_allow_html=True)
     st.write("Ici, vous retrouvez une synthèse macroscopique de votre simulation d'émissions")
     with st.expander("Résultats 📊"):
-        E_S123 = EMISSIONS_ouv + E_tot + tot_S3 + tot_S1 + tot_S2
-        E_S3 = EMISSIONS_ouv + E_tot + tot_S3
-        st.write("Emissions GES, Scope 1 ⚡ : " + str(round(tot_S1, 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 2 🛢️ : " + str(round(tot_S2, 1)) + " tCO2e ")
+        E_S123 = simulator_dict["EMISSIONS_ouv"] + simulator_dict["E_tot"] + simulator_dict["tot_S3"] + \
+                 simulator_dict["tot_S1"] + simulator_dict["tot_S2"]
+        E_S3 = simulator_dict["EMISSIONS_ouv"] + simulator_dict["E_tot"] + simulator_dict["tot_S3"]
+        simulator_dict['E_S123'] = E_S123
+        simulator_dict['E_S3'] = E_S3
+        st.write("Emissions GES, Scope 1 ⚡ : " + str(round(simulator_dict["tot_S1"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 2 🛢️ : " + str(round(simulator_dict["tot_S2"], 1)) + " tCO2e ")
         st.write("Emissions GES, Scope 3 🗑️+🛒+🏗️ : " + str(round(E_S3, 1)) + " tCO2e ")
         st.write("Emissions GES totales 🌍 : " + str(round(E_S123, 1)) + " tCO2e ")
         if E_S123 > 0:
             fig = plt.figure()
             ax = fig.add_axes([0, 0, 1, 1])
             poste = ["1", "2", "3"]
-            es = [tot_S1, tot_S2, E_S3]
+            es = [simulator_dict["tot_S1"], simulator_dict["tot_S2"], E_S3]
             ax.set_title('Emissions GES par scope', color="#f37121", size=28)
             ax.set_ylabel('Emissions (tCO2e)', color="#67686b", size=18)
             ax.set_xlabel('Scopes', color="#67686b", size=18)
             plt.xticks(rotation=45)
             ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth=3)
             st.pyplot(fig)
-
-    simulator_dict['E_S123'] = E_S123
-    simulator_dict['E_S3'] = E_S3
 
     header6 = '''
     <head>
@@ -1205,7 +1232,6 @@ def show():
     st.caption("Les données de facteurs d'émissions sont issues de la Base Carbone® de l'ADEME")
     st.caption("Les autres données sources utilisées sont référencées et disponible sur demande à Altaroad")
     st.caption("SimulateurCO2 v0.1 - Développé par Altaroad - CONFIDENTIEL 2023 - https://www.altaroad.com")
-    st.image(Image_title)
     return simulator_dict
 
 if __name__ == "__main__":
@@ -1321,7 +1347,13 @@ if __name__ == "__main__":
         if my_key not in st.session_state:
             st.session_state[my_key] = initial_dict[my_key]
 
-    simulator_dict=show()
+    ### the streamlit page here
+    simulator_dict = show_header(simulator_dict)
+    simulator_dict=show_scope3_1(simulator_dict)
+    simulator_dict=show_scope3_2(simulator_dict)
+    simulator_dict = show_scope12(simulator_dict)
+    simulator_dict = show_scope3_construction(simulator_dict)
+    simulator_dict = show_co2_results(simulator_dict)
 
     #gestion de session state
     for my_key in initial_dict.keys():
