@@ -13,7 +13,7 @@ from utils_simu import *
 import warnings
 import os
 import base64
-warnings.filterwarnings('ignore')
+warnings.filterwarnings("ignore")
 
 #get AWS access key and secret key
 ACCESS_KEY = st.secrets["my_access_key"]["ACCESS_KEY"]
@@ -1024,7 +1024,7 @@ def show_scope3_construction(simulator_dict):
     '''
     st.write('---------------------------------------------------')
     st.markdown(header4, unsafe_allow_html=True)
-    st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface", help="Important: cette méthode d'estimation remplace l'estimation fine précédemment proposée par matériaux, déchets et énergies")
+    st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface")
     # bdd = "data_FE_ouvrages.csv"
     # df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
     df=BDD_FE_OUV.copy()
@@ -1037,7 +1037,7 @@ def show_scope3_construction(simulator_dict):
     with st.expander("Données 👷"):
         list_ouvrage=list(df["Type d'ouvrage"].unique())
         try:
-            ouvrage = st.selectbox("Type d'ouvrage :", list_ouvrage, list_ouvrage.index(st.session_state["ouvrage"]))
+            ouvrage = st.selectbox("Type d'ouvrage :", list_ouvrage, list_ouvrage.index(st.session_state["ouvrage"]), help="Important: cette méthode d'estimation remplace l'estimation fine précédemment proposée par matériaux, déchets et énergies")
         except:
             ouvrage = st.selectbox("Type d'ouvrage :", list_ouvrage)
 
@@ -1058,7 +1058,6 @@ def show_scope3_construction(simulator_dict):
         df = df[df['Sous catégorie 1'].str.contains(str(sous_categorie1))]
         if df['Sous catégorie 2'].str.contains('/').any():
             sous_categorie2 = df['Sous catégorie 2'].unique()
-            st.dataframe(df, 1000, 150)
         else:
             list_sous_categorie2=list(df['Sous catégorie 2'].unique())
             try:
@@ -1066,7 +1065,7 @@ def show_scope3_construction(simulator_dict):
             except:
                 sous_categorie2 = st.selectbox('Choix de la sous-catégorie 2 :', list_sous_categorie2)
             df = df[df['Sous catégorie 2'].str.contains(str(sous_categorie2))]
-            st.dataframe(df, 1000, 150)
+        #st.dataframe(df, 1000, 150)
         for u in df["Unité"]:
             u = u[7:].lower()
         DO_ouv = float(st.number_input("Donnée opérationnelle (en " + u + ") : ", value=int(st.session_state['DO_ouv']),step=1))
