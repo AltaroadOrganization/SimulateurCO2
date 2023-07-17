@@ -84,6 +84,17 @@ def pie_plot(inputs_list, labels_name, title, key_name):
     title.set_size(18)
     return _fig
 
+#get data function
+@st.cache_data
+def get_dataBase_func():
+    bdd_d = "Base_Carbone_FE_S3.csv"
+    BDD_FE_S3 = pd.read_csv(bdd_d, encoding="latin1", sep=";", decimal=',')
+    bdd_s2 = "Base_Carbone_FE_S1et2.csv"
+    BDD_FE_S2 = pd.read_csv(bdd_s2, encoding="latin1", sep=";", decimal=',')
+    bdd_ouv = "data_FE_ouvrages.csv"
+    BDD_FE_OUV = pd.read_csv(bdd_ouv, encoding="latin1", sep=";", decimal=',')
+    return BDD_FE_S3, BDD_FE_S2, BDD_FE_OUV
+
 def bar_plot(inputs_list, labels_name, title, x_label_title, y_label_title):
     _fig = plt.figure()
     _ax = _fig.add_axes([0, 0, 1, 1])

@@ -22,6 +22,9 @@ SECRET_KEY = st.secrets["my_access_key"]["SECRET_KEY"]
 #we initiate results dict
 simulator_dict = {}
 
+#get the FE BDD
+BDD_FE_S3, BDD_FE_S2, BDD_FE_OUV = get_dataBase_func()
+
 def show_header(simulator_dict):
     #all the inputs and outputs are saved in a dict
 
@@ -88,7 +91,7 @@ def show_header(simulator_dict):
     '''
     st.write('---------------------------------------------------')
     st.markdown(header0, unsafe_allow_html=True)
-    with st.expander('Ici, vous entrez quelques infos sur le chantier que vous souhaitez simuler'):
+    with st.expander('Précisez quelques informations sur le chantier que vous souhaitez simuler'):
         list_chantier=['CONSTRUCTION','DEMOLITION','TERRASSEMENT']
         type_chantier = st.selectbox("Type de chantier", list_chantier, list_chantier.index(st.session_state["type_chantier"]))
         lieu_chantier = st.text_input('Le lieu du chantier (entrer une adresse)', value=st.session_state["lieu_chantier"], max_chars=None, key=None, type="default")
@@ -756,8 +759,9 @@ def show_scope3_2(simulator_dict):
     with st.expander("Type de déchet ♻"):
         scope3d = "scope3d_blank.csv"
         df_S3d = pd.read_csv(scope3d, encoding="latin1", sep=",", decimal='.')
-        bdd_d = "Base_Carbone_FE_S3.csv"
-        df = pd.read_csv(bdd_d, encoding="latin1", sep=";", decimal=',')
+        #bdd_d = "Base_Carbone_FE_S3.csv"
+        #df = pd.read_csv(bdd_d, encoding="latin1", sep=";", decimal=',')
+        df=BDD_FE_S3.copy()
         df = df[df['Poste'] == "Poste 11"]
         choix_fe = st.selectbox("Catégorie du déchet :", df["Nom base français"].unique())
         df = df[df['Nom base français'] == choix_fe]
@@ -798,8 +802,9 @@ def show_scope3_2(simulator_dict):
     with st.expander("Type de Matériaux livrés 🛒"):
         scope3a = "scope3a_blank.csv"
         df_S3a = pd.read_csv(scope3a, encoding="latin1", sep=",", decimal='.')
-        bdd_a = "Base_Carbone_FE_S3.csv"
-        df = pd.read_csv(bdd_a, encoding="latin1", sep=";", decimal=',')
+        #bdd_a = "Base_Carbone_FE_S3.csv"
+        #df = pd.read_csv(bdd_a, encoding="latin1", sep=";", decimal=',')
+        df=BDD_FE_S3.copy()
         df = df[df['Poste'] == "Poste 9"]
         choix_fe = st.selectbox("Catégorie du bien ou service :", df["Nom base français"].unique())
         df = df[df['Nom base français'] == choix_fe]
@@ -905,8 +910,9 @@ def show_scope12(simulator_dict):
         scope1 = "scope1_blank.csv"
         df_S1 = pd.read_csv(scope1, encoding="latin1", sep=",", decimal='.', index_col=0)
         df_S1 = df_S1.dropna()
-        bdd_s2 = "Base_Carbone_FE_S1et2.csv"
-        df = pd.read_csv(bdd_s2, encoding="latin1", sep=";", decimal=',')
+        #bdd_s2 = "Base_Carbone_FE_S1et2.csv"
+        #df = pd.read_csv(bdd_s2, encoding="latin1", sep=";", decimal=',')
+        df=BDD_FE_S2.copy()
         df["Sous catégorie 1"] = df["Sous catégorie 1"].astype(str)
         df["Sous catégorie 2"] = df["Sous catégorie 2"].astype(str)
         df["Sous catégorie 3"] = df["Sous catégorie 3"].astype(str)
@@ -1018,9 +1024,10 @@ def show_scope3_construction(simulator_dict):
     '''
     st.write('---------------------------------------------------')
     st.markdown(header4, unsafe_allow_html=True)
-    st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface")
-    bdd = "data_FE_ouvrages.csv"
-    df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
+    st.write("Ici, vous pouvez simuler les émissions liées à la construction d'un ouvrage en fonction du type d'ouvrage et de sa surface", help="Important: cette méthode d'estimation remplace l'estimation fine précédemment proposée par matériaux, déchets et énergies")
+    # bdd = "data_FE_ouvrages.csv"
+    # df = pd.read_csv(bdd, encoding="latin1", sep=";", decimal=',')
+    df=BDD_FE_OUV.copy()
     df["Type d'ouvrage"] = df["Type d'ouvrage"].astype(str)
     df["Catégorie"] = df["Catégorie"].astype(str)
     df["Sous catégorie 1"] = df["Sous catégorie 1"].astype(str)
