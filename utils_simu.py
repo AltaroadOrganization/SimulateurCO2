@@ -86,6 +86,16 @@ def pie_plot(inputs_list, labels_name, title, key_name):
     title.set_size(18)
     return _fig
 
+def bar_plot(inputs_list, labels_name, title, x_label_title, y_label_title):
+    _fig = plt.figure()
+    _ax = _fig.add_axes([0, 0, 1, 1])
+    _ax.set_title(title, color="#F05E16", fontname="Tahoma", size=20)
+    _ax.set_ylabel(y_label_title, color="#67686b", fontname="Tahoma", size=14)
+    _ax.set_xlabel(x_label_title, fontname="Tahoma", color="#67686b", size=14)
+    plt.xticks(rotation=45)
+    _ax.bar(labels_name, inputs_list, color="#F7BE6D", edgecolor="#FA9C1B")
+    return _fig
+
 #get data function
 @st.cache_data
 def get_dataBase_func():
@@ -96,16 +106,6 @@ def get_dataBase_func():
     bdd_ouv = "data_FE_ouvrages.csv"
     BDD_FE_OUV = pd.read_csv(bdd_ouv, encoding="latin1", sep=";", decimal=',')
     return BDD_FE_S3, BDD_FE_S2, BDD_FE_OUV
-
-def bar_plot(inputs_list, labels_name, title, x_label_title, y_label_title):
-    _fig = plt.figure()
-    _ax = _fig.add_axes([0, 0, 1, 1])
-    _ax.set_title(title, color="#F05E16", fontname="Tahoma", size=20)
-    _ax.set_ylabel(y_label_title, color="#67686b", fontname="Tahoma", size=14)
-    _ax.set_xlabel(x_label_title, fontname="Tahoma", color="#67686b", size=14)
-    plt.xticks(rotation=45)
-    _ax.bar(labels_name, inputs_list, color="#F7BE6D", edgecolor="#FA9C1B")
-    return _fig
 
 #function to create the pdf report
 def build_pdf_from_dict(the_input_dict):

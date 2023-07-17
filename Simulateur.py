@@ -746,7 +746,7 @@ def show_scope3_2(simulator_dict):
     #st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
     st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat et livraison de matières premières, équipements ou services")
     st.write("Cliquer sur Rafraîchir avant de démarrer 🔄")
-    if st.button('Rafraîchir Scope 3'):
+    if st.button('Rafraîchir Scope 3', use_container_width=True):
         scope3d = "scope3d_blank.csv"
         df_S3d = pd.read_csv(scope3d, encoding="latin1", sep=",", decimal='.', index_col=0)
         df_S3d[df_S3d.columns]=""
@@ -896,7 +896,7 @@ def show_scope12(simulator_dict):
     st.write(
         "Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
     st.write("Cliquer sur Rafraîchir avant de démarrer 🔄")
-    if st.button('Rafraîchir Scope 1 et 2'):
+    if st.button('Rafraîchir Scope 1 et 2', use_container_width=True):
         scope2 = "scope2_blank.csv"
         df_S2 = pd.read_csv(scope2, encoding="latin1", sep=",", decimal='.', index_col=0)
         df_S2[df_S2.columns] = ""
@@ -1141,7 +1141,7 @@ def show_co2_results(simulator_dict):
                 build_pdf_from_dict(st.session_state)
                 with open("ALTAROAD_Simulateur_CO2_SYNTHESE.pdf", "rb") as pdf_file:
                     PDFbyte = pdf_file.read()
-                st.download_button(label="Télécharger",
+                st.download_button(label="Télécharger",use_container_width=True,
                                    data=PDFbyte,
                                    file_name="ALTAROAD_Simulateur_CO2_SYNTHESE.pdf",
                                    mime='application/octet-stream', on_click=download_state_management(st.session_state, ACCESS_KEY, SECRET_KEY))
