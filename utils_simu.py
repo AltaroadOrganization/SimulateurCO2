@@ -97,7 +97,7 @@ def bar_plot(inputs_list, labels_name, title, x_label_title, y_label_title):
     return _fig
 
 #get data function
-@st.cache_data
+@st.cache_data(show_spinner=False)
 def get_dataBase_func():
     bdd_d = "Base_Carbone_FE_S3.csv"
     BDD_FE_S3 = pd.read_csv(bdd_d, encoding="latin1", sep=";", decimal=',')
