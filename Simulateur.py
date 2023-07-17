@@ -693,86 +693,39 @@ def show_scope3_1(simulator_dict):
     st.markdown(subheader9, unsafe_allow_html=True)
     #st.subheader("Graphiques 📊")
     with st.expander("Déchets"):
-        col1, col2 = st.columns(2)
-        with col1:
-            if ISDI1 > 0 or ISDI2 > 0 or ISDND > 0 or ISDD > 0:
-                labels = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
-                sizes = [ISDI1, ISDI2, ISDND, ISDD]
-                fig1, ax1 = plt.subplots()
-                ax1.set_title("Part des déchets par 'type'",color = "#f37121", size = 28)
-                ax1.pie(sizes, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#D9D9D9"])
-                ax1.axis('equal')
-                legend = ax1.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
-                legend.set_title("Déchets")
-                title = legend.get_title()
-                title.set_color("#67686b")
-                title.set_family("sen")
-                title.set_size(18)
-                st.pyplot(fig1)
-            if E_ISDI1 > 0 or E_ISDI2 > 0 or E_ISDND > 0 or E_ISDD > 0:
-                labels2 = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
-                sizes2 = [E_ISDI1, E_ISDI2, E_ISDND, E_ISDD]
-                fig2, ax2 = plt.subplots()
-                ax2.set_title("Emissions de CO2 par déchet : 'traitement'",color = "#f37121", size = 28)
-                ax2.pie(sizes2, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#D9D9D9"])
-                ax2.axis('equal')
-                legend = ax2.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
-                legend.set_title("Déchets")
-                title = legend.get_title()
-                title.set_color("#67686b")
-                title.set_size(18)
-                st.pyplot(fig2)
-            if E_trans_ISDI1 > 0 or E_trans_ISDI2 > 0 or E_trans_ISDND > 0 or E_trans_ISDD > 0:
-                labels3 = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
-                sizes3 = [E_trans_ISDI1, E_trans_ISDI2, E_trans_ISDND, E_trans_ISDD]
-                fig3, ax3 = plt.subplots()
-                ax3.set_title("Emissions de CO2e par déchet : 'transport'",color = "#f37121", size = 28)
-                ax3.pie(sizes3, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#D9D9D9"])
-                ax3.axis('equal')
-                legend = ax3.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
-                legend.set_title("Déchets")
-                title = legend.get_title()
-                title.set_color("#67686b")
-                title.set_size(18)
-                st.pyplot(fig3)
-        with col2:
-            if E_ISDI1 + E_trans_ISDI1 > 0 or E_ISDI2 + E_trans_ISDI2 > 0 or E_ISDND + E_trans_ISDND > 0 or E_ISDD + E_trans_ISDD > 0:
-                sizes4 = [E_ISDI1 + E_trans_ISDI1, E_ISDI2 + E_trans_ISDI2, E_ISDND + E_trans_ISDND,
-                          E_ISDD + E_trans_ISDD]
-                fig4, ax4 = plt.subplots()
-                ax4.set_title("Emissions CO2e globales par déchet",color = "#f37121", size = 28)
-                ax4.pie(sizes4, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b", "black", "#D9D9D9"])
-                ax4.axis('equal')
-                legend = ax4.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
-                legend.set_title("Déchets")
-                title = legend.get_title()
-                title.set_color("#67686b")
-                title.set_size(18)
-                st.pyplot(fig4)
-            if E_valo > 0 or E_trans > 0:
-                sizes5 = [E_valo, E_trans]
-                fig5, ax5 = plt.subplots()
-                ax5.set_title("Part des émissions de CO2e Traitement/Transport",color = "#f37121", size = 28)
-                ax5.pie(sizes5, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True, colors = ['#f37121', "#67686b"])
-                ax5.axis('equal')
-                legend = ax5.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor = "#67686b", edgecolor = "#f37121")
-                legend.set_title("Déchets")
-                title = legend.get_title()
-                title.set_color("#67686b")
-                title.set_size(18)
-                st.pyplot(fig5)
+        if ISDI1 > 0 or ISDI2 > 0 or ISDND > 0 or ISDD > 0:
+            labels = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
+            sizes = [ISDI1, ISDI2, ISDND, ISDD]
+            fig1 = pie_plot(sizes, labels, "Déchets", "des masses de déchets")
+            st.pyplot(fig1)
+        if E_ISDI1 > 0 or E_ISDI2 > 0 or E_ISDND > 0 or E_ISDD > 0:
+            labels2 = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
+            sizes2 = [E_ISDI1, E_ISDI2, E_ISDND, E_ISDD]
+            fig2 = pie_plot(sizes2, labels2, "Déchets", "des émissions CO2e - part matière")
+            st.pyplot(fig2)
+        if E_trans_ISDI1 > 0 or E_trans_ISDI2 > 0 or E_trans_ISDND > 0 or E_trans_ISDD > 0:
+            labels3 = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
+            sizes3 = [E_trans_ISDI1, E_trans_ISDI2, E_trans_ISDND, E_trans_ISDD]
+            fig3 = pie_plot(sizes3, labels3, "Déchets", "des émissions CO2e - part transport")
+            st.pyplot(fig3)
+        if E_ISDI1 + E_trans_ISDI1 > 0 or E_ISDI2 + E_trans_ISDI2 > 0 or E_ISDND + E_trans_ISDND > 0 or E_ISDD + E_trans_ISDD > 0:
+            sizes4 = [E_ISDI1 + E_trans_ISDI1, E_ISDI2 + E_trans_ISDI2, E_ISDND + E_trans_ISDND,
+                      E_ISDD + E_trans_ISDD]
+            labels4 = 'Terres', 'Gravats', 'Déchets Non-Dangereux', 'Déchets Dangereux'
+            fig4 = pie_plot(sizes4, labels4, "Déchets", "des émissions CO2e totales")
+            st.pyplot(fig4)
+        if E_valo > 0 or E_trans > 0:
+            sizes5 = [E_valo, E_trans]
+            fig5, ax5 = plt.subplots()
+            labels5 = "matière", "transport"
+            fig5 = pie_plot(sizes5, labels5, "part", "des émissions CO2e totales")
+            st.pyplot(fig5)
 
     with st.expander("Réductions"):
-        fig = plt.figure()
-        ax = fig.add_axes([0, 0, 1, 1])
-        actions = ["Flotte de véhicules économes", "Optimiser le chargement des camions", "+ 10% taux de valorisation",
-                   "- 10km distance chantier/centre de collecte", "Toutes les actions"]
+        actions = ["Véhicules économes", "Chargement Opti.", "+ 10% taux de valo.",
+                   "- 10km distance", "Toutes les actions"]
         valeurs = [Ea1, Ea2, Ea3, Ea4, Ea5]
-        ax.set_title('Diminution des émissions CO2e par action',color = "#f37121", size = 28)
-        ax.set_ylabel('tCO2e', color =  "#67686b", size = 18)
-        ax.set_xlabel('Actions de réduction', color =  "#67686b", size = 18)
-        plt.xticks(rotation=45)
-        ax.bar(actions, valeurs, color="#f37121", edgecolor="#67686b")
+        fig = bar_plot(valeurs, actions, 'Diminution des émissions CO2e par action', 'Actions de réduction', 'tCO2e')
         st.pyplot(fig)
 
     return simulator_dict
@@ -892,7 +845,7 @@ def show_scope3_2(simulator_dict):
                 writer_object.writerow(new)
                 f_object.close()
 
-    with st.expander("Résultats 📊"):
+    with st.expander("Résultats et Graphiques 📊"):
         df_S3d = pd.read_csv(scope3d, encoding="latin1", sep=",", decimal='.', index_col=0)
         df_S3d = df_S3d.dropna()
         df_S3a = pd.read_csv(scope3a, encoding="latin1", sep=",", decimal='.', index_col=0)
@@ -907,31 +860,16 @@ def show_scope3_2(simulator_dict):
         st.text("Total des émissions GES du scope 3 🗑️️+🛒 🌍 : " + str(tot_S3) + " tCO2e")
         st.write(" ")
 
-        col1, col2 = st.columns(2)
-        with col1:
-            if tot_S3d > 0:
-                fig = plt.figure()
-                ax = fig.add_axes([0, 0, 1, 1])
-                poste = df_S3d["Donnee"]
-                es = df_S3d["Emissions GES (en tCO2e)"]
-                ax.set_title('Emissions GES liées au traitement des déchets', color = "#f37121", size = 28)
-                ax.set_ylabel('Emissions (tCO2e)',color =  "#67686b", size = 18)
-                ax.set_xlabel('Déchets',color =  "#67686b", size = 18)
-                plt.xticks(rotation=45)
-                ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth = 3)
-                st.pyplot(fig)
-        with col2:
-            if tot_S3a > 0:
-                fig = plt.figure()
-                ax = fig.add_axes([0, 0, 1, 1])
-                poste = df_S3a["Donnee"]
-                es = df_S3a["Emissions GES (en tCO2e)"]
-                ax.set_title('Emissions GES liées aux achats de biens ou services', color = "#f37121", size = 28)
-                ax.set_ylabel('Emissions (tCO2e)',color =  "#67686b", size = 18)
-                ax.set_xlabel('Biens ou services',color =  "#67686b", size = 18)
-                plt.xticks(rotation=45)
-                ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth = 3)
-                st.pyplot(fig)
+        if tot_S3d > 0:
+            poste = df_S3d["Donnee"]
+            es = df_S3d["Emissions GES (en tCO2e)"]
+            fig=bar_plot(es, poste, 'Emissions GES liées au traitement des déchets', 'Déchets', 'Emissions (tCO2e)')
+            st.pyplot(fig)
+        if tot_S3a > 0:
+            poste = df_S3a["Donnee"]
+            es = df_S3a["Emissions GES (en tCO2e)"]
+            fig=bar_plot(es, poste, 'Emissions GES liées aux achats de biens ou services', 'Biens ou services', 'Emissions (tCO2e)')
+            st.pyplot(fig)
 
     simulator_dict['tot_S3d']=tot_S3d
     simulator_dict['tot_S3a']=tot_S3a
@@ -1035,7 +973,7 @@ def show_scope12(simulator_dict):
                 writer_object.writerow(new2)
                 f_object.close()
 
-    with st.expander("Résultats 📊"):
+    with st.expander("Résultats et Graphiques 📊"):
         df_S1 = pd.read_csv(scope1, encoding="latin1", sep=",", decimal='.', index_col=0)
         df_S1 = df_S1.dropna()
         df_S2 = pd.read_csv(scope2, encoding="latin1", sep=",", decimal='.', index_col=0)
@@ -1050,35 +988,18 @@ def show_scope12(simulator_dict):
         st.text("Total des émissions GES des scopes 1 & 2 🛢️+⚡ 🌍 : " + str(tot_S1et2) + " tCO2e")
         st.write(" ")
 
-        col1, col2 = st.columns(2)
-        with col1:
-            if tot_S1 > 0 or tot_S2 > 0:
-                fig = plt.figure()
-                ax = fig.add_axes([0, 0, 1, 1])
-                poste = df_S1et2["Donnee"]
-                es = df_S1et2["Emissions GES (en tCO2e)"]
-                ax.set_title('Emissions GES des Scopes 1 et 2', color="#f37121", size=28)
-                ax.set_ylabel('Emissions (tCO2e)', color="#67686b", size=18)
-                ax.set_xlabel('Données', color="#67686b", size=18)
-                plt.xticks(rotation=45)
-                ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth=4)
-                st.pyplot(fig)
-        with col2:
-            if tot_S1 > 0 or tot_S2 > 0:
-                labels = '1', '2'
-                sizes = [tot_S1, tot_S2]
-                fig1, ax1 = plt.subplots()
-                ax1.set_title("Part des émissions GES par scope", color="#f37121", size=28)
-                ax1.pie(sizes, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=True,
-                        colors=['#f37121', "#67686b"])
-                ax1.axis('equal')
-                legend = ax1.legend(labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor="#67686b",
-                                    edgecolor="#f37121")
-                legend.set_title("Scope")
-                title = legend.get_title()
-                title.set_color("#67686b")
-                title.set_size(18)
-                st.pyplot(fig1)
+        if tot_S1 > 0 or tot_S2 > 0:
+            fig = plt.figure()
+            ax = fig.add_axes([0, 0, 1, 1])
+            poste = df_S1et2["Donnee"]
+            es = df_S1et2["Emissions GES (en tCO2e)"]
+            fig = bar_plot(es, poste, 'Emissions GES des Scopes 1 et 2', 'Données', 'Emissions (tCO2e)')
+            st.pyplot(fig)
+        if tot_S1 > 0 or tot_S2 > 0:
+            labels = '1', '2'
+            sizes = [tot_S1, tot_S2]
+            fig1=pie_plot(sizes, labels, "Part des émissions GES par scope", "Scope")
+            st.pyplot(fig1)
 
     simulator_dict['tot_S1'] = tot_S1
     simulator_dict['tot_S2'] = tot_S2
@@ -1174,7 +1095,7 @@ def show_co2_results(simulator_dict):
     st.write('---------------------------------------------------')
     st.markdown(header5, unsafe_allow_html=True)
     st.write("Ici, vous retrouvez une synthèse macroscopique de votre simulation d'émissions")
-    with st.expander("Résultats 📊"):
+    with st.expander("Résultats et Graphiques 📊"):
         E_S123 = simulator_dict["EMISSIONS_ouv"] + simulator_dict["E_tot"] + simulator_dict["tot_S3"] + \
                  simulator_dict["tot_S1"] + simulator_dict["tot_S2"]
         E_S3 = simulator_dict["EMISSIONS_ouv"] + simulator_dict["E_tot"] + simulator_dict["tot_S3"]
@@ -1185,15 +1106,9 @@ def show_co2_results(simulator_dict):
         st.write("Emissions GES, Scope 3 🗑️+🛒+🏗️ : " + str(round(E_S3, 1)) + " tCO2e ")
         st.write("Emissions GES totales 🌍 : " + str(round(E_S123, 1)) + " tCO2e ")
         if E_S123 > 0:
-            fig = plt.figure()
-            ax = fig.add_axes([0, 0, 1, 1])
             poste = ["1", "2", "3"]
             es = [simulator_dict["tot_S1"], simulator_dict["tot_S2"], E_S3]
-            ax.set_title('Emissions GES par scope', color="#f37121", size=28)
-            ax.set_ylabel('Emissions (tCO2e)', color="#67686b", size=18)
-            ax.set_xlabel('Scopes', color="#67686b", size=18)
-            plt.xticks(rotation=45)
-            ax.bar(poste, es, color="#f37121", edgecolor="#67686b", linewidth=3)
+            fig=bar_plot(es, poste, 'Emissions GES par scope', 'Scopes', 'Emissions (tCO2e)')
             st.pyplot(fig)
 
     header6 = '''
@@ -1349,8 +1264,8 @@ if __name__ == "__main__":
 
     ### the streamlit page here
     simulator_dict = show_header(simulator_dict)
-    simulator_dict=show_scope3_1(simulator_dict)
-    simulator_dict=show_scope3_2(simulator_dict)
+    simulator_dict = show_scope3_1(simulator_dict)
+    simulator_dict = show_scope3_2(simulator_dict)
     simulator_dict = show_scope12(simulator_dict)
     simulator_dict = show_scope3_construction(simulator_dict)
     simulator_dict = show_co2_results(simulator_dict)

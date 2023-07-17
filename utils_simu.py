@@ -69,6 +69,31 @@ def get_img_with_href(local_img_path, target_url):
     html_code = f'''<a href="{target_url}"><img src="data:image/{img_format};base64,{bin_str}" width="100%" height="auto"/></a>'''
     return html_code
 
+#plot function
+def pie_plot(inputs_list, labels_name, title, key_name):
+    _fig, _ax = plt.subplots()
+    _ax.set_title("Distribution {}".format(key_name), color="#F05E16", size=20, fontname="Tahoma")
+    _ax.pie(inputs_list, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=False,
+            colors=["#F7BE6D","#FFB247","#FA9C1B","#F58216","#F05E16"])
+    _ax.axis('equal')
+    legend = _ax.legend(labels_name, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor="black",
+                        edgecolor="#F7BE6D")
+    legend.set_title(title)
+    title = legend.get_title()
+    title.set_color("#F05E16")
+    title.set_size(18)
+    return _fig
+
+def bar_plot(inputs_list, labels_name, title, x_label_title, y_label_title):
+    _fig = plt.figure()
+    _ax = _fig.add_axes([0, 0, 1, 1])
+    _ax.set_title(title, color="#F05E16", fontname="Tahoma", size=20)
+    _ax.set_ylabel(y_label_title, color="#67686b", fontname="Tahoma", size=14)
+    _ax.set_xlabel(x_label_title, fontname="Tahoma", color="#67686b", size=14)
+    plt.xticks(rotation=45)
+    _ax.bar(labels_name, inputs_list, color="#F7BE6D", edgecolor="#FA9C1B")
+    return _fig
+
 #function to create the pdf report
 def build_pdf_from_dict(the_input_dict):
     pdf = FPDF()
