@@ -1229,6 +1229,10 @@ def show_co2_results(simulator_dict):
         st.write("Emissions GES, Scope 1 ⚡ : " + str(round(st.session_state["tot_S1"], 1)) + " tCO2e ")
         st.write("Emissions GES, Scope 2 🛢️ : " + str(round(st.session_state["tot_S2"], 1)) + " tCO2e ")
         st.write("Emissions GES, Scope 3 🗑️+🛒+🏗️ : " + str(round(st.session_state["E_S3"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 3 Déchets 🗑️ : " + str(round(st.session_state["E_tot"]+st.session_state["tot_S3d"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 3 Matériaux 🛒 : " + str(round(st.session_state["tot_S3a"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 3 Construction 🏗️ : " + str(round(st.session_state["EMISSIONS_ouv"], 1)) + " tCO2e ")
+
         st.write("Emissions GES totales 🌍 : " + str(round(st.session_state["E_S123"], 1)) + " tCO2e ")
         if E_S123 > 0:
             poste = ["1", "2", "3"]
