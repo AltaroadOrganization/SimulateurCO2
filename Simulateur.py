@@ -533,7 +533,7 @@ def show_scope3_1(simulator_dict):
         with st.expander("Réduction des émissions carbone"):
             if E_tot > 0:
                 st.write("Cette action permet de réduire les émissions totales de :")
-                st.subheader(str(int(Ea2)) + " tCO2e, soit " + str(
+                st.subheader(str(round(Ea2,1)) + " tCO2e, soit " + str(
                     int((Ea2 / E_tot) * 100)) + " % des émissions totales estimées")
                 st.write("soit " + w)
             else:
@@ -597,7 +597,7 @@ def show_scope3_1(simulator_dict):
             with st.expander("Réduction des émissions carbone"):
                 if E_tot > 0:
                     st.write("Cette action permet de réduire les émissions totales de :")
-                    st.subheader(str(int(Ea3)) + " tCO2e, soit " + str(
+                    st.subheader(str(round(Ea3,1)) + " tCO2e, soit " + str(
                         int((Ea3 / E_tot) * 100)) + " % des émissions totales estimées")
                     st.write("soit " + x)
                 else:
@@ -648,7 +648,7 @@ def show_scope3_1(simulator_dict):
             with st.expander("Réduction des émissions carbone"):
                 if E_tot > 0:
                     st.write("Cette action permet de réduire les émissions totales de :")
-                    st.subheader(str(int(Ea1)) + " tCO2e, soit " + str(
+                    st.subheader(str(round(Ea1,1)) + " tCO2e, soit " + str(
                         int((Ea1 / E_tot) * 100)) + " % des émissions totales estimées")
                     st.write("soit " + v)
                 else:
@@ -696,7 +696,7 @@ def show_scope3_1(simulator_dict):
             with st.expander("Réduction des émissions carbone"):
                 if E_tot > 0:
                     st.write("Cette action permet de réduire les émissions totales de :")
-                    st.subheader(str(int(Ea4)) + " tCO2e, soit " + str(
+                    st.subheader(str(round(Ea4,1)) + " tCO2e, soit " + str(
                         int((Ea4 / E_tot) * 100)) + " % des émissions totales estimées")
                     st.write("soit " + y)
                 else:
@@ -759,7 +759,7 @@ def show_scope3_1(simulator_dict):
             if E_tot > 0:
                 st.write("Cette action permet de réduire les émissions totales de :")
                 st.subheader(
-                    str(int(Ea5)) + " tCO2e, soit " + str(int((Ea5 / E_tot) * 100)) + " % des émissions totales estimées")
+                    str(round(Ea5,1)) + " tCO2e, soit " + str(int((Ea5 / E_tot) * 100)) + " % des émissions totales estimées")
                 st.write("soit " + z)
             else:
                 st.write("Merci d'entrer au minimum une quantité de déchets")

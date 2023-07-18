@@ -14,7 +14,7 @@ import base64
 import warnings
 warnings.filterwarnings("ignore")
 
-#function to relaod the state
+#function to reload the state
 @st.cache_data(show_spinner=False)
 def download_state_management(_simulator_dict, ACCESS_KEY, SECRET_KEY):
     if 'download_done' not in st.session_state:
