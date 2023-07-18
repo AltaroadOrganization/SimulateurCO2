@@ -39,7 +39,8 @@ def show_header(simulator_dict):
     date = result.strftime("%d/%m/%Y")
     heure = result.strftime("%H:%M:%S")
     st.caption("début de session - Date et heure : {}".format(date_heure))
-    simulator_dict['date_heure']=date_heure
+    #simulator_dict['date_heure']=date_heure
+    st.session_state.date_heure = date_heure
 
     with col1:
         original_title = '''
@@ -95,14 +96,14 @@ def show_header(simulator_dict):
         list_chantier=['CONSTRUCTION','DEMOLITION','TERRASSEMENT']
         type_chantier = st.selectbox("Type de chantier", list_chantier, list_chantier.index(st.session_state["type_chantier"]))
         lieu_chantier = st.text_input('Le lieu du chantier (entrer une adresse)', value=st.session_state["lieu_chantier"], max_chars=None, key=None, type="default")
-        #col1,col2=st.columns(2)
-        #list_taille=['PETIT','MOYEN','GROS']
-        #taille_chantier = col1.selectbox('La taille du chantier', list_taille, list_taille.index(st.session_state["taille_chantier"]))
         duree_semaine_chantier=st.text_input('Durée en  semaines', value=st.session_state["duree_semaine_chantier"], max_chars=None, key=None, type="default")
-        simulator_dict['type_chantier']=type_chantier
-        simulator_dict['lieu_chantier']=lieu_chantier
+        #simulator_dict['type_chantier']=type_chantier
+        #simulator_dict['lieu_chantier']=lieu_chantier
         #simulator_dict['taille_chantier']=taille_chantier
-        simulator_dict['duree_semaine_chantier']=duree_semaine_chantier
+        #simulator_dict['duree_semaine_chantier']=duree_semaine_chantier
+        st.session_state.type_chantier = type_chantier
+        st.session_state.lieu_chantier = lieu_chantier
+        st.session_state.duree_semaine_chantier = duree_semaine_chantier
 
     return simulator_dict
 
@@ -137,10 +138,14 @@ def show_scope3_1(simulator_dict):
         ISDI1brut = st.number_input("Déchets inertes excavés (Terres) (en T)", value=int(st.session_state['ISDI1brut']), step=1)
         ISDI2brut = st.number_input("Déchets inertes excavés (Gravats) (en T)", value=int(st.session_state['ISDI2brut']), step=1)
         ISDD = st.number_input("Déchets dangereux (en T)", value=int(st.session_state['ISDD']), step=1)
-        simulator_dict['ISDI1brut'] = ISDI1brut
-        simulator_dict['ISDI2brut'] = ISDI2brut
-        simulator_dict['ISDND'] = ISDND
-        simulator_dict['ISDD'] = ISDD
+        #simulator_dict['ISDI1brut'] = ISDI1brut
+        #simulator_dict['ISDI2brut'] = ISDI2brut
+        #simulator_dict['ISDND'] = ISDND
+        #simulator_dict['ISDD'] = ISDD
+        st.session_state.ISDI1brut = ISDI1brut
+        st.session_state.ISDI2brut = ISDI2brut
+        st.session_state.ISDND = ISDND
+        st.session_state.ISDD = ISDD
 
 
     with col2:
@@ -155,10 +160,14 @@ def show_scope3_1(simulator_dict):
         dist_exuISDI1 = st.number_input("Distance centre de collecte ISDI1 (en km)", value=int(st.session_state['dist_exuISDI1']), step=1)
         dist_exuISDI2 = st.number_input("Distance centre de collecte ISDI2 (en km)", value=int(st.session_state['dist_exuISDI2']), step=1)
         dist_exuISDD = st.number_input("Distance centre de collecte ISDD (en km)", value=int(st.session_state['dist_exuISDD']), step=1)
-        simulator_dict['dist_exuISDI1'] = dist_exuISDI1
-        simulator_dict['dist_exuISDI2'] = dist_exuISDI2
-        simulator_dict['dist_exuISDND'] = dist_exuISDND
-        simulator_dict['dist_exuISDD'] = dist_exuISDD
+        #simulator_dict['dist_exuISDI1'] = dist_exuISDI1
+        #simulator_dict['dist_exuISDI2'] = dist_exuISDI2
+        #simulator_dict['dist_exuISDND'] = dist_exuISDND
+        #simulator_dict['dist_exuISDD'] = dist_exuISDD
+        st.session_state.dist_exuISDI1 = dist_exuISDI1
+        st.session_state.dist_exuISDI2 = dist_exuISDI2
+        st.session_state.dist_exuISDND = dist_exuISDND
+        st.session_state.dist_exuISDD = dist_exuISDD
 
     col1, col2 = st.columns(2)
     with col1:
@@ -171,7 +180,8 @@ def show_scope3_1(simulator_dict):
         st.markdown(subheader3, unsafe_allow_html=True)
         #st.subheader("Nombre de passages quotidiens 🔃")
         pass_jour = st.slider("Nombre de passages quotidien estimés", 10, 100, value=int(st.session_state['pass_jour']), step=5)
-        simulator_dict['pass_jour'] = pass_jour
+        #simulator_dict['pass_jour'] = pass_jour
+        st.session_state.pass_jour = pass_jour
 
     with col2:
         subheader4 = '''
@@ -186,9 +196,12 @@ def show_scope3_1(simulator_dict):
         valo_terres = 100 - repl_terres
         ISDI1 = math.ceil(ISDI1brut * (valo_terres / 100))
         ISDI2 = math.ceil(ISDI2brut * (valo_terres / 100))
-        simulator_dict['repl_terres'] = repl_terres
-        simulator_dict['ISDI1'] = ISDI1
-        simulator_dict['ISDI2'] = ISDI2
+        # simulator_dict['repl_terres'] = repl_terres
+        # simulator_dict['ISDI1'] = ISDI1
+        # simulator_dict['ISDI2'] = ISDI2
+        st.session_state.repl_terres = repl_terres
+        st.session_state.ISDI1 = ISDI1
+        st.session_state.ISDI2 = ISDI2
 
     col1, col2 = st.columns(2)
     with col1:
@@ -207,12 +220,18 @@ def show_scope3_1(simulator_dict):
             cam5 = (nb_cam5 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
             cam4 = (nb_cam4 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
             cam2 = (nb_cam2 / (nb_cam5 + nb_cam4 + nb_cam2)) * 100
-            simulator_dict['nb_cam5'] = nb_cam5
-            simulator_dict['nb_cam4'] = nb_cam4
-            simulator_dict['nb_cam2'] = nb_cam2
-            simulator_dict['cam5'] = cam5
-            simulator_dict['cam4'] = cam4
-            simulator_dict['cam2'] = cam2
+            # simulator_dict['nb_cam5'] = nb_cam5
+            # simulator_dict['nb_cam4'] = nb_cam4
+            # simulator_dict['nb_cam2'] = nb_cam2
+            # simulator_dict['cam5'] = cam5
+            # simulator_dict['cam4'] = cam4
+            # simulator_dict['cam2'] = cam2
+            st.session_state.nb_cam5 = nb_cam5
+            st.session_state.nb_cam4 = nb_cam4
+            st.session_state.nb_cam2 = nb_cam2
+            st.session_state.cam5 = cam5
+            st.session_state.cam4 = cam4
+            st.session_state.cam2 = cam2
         else:
             st.write("rentrer au moins 1 camion")
             cam2=cam5=cam4=0
@@ -228,9 +247,12 @@ def show_scope3_1(simulator_dict):
         load_cam5 = st.slider("Chargement moyen des camions 5 essieux (tonnes)", 15, 29, value=int(st.session_state['load_cam5']),step=1, help="Important: optimiser le chargement permet de réduire le nombre de trajets et donc le CO2")
         load_cam4 = st.slider("Chargement moyen des camions 4 essieux (tonnes)", 10, 20, value=int(st.session_state['load_cam4']), step=1, help="Important: optimiser le chargement permet de réduire le nombre de trajets et donc le CO2")
         load_cam2 = st.slider("Chargement moyen des camions 2 essieux (tonnes)", 2, 15, value=int(st.session_state['load_cam2']), step=1, help="Important: optimiser le chargement permet de réduire le nombre de trajets et donc le CO2")
-        simulator_dict['load_cam5'] = load_cam5
-        simulator_dict['load_cam4'] = load_cam4
-        simulator_dict['load_cam2'] = load_cam2
+        # simulator_dict['load_cam5'] = load_cam5
+        # simulator_dict['load_cam4'] = load_cam4
+        # simulator_dict['load_cam2'] = load_cam2
+        st.session_state.load_cam5 = load_cam5
+        st.session_state.load_cam4 = load_cam4
+        st.session_state.load_cam2 = load_cam2
 
     mean_load=(load_cam5 * (cam5 / 100) + load_cam4 * (cam4 / 100) + load_cam2 * (cam2 / 100))
 
@@ -244,15 +266,24 @@ def show_scope3_1(simulator_dict):
         mav_trans = constant_dict["mav5e"] * (cam5 / 100) + constant_dict["mav4e"] * (cam4 / 100) + constant_dict["mav2e"] * (cam2/100)
         tot_D = ISDI1 + ISDI2 + ISDND + ISDD
         dist_tot = pass_ISDI1 * dist_exuISDI1 + pass_ISDI2 * dist_exuISDI2 + pass_ISDND * dist_exuISDND + pass_ISDD * dist_exuISDD
-        simulator_dict['pass_ISDI1'] = pass_ISDI1
-        simulator_dict['pass_ISDI2'] = pass_ISDI2
-        simulator_dict['pass_ISDND'] = pass_ISDND
-        simulator_dict['pass_ISDD'] = pass_ISDD
-        simulator_dict['pass_tot'] = pass_tot
-        simulator_dict['FE_trans'] = FE_trans
-        simulator_dict['mav_trans'] = mav_trans
-        simulator_dict['tot_D'] = tot_D
-        simulator_dict['dist_tot'] = dist_tot
+        # simulator_dict['pass_ISDI1'] = pass_ISDI1
+        # simulator_dict['pass_ISDI2'] = pass_ISDI2
+        # simulator_dict['pass_ISDND'] = pass_ISDND
+        # simulator_dict['pass_ISDD'] = pass_ISDD
+        # simulator_dict['pass_tot'] = pass_tot
+        # simulator_dict['FE_trans'] = FE_trans
+        # simulator_dict['mav_trans'] = mav_trans
+        # simulator_dict['tot_D'] = tot_D
+        # simulator_dict['dist_tot'] = dist_tot
+        st.session_state.pass_ISDI1 = pass_ISDI1
+        st.session_state.pass_ISDI2 = pass_ISDI2
+        st.session_state.pass_ISDND = pass_ISDND
+        st.session_state.pass_ISDD = pass_ISDD
+        st.session_state.pass_tot = pass_tot
+        st.session_state.FE_trans = FE_trans
+        st.session_state.mav_trans = mav_trans
+        st.session_state.tot_D = tot_D
+        st.session_state.dist_tot = dist_tot
     else:
         st.write('rentrer au moins un camion et une masse de chargement')
         pass_ISDI1 = 0
@@ -283,17 +314,28 @@ def show_scope3_1(simulator_dict):
     E_trans = round(E_trans_ISDI1+E_trans_ISDI2+E_trans_ISDND+E_trans_ISDD, 1)
     E_valo = E_ISDI1 + E_ISDI2 + E_ISDND + E_ISDD
     E_tot = E_trans + E_valo
-    simulator_dict['E_ISDI1'] = E_ISDI1
-    simulator_dict['E_ISDI2'] = E_ISDI2
-    simulator_dict['E_ISDND'] = E_ISDND
-    simulator_dict['E_ISDD'] = E_ISDD
-    simulator_dict['E_trans_ISDI1'] = E_trans_ISDI1
-    simulator_dict['E_trans_ISDI2'] = E_trans_ISDI2
-    simulator_dict['E_trans_ISDND'] = E_trans_ISDND
-    simulator_dict['E_trans_ISDD'] = E_trans_ISDD
-    simulator_dict['E_trans'] = E_trans
-    simulator_dict['E_valo'] = E_valo
-    simulator_dict['E_tot'] = E_tot
+    # simulator_dict['E_ISDI1'] = E_ISDI1
+    # simulator_dict['E_ISDI2'] = E_ISDI2
+    # simulator_dict['E_ISDND'] = E_ISDND
+    # simulator_dict['E_ISDD'] = E_ISDD
+    # simulator_dict['E_trans_ISDI1'] = E_trans_ISDI1
+    # simulator_dict['E_trans_ISDI2'] = E_trans_ISDI2
+    # simulator_dict['E_trans_ISDND'] = E_trans_ISDND
+    # simulator_dict['E_trans_ISDD'] = E_trans_ISDD
+    # simulator_dict['E_trans'] = E_trans
+    # simulator_dict['E_valo'] = E_valo
+    # simulator_dict['E_tot'] = E_tot
+    st.session_state.E_ISDI1 = E_ISDI1
+    st.session_state.E_ISDI2 = E_ISDI2
+    st.session_state.E_ISDND = E_ISDND
+    st.session_state.E_ISDD = E_ISDD
+    st.session_state.E_trans_ISDI1 = E_trans_ISDI1
+    st.session_state.E_trans_ISDI2 = E_trans_ISDI2
+    st.session_state.E_trans_ISDND = E_trans_ISDND
+    st.session_state.E_trans_ISDD = E_trans_ISDD
+    st.session_state.E_trans = E_trans
+    st.session_state.E_valo = E_valo
+    st.session_state.E_tot = E_tot
 
     with st.expander("Emissions de CO2e par types de déchets"):
         col1, col2, col3, col4 = st.columns(4)
@@ -309,9 +351,11 @@ def show_scope3_1(simulator_dict):
                 st.write("kgCO2e/tonne :")
                 I_ISDI1_kgCO2T=round(((E_ISDI1 + E_trans_ISDI1) / ISDI1) * 1000,1)
                 st.subheader(str(I_ISDI1_kgCO2T))
-                simulator_dict['I_ISDI1_kgCO2T'] = I_ISDI1_kgCO2T
+                #simulator_dict['I_ISDI1_kgCO2T'] = I_ISDI1_kgCO2T
+                st.session_state.I_ISDI1_kgCO2T = I_ISDI1_kgCO2T
             else:
-                simulator_dict['I_ISDI1_kgCO2T'] = 0
+                #simulator_dict['I_ISDI1_kgCO2T'] = 0
+                st.session_state.I_ISDI1_kgCO2T = 0
         with col2:
             st.subheader("Gravats")
             st.write("CO2e traitement (en tCO2e):")
@@ -324,9 +368,11 @@ def show_scope3_1(simulator_dict):
                 st.write("kgCO2e/tonne :")
                 I_ISDI2_kgCO2T = round(((E_ISDI2 + E_trans_ISDI2) / ISDI2) * 1000, 1)
                 st.subheader(str(I_ISDI2_kgCO2T))
-                simulator_dict['I_ISDI2_kgCO2T'] = I_ISDI2_kgCO2T
+                #simulator_dict['I_ISDI2_kgCO2T'] = I_ISDI2_kgCO2T
+                st.session_state.I_ISDI2_kgCO2T = I_ISDI2_kgCO2T
             else:
-                simulator_dict['I_ISDI2_kgCO2T'] = 0
+                #simulator_dict['I_ISDI2_kgCO2T'] = 0
+                st.session_state.I_ISDI1_kgCO2T = 0
         with col3:
             st.subheader("DND")
             st.write("CO2e traitement (en tCO2e):")
@@ -339,9 +385,11 @@ def show_scope3_1(simulator_dict):
                 st.write("kgCO2e/tonne :")
                 I_ISDND_kgCO2T = round(((E_ISDND + E_trans_ISDND) / ISDND) * 1000, 1)
                 st.subheader(str(I_ISDND_kgCO2T))
-                simulator_dict['I_ISDND_kgCO2T'] = I_ISDND_kgCO2T
+                #simulator_dict['I_ISDND_kgCO2T'] = I_ISDND_kgCO2T
+                st.session_state.I_ISDND_kgCO2T = I_ISDND_kgCO2T
             else:
-                simulator_dict['I_ISDND_kgCO2T'] = 0
+                #simulator_dict['I_ISDND_kgCO2T'] = 0
+                st.session_state.I_ISDND_kgCO2T = 0
         with col4:
             st.subheader("DD")
             st.write("CO2e traitement (en tCO2e):")
@@ -354,9 +402,11 @@ def show_scope3_1(simulator_dict):
                 st.write("kgCO2e/tonne :")
                 I_ISDD_kgCO2T = round(((E_ISDD + E_trans_ISDD) / ISDD) * 1000, 1)
                 st.subheader(str(I_ISDD_kgCO2T))
-                simulator_dict['I_ISDD_kgCO2T'] = I_ISDD_kgCO2T
+                #simulator_dict['I_ISDD_kgCO2T'] = I_ISDD_kgCO2T
+                st.session_state.I_ISDD_kgCO2T = I_ISDD_kgCO2T
             else:
-                simulator_dict['I_ISDD_kgCO2T'] = 0
+                #simulator_dict['I_ISDD_kgCO2T'] = 0
+                st.session_state.I_ISDD_kgCO2T = 0
 
     with st.expander("Emissions totales de CO2e (en tCO2e)"):
         col1, col2, col3, col4 = st.columns(4)
@@ -374,9 +424,11 @@ def show_scope3_1(simulator_dict):
                 st.write("kgCO2e/tonne :")
                 I_tot_kgCO2T = round(((E_trans + E_valo) / tot_D) * 1000, 1)
                 st.subheader(str(I_tot_kgCO2T))
-                simulator_dict['I_tot_kgCO2T'] = I_tot_kgCO2T
+                #simulator_dict['I_tot_kgCO2T'] = I_tot_kgCO2T
+                st.session_state.I_tot_kgCO2T = I_tot_kgCO2T
             else:
-                simulator_dict['I_tot_kgCO2T'] = 0
+                #simulator_dict['I_tot_kgCO2T'] = 0
+                st.session_state.I_tot_kgCO2T = 0
 
     with st.expander("Distance à parcourir"):
         st.subheader(str(dist_tot) + " km")
@@ -387,23 +439,29 @@ def show_scope3_1(simulator_dict):
         st.write("Total jours évacuation :")
         if pass_jour>0:
             jours_evacuation = round((pass_tot / pass_jour),1)
-            simulator_dict['jours_evacuation'] = jours_evacuation
+            #simulator_dict['jours_evacuation'] = jours_evacuation
+            st.session_state.jours_evacuation = jours_evacuation
         else:
             jours_evacuation = 0
-            simulator_dict['jours_evacuation'] = jours_evacuation
+            #simulator_dict['jours_evacuation'] = jours_evacuation
+            st.session_state.jours_evacuation = jours_evacuation
         st.subheader(jours_evacuation)
         st.write("Nombre de passages pour l'évacuation des terres :")
         st.subheader(pass_ISDI1)
-        simulator_dict['pass_ISDI1'] = pass_ISDI1
+        #simulator_dict['pass_ISDI1'] = pass_ISDI1
+        st.session_state.pass_ISDI1 = pass_ISDI1
         st.write("Nombre de passages pour l'évacuation des gravats :")
         st.subheader(pass_ISDI2)
-        simulator_dict['pass_ISDI2'] = pass_ISDI2
+        #simulator_dict['pass_ISDI2'] = pass_ISDI2
+        st.session_state.pass_ISDI2 = pass_ISDI2
         st.write("Nombre de passages pour l'évacuation des déchets non-dangereux :")
         st.subheader(pass_ISDND)
-        simulator_dict['pass_ISDND'] = pass_ISDND
+        #simulator_dict['pass_ISDND'] = pass_ISDND
+        st.session_state.pass_ISDND = pass_ISDND
         st.write("Nombre de passages pour l'évacuation des déchets dangereux :")
         st.subheader(pass_ISDD)
-        simulator_dict['pass_ISDD'] = pass_ISDD
+        #simulator_dict['pass_ISDD'] = pass_ISDD
+        st.session_state.pass_ISDD = pass_ISDD
 
     subheader8 = '''
     <head>
@@ -445,16 +503,25 @@ def show_scope3_1(simulator_dict):
     eco_ISDND_Ea2 = (pass_ISDND - new_pass_ISDND_Ea2) * constant_dict["prix_ISDND"]
     eco_ISDD_Ea2 = (pass_ISDD - new_pass_ISDD_Ea2) * constant_dict["prix_ISDD"]
     eco_D_tot_Ea2 = eco_ISDI1_Ea2 + eco_ISDI2_Ea2 + eco_ISDND_Ea2 + eco_ISDD_Ea2
-    simulator_dict['Ea2'] = Ea2
-    simulator_dict['eco_c_Ea2'] = math.ceil(eco_c_Ea2)
-    simulator_dict['eco_D_tot_Ea2'] = math.ceil(eco_D_tot_Ea2)
-    simulator_dict['new_pass_ISDI1_Ea2'] = new_pass_ISDI1_Ea2
-    simulator_dict['new_pass_ISDI2_Ea2'] = new_pass_ISDI2_Ea2
-    simulator_dict['new_pass_ISDND_Ea2'] = new_pass_ISDND_Ea2
-    simulator_dict['new_pass_ISDD_Ea2'] = new_pass_ISDD_Ea2
-    simulator_dict['new_pass_tot_Ea2'] = new_pass_tot_Ea2
-    simulator_dict['new_E_trans_Ea2'] = new_E_trans_Ea2
-
+    # simulator_dict['Ea2'] = Ea2
+    # simulator_dict['eco_c_Ea2'] = math.ceil(eco_c_Ea2)
+    # simulator_dict['eco_D_tot_Ea2'] = math.ceil(eco_D_tot_Ea2)
+    # simulator_dict['new_pass_ISDI1_Ea2'] = new_pass_ISDI1_Ea2
+    # simulator_dict['new_pass_ISDI2_Ea2'] = new_pass_ISDI2_Ea2
+    # simulator_dict['new_pass_ISDND_Ea2'] = new_pass_ISDND_Ea2
+    # simulator_dict['new_pass_ISDD_Ea2'] = new_pass_ISDD_Ea2
+    # simulator_dict['new_pass_tot_Ea2'] = new_pass_tot_Ea2
+    # simulator_dict['new_E_trans_Ea2'] = new_E_trans_Ea2
+    st.session_state.Ea2 = Ea2
+    st.session_state.eco_c_Ea2 = eco_c_Ea2
+    st.session_state.eco_D_tot_Ea2 = eco_D_tot_Ea2
+    st.session_state.new_pass_ISDI1_Ea2 = new_pass_ISDI1_Ea2
+    st.session_state.new_pass_ISDI2_Ea2 = new_pass_ISDI2_Ea2
+    st.session_state.new_pass_ISDND_Ea2 = new_pass_ISDND_Ea2
+    st.session_state.new_pass_ISDD_Ea2 = new_pass_ISDD_Ea2
+    st.session_state.new_pass_tot_Ea2 = new_pass_tot_Ea2
+    st.session_state.new_E_trans_Ea2 = new_E_trans_Ea2
+    
     if action1:
         st.caption("Retour d'expérience: Réduction possible de -3% à -6% du CO2e SCOPE3 total")
         st.caption("Selon la marque, le modèle "
@@ -500,15 +567,24 @@ def show_scope3_1(simulator_dict):
     eco_ISDD_Ea3 = (pass_ISDD - new_pass_ISDD_Ea3) * constant_dict["prix_ISDD"]
     eco_D_tot_Ea3 = eco_ISDI1_Ea3 + eco_ISDI2_Ea3 + eco_ISDND_Ea3 + eco_ISDD_Ea3
 
-    simulator_dict['Ea3'] = Ea3
-    simulator_dict['eco_c_Ea3'] = math.ceil(eco_c_Ea3)
-    simulator_dict['eco_D_tot_Ea3'] = math.ceil(eco_D_tot_Ea3)
-    simulator_dict['new_pass_ISDI1_Ea3'] = new_pass_ISDI1_Ea3
-    simulator_dict['new_pass_ISDI2_Ea3'] = new_pass_ISDI2_Ea3
-    simulator_dict['new_pass_ISDND_Ea3'] = new_pass_ISDND_Ea3
-    simulator_dict['new_pass_ISDD_Ea3'] = new_pass_ISDD_Ea3
-    simulator_dict['new_pass_tot_Ea3'] = new_pass_tot_Ea3
-    simulator_dict['new_E_trans_Ea3'] = new_E_trans_Ea3
+    # simulator_dict['Ea3'] = Ea3
+    # simulator_dict['eco_c_Ea3'] = math.ceil(eco_c_Ea3)
+    # simulator_dict['eco_D_tot_Ea3'] = math.ceil(eco_D_tot_Ea3)
+    # simulator_dict['new_pass_ISDI1_Ea3'] = new_pass_ISDI1_Ea3
+    # simulator_dict['new_pass_ISDI2_Ea3'] = new_pass_ISDI2_Ea3
+    # simulator_dict['new_pass_ISDND_Ea3'] = new_pass_ISDND_Ea3
+    # simulator_dict['new_pass_ISDD_Ea3'] = new_pass_ISDD_Ea3
+    # simulator_dict['new_pass_tot_Ea3'] = new_pass_tot_Ea3
+    # simulator_dict['new_E_trans_Ea3'] = new_E_trans_Ea3
+    st.session_state.Ea3 = Ea3
+    st.session_state.eco_c_Ea3 = eco_c_Ea3
+    st.session_state.eco_D_tot_Ea3 = eco_D_tot_Ea3
+    st.session_state.new_pass_ISDI1_Ea3 = new_pass_ISDI1_Ea3
+    st.session_state.new_pass_ISDI2_Ea3 = new_pass_ISDI2_Ea3
+    st.session_state.new_pass_ISDND_Ea3 = new_pass_ISDND_Ea3
+    st.session_state.new_pass_ISDD_Ea3 = new_pass_ISDD_Ea3
+    st.session_state.new_pass_tot_Ea3 = new_pass_tot_Ea3
+    st.session_state.new_E_trans_Ea3 = new_E_trans_Ea3
 
     if action2:
         st.caption("Retour d'expérience: Réduction possible de -2% à -5% du CO2e SCOPE3 total")
@@ -552,12 +628,18 @@ def show_scope3_1(simulator_dict):
     eco_c_Ea1 = (conso_tot_Ea1 - new_conso_tot_Ea1) * constant_dict["prix_c"]
     eco_ISDI = (pass_ISDI1 - new_pass_ISDI1) * constant_dict["prix_ISDI1"]
 
-    simulator_dict['Ea1'] = Ea1
-    simulator_dict['eco_c_Ea1'] = math.ceil(eco_c_Ea1)
-    simulator_dict['eco_ISDI'] = math.ceil(eco_ISDI)
-    simulator_dict['new_pass_ISDI1'] = new_pass_ISDI1
-    simulator_dict['new_E_trans_ISDI1'] = new_E_trans_ISDI1
-    simulator_dict['new_pass_tot'] = new_pass_tot
+    # simulator_dict['Ea1'] = Ea1
+    # simulator_dict['eco_c_Ea1'] = math.ceil(eco_c_Ea1)
+    # simulator_dict['eco_ISDI'] = math.ceil(eco_ISDI)
+    # simulator_dict['new_pass_ISDI1'] = new_pass_ISDI1
+    # simulator_dict['new_E_trans_ISDI1'] = new_E_trans_ISDI1
+    # simulator_dict['new_pass_tot'] = new_pass_tot
+    st.session_state.Ea1 = Ea1
+    st.session_state.eco_c_Ea1 = eco_c_Ea1
+    st.session_state.eco_ISDI = eco_ISDI
+    st.session_state.new_pass_ISDI1 = new_pass_ISDI1
+    st.session_state.new_E_trans_ISDI1 = new_E_trans_ISDI1
+    st.session_state.new_pass_tot = new_pass_tot
 
     if action3:
         if valo_terres >= 10:
@@ -601,8 +683,11 @@ def show_scope3_1(simulator_dict):
                                                      pass_ISDND * new_dist_exuISDND + pass_ISDD * new_dist_exuISDD)
     eco_c_Ea4 = (conso_tot - new_conso_tot_Ea4) * constant_dict["prix_c"]
 
-    simulator_dict['Ea4'] = Ea4
-    simulator_dict['eco_c_Ea4'] = math.ceil(eco_c_Ea4)
+    # simulator_dict['Ea4'] = Ea4
+    # simulator_dict['eco_c_Ea4'] = math.ceil(eco_c_Ea4)
+    st.session_state.Ea4 = Ea4
+    st.session_state.eco_c_Ea4 = math.ceil(eco_c_Ea4)
+    
 
     if action4:
         st.caption("Hypothèse: choisir des centres de collecte 10 km plus proche")
@@ -649,15 +734,24 @@ def show_scope3_1(simulator_dict):
     eco_ISDD_Ea5 = (pass_ISDD - new_pass_ISDD_Ea5) * constant_dict["prix_ISDD"]
     eco_D_tot_Ea5 = eco_ISDI1_Ea5 + eco_ISDI2_Ea5 + eco_ISDND_Ea5 + eco_ISDD_Ea5
 
-    simulator_dict['Ea5'] = Ea5
-    simulator_dict['eco_c_Ea5'] = math.ceil(eco_c_Ea5)
-    simulator_dict['eco_D_tot_Ea5'] = math.ceil(eco_D_tot_Ea5)
-    simulator_dict['new_pass_ISDI1_Ea5'] = new_pass_ISDI1_Ea5
-    simulator_dict['new_pass_ISDI2_Ea5'] = new_pass_ISDI2_Ea5
-    simulator_dict['new_pass_ISDND_Ea5'] = new_pass_ISDND_Ea5
-    simulator_dict['new_pass_ISDD_Ea5'] = new_pass_ISDD_Ea5
-    simulator_dict['new_pass_tot_Ea5'] = new_pass_tot_Ea5
-    simulator_dict['new_E_trans_Ea5'] = new_E_trans_Ea5
+    # simulator_dict['Ea5'] = Ea5
+    # simulator_dict['eco_c_Ea5'] = math.ceil(eco_c_Ea5)
+    # simulator_dict['eco_D_tot_Ea5'] = math.ceil(eco_D_tot_Ea5)
+    # simulator_dict['new_pass_ISDI1_Ea5'] = new_pass_ISDI1_Ea5
+    # simulator_dict['new_pass_ISDI2_Ea5'] = new_pass_ISDI2_Ea5
+    # simulator_dict['new_pass_ISDND_Ea5'] = new_pass_ISDND_Ea5
+    # simulator_dict['new_pass_ISDD_Ea5'] = new_pass_ISDD_Ea5
+    # simulator_dict['new_pass_tot_Ea5'] = new_pass_tot_Ea5
+    # simulator_dict['new_E_trans_Ea5'] = new_E_trans_Ea5
+    st.session_state.Ea5 = Ea5
+    st.session_state.eco_c_Ea5 = math.ceil(eco_c_Ea5)
+    st.session_state.eco_D_tot_Ea5 = math.ceil(eco_D_tot_Ea5)
+    st.session_state.new_pass_ISDI1_Ea5 = new_pass_ISDI1_Ea5
+    st.session_state.new_pass_ISDI2_Ea5 = new_pass_ISDI2_Ea5
+    st.session_state.new_pass_ISDND_Ea5 = new_pass_ISDND_Ea5
+    st.session_state.new_pass_ISDD_Ea5 = new_pass_ISDD_Ea5
+    st.session_state.new_pass_tot_Ea5 = new_pass_tot_Ea5
+    st.session_state.new_E_trans_Ea5 = new_E_trans_Ea5
 
     if action5:
         z = random_CO2_equivalent(Ea5)
@@ -876,9 +970,12 @@ def show_scope3_2(simulator_dict):
             fig=bar_plot(es, poste, 'Emissions GES liées aux achats de biens ou services', 'Biens ou services', 'Emissions (tCO2e)')
             st.pyplot(fig)
 
-    simulator_dict['tot_S3d']=tot_S3d
-    simulator_dict['tot_S3a']=tot_S3a
-    simulator_dict['tot_S3']=tot_S3
+    # simulator_dict['tot_S3d']=tot_S3d
+    # simulator_dict['tot_S3a']=tot_S3a
+    # simulator_dict['tot_S3']=tot_S3
+    st.session_state.tot_S3d = tot_S3d
+    st.session_state.tot_S3a = tot_S3a
+    st.session_state.tot_S3 = tot_S3
 
     return simulator_dict
 
@@ -1007,9 +1104,12 @@ def show_scope12(simulator_dict):
             fig1=pie_plot(sizes, labels, "Part des émissions GES par scope", "Scope")
             st.pyplot(fig1)
 
-    simulator_dict['tot_S1'] = tot_S1
-    simulator_dict['tot_S2'] = tot_S2
-    simulator_dict['tot_S1et2'] = tot_S1et2
+    # simulator_dict['tot_S1'] = tot_S1
+    # simulator_dict['tot_S2'] = tot_S2
+    # simulator_dict['tot_S1et2'] = tot_S1et2
+    st.session_state.tot_S1 = tot_S1
+    st.session_state.tot_S2 = tot_S2
+    st.session_state.tot_S1et2 = tot_S1et2
 
     return simulator_dict
 
@@ -1080,14 +1180,22 @@ def show_scope3_construction(simulator_dict):
         st.subheader("Emissions GES de l'ouvrage 🌍 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
         st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
 
-    simulator_dict['ouvrage'] = ouvrage
-    simulator_dict['categorie_ouvrage'] = categorie
-    simulator_dict['sous_categorie_ouvrage1'] = sous_categorie1
-    simulator_dict['sous_categorie_ouvrage2'] = sous_categorie2
-    simulator_dict['EMISSIONS_ouv'] = EMISSIONS_ouv
-    simulator_dict['INCERTITUDE_ouv'] = INCERTITUDE_ouv
-    simulator_dict['DO_ouv'] = DO_ouv
-    simulator_dict['u'] = u
+    # simulator_dict['ouvrage'] = ouvrage
+    # simulator_dict['categorie_ouvrage'] = categorie
+    # simulator_dict['sous_categorie_ouvrage1'] = sous_categorie1
+    # simulator_dict['sous_categorie_ouvrage2'] = sous_categorie2
+    # simulator_dict['EMISSIONS_ouv'] = EMISSIONS_ouv
+    # simulator_dict['INCERTITUDE_ouv'] = INCERTITUDE_ouv
+    # simulator_dict['DO_ouv'] = DO_ouv
+    # simulator_dict['u'] = u
+    st.session_state.ouvrage = ouvrage
+    st.session_state.categorie_ouvrage = categorie
+    st.session_state.sous_categorie_ouvrage1 = sous_categorie1
+    st.session_state.sous_categorie_ouvrage2 = sous_categorie2
+    st.session_state.EMISSIONS_ouv = EMISSIONS_ouv
+    st.session_state.INCERTITUDE_ouv = INCERTITUDE_ouv
+    st.session_state.DO_ouv = DO_ouv
+    st.session_state.u = u
 
     return simulator_dict
 
@@ -1102,18 +1210,24 @@ def show_co2_results(simulator_dict):
     st.markdown(header5, unsafe_allow_html=True)
     st.write("Ici, vous retrouvez une synthèse macroscopique de votre simulation d'émissions")
     with st.expander("Résultats et Graphiques 📊"):
-        E_S123 = simulator_dict["EMISSIONS_ouv"] + simulator_dict["E_tot"] + simulator_dict["tot_S3"] + \
-                 simulator_dict["tot_S1"] + simulator_dict["tot_S2"]
-        E_S3 = simulator_dict["EMISSIONS_ouv"] + simulator_dict["E_tot"] + simulator_dict["tot_S3"]
-        simulator_dict['E_S123'] = E_S123
-        simulator_dict['E_S3'] = E_S3
-        st.write("Emissions GES, Scope 1 ⚡ : " + str(round(simulator_dict["tot_S1"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 2 🛢️ : " + str(round(simulator_dict["tot_S2"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 3 🗑️+🛒+🏗️ : " + str(round(E_S3, 1)) + " tCO2e ")
-        st.write("Emissions GES totales 🌍 : " + str(round(E_S123, 1)) + " tCO2e ")
+        # E_S123 = simulator_dict["EMISSIONS_ouv"] + simulator_dict["E_tot"] + simulator_dict["tot_S3"] + \
+        #          simulator_dict["tot_S1"] + simulator_dict["tot_S2"]
+        E_S123 = st.session_state["EMISSIONS_ouv"] + st.session_state["E_tot"] + st.session_state["tot_S3"] + \
+                 st.session_state["tot_S1"] + st.session_state["tot_S2"]
+        # E_S3 = simulator_dict["EMISSIONS_ouv"] + simulator_dict["E_tot"] + simulator_dict["tot_S3"]
+        E_S3 = st.session_state["EMISSIONS_ouv"] + st.session_state["E_tot"] + st.session_state["tot_S3"]
+        # simulator_dict['E_S123'] = E_S123
+        # simulator_dict['E_S3'] = E_S3
+        st.session_state['E_S123'] = E_S123
+        st.session_state['E_S3'] = E_S3
+        st.write("Emissions GES, Scope 1 ⚡ : " + str(round(st.session_state["tot_S1"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 2 🛢️ : " + str(round(st.session_state["tot_S2"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 3 🗑️+🛒+🏗️ : " + str(round(st.session_state["E_S3"], 1)) + " tCO2e ")
+        st.write("Emissions GES totales 🌍 : " + str(round(st.session_state["E_S123"], 1)) + " tCO2e ")
         if E_S123 > 0:
             poste = ["1", "2", "3"]
-            es = [simulator_dict["tot_S1"], simulator_dict["tot_S2"], E_S3]
+            # es = [simulator_dict["tot_S1"], simulator_dict["tot_S2"], E_S3]
+            es = [st.session_state["tot_S1"], st.session_state["tot_S2"], st.session_state["E_S3"]]
             fig=bar_plot(es, poste, 'Emissions GES par scope', 'Scopes', 'Emissions (tCO2e)')
             st.pyplot(fig)
 
@@ -1132,7 +1246,8 @@ def show_co2_results(simulator_dict):
             "Votre email ne sera pas diffusé en dehors de nos services."):
         email_user = st.text_input('indiquez votre email valide ici', value=st.session_state['email_user'], max_chars=None, key=None,
                                    type="default")
-        simulator_dict['email_user'] = email_user
+        #simulator_dict['email_user'] = email_user
+        st.session_state.email_user = email_user
 
         if email_user != '':
             if solve(email_user):
@@ -1276,15 +1391,15 @@ if __name__ == "__main__":
     simulator_dict = show_scope3_construction(simulator_dict)
     simulator_dict = show_co2_results(simulator_dict)
 
-    #gestion de session state
-    for my_key in initial_dict.keys():
-        if my_key not in st.session_state:
-            st.session_state[my_key] = initial_dict[my_key]
-        else:
-            try:
-                st.session_state[my_key]=simulator_dict[my_key]
-            except:
-                st.session_state[my_key] = initial_dict[my_key]
+    # #gestion de session state
+    # for my_key in initial_dict.keys():
+    #     if my_key not in st.session_state:
+    #         st.session_state[my_key] = initial_dict[my_key]
+    #     else:
+    #         try:
+    #             st.session_state[my_key]=simulator_dict[my_key]
+    #         except:
+    #             st.session_state[my_key] = initial_dict[my_key]
 
     if "download_done" not in st.session_state:
         st.session_state.download_done = False

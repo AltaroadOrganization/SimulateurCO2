@@ -2,7 +2,7 @@
 ### Créé par ALtaroad
 #### v0.0
 
-Cet outil permet de simuler les émissions de Carbones (CO2e) d'un chantier en prenant en compte  
+Cet outil permet de simuler les émissions de CO2 équivalent (CO2e) d'un chantier en prenant en compte  
 - Scope1  
 - Scope2  
 - Scope3  
