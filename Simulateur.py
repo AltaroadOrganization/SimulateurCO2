@@ -13,7 +13,9 @@ from utils_simu import *
 import warnings
 import os
 import base64
+
 warnings.filterwarnings("ignore")
+plt.set_loglevel('WARNING')
 
 #get AWS access key and secret key
 ACCESS_KEY = st.secrets["my_access_key"]["ACCESS_KEY"]

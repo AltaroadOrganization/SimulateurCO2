@@ -12,7 +12,9 @@ import boto3
 import os
 import base64
 import warnings
+
 warnings.filterwarnings("ignore")
+plt.set_loglevel('WARNING')
 
 #function to reload the state
 @st.cache_data(show_spinner=False)
