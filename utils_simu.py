@@ -74,7 +74,7 @@ def get_img_with_href(local_img_path, target_url):
 #plot function
 def pie_plot(inputs_list, labels_name, title, key_name):
     _fig, _ax = plt.subplots()
-    _ax.set_title("Distribution {}".format(key_name), color="#F05E16", size=20, fontname="Tahoma")
+    _ax.set_title("Distribution {}".format(key_name), color="#F05E16", size=20)
     _ax.pie(inputs_list, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=False,
             colors=["#F7BE6D","#FFB247","#FA9C1B","#F58216","#F05E16"])
     _ax.axis('equal')
@@ -89,9 +89,9 @@ def pie_plot(inputs_list, labels_name, title, key_name):
 def bar_plot(inputs_list, labels_name, title, x_label_title, y_label_title):
     _fig = plt.figure()
     _ax = _fig.add_axes([0, 0, 1, 1])
-    _ax.set_title(title, color="#F05E16", fontname="Tahoma", size=20)
-    _ax.set_ylabel(y_label_title, color="#67686b", fontname="Tahoma", size=14)
-    _ax.set_xlabel(x_label_title, fontname="Tahoma", color="#67686b", size=14)
+    _ax.set_title(title, color="#F05E16", size=20)
+    _ax.set_ylabel(y_label_title, color="#67686b", size=14)
+    _ax.set_xlabel(x_label_title, color="#67686b", size=14)
     plt.xticks(rotation=45)
     _ax.bar(labels_name, inputs_list, color="#F7BE6D", edgecolor="#FA9C1B")
     return _fig
