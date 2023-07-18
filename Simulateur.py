@@ -84,6 +84,12 @@ def show_header(simulator_dict):
     link = '[Une question ? Contactez-nous !](https://www.altaroad.com/demander-une-demo/)'
     st.markdown(link, unsafe_allow_html=True)
 
+    st.write('---------------------------------------------------')
+    if st.button("Effacer toutes les données saisies",use_container_width=True):
+        # Clear values from *all* all in-memory and on-disk data caches:
+        # i.e. clear values from both square and cube
+        st.cache_data.clear()
+
     header0 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
