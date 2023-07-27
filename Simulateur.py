@@ -848,7 +848,7 @@ def show_scope3_2(simulator_dict):
     #st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
     st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat et livraison de matières premières, équipements ou services")
     st.write("Cliquer sur Rafraîchir avant de démarrer")
-    if st.button('Rafraîchir Scope 3', use_container_width=True):
+    if st.button('Rafraîchir Scope 3 Autres déchets et Matériaux', use_container_width=True):
         scope3d = "scope3d_blank.csv"
         df_S3d = pd.read_csv(scope3d, encoding="latin1", sep=",", decimal='.', index_col=0)
         df_S3d[df_S3d.columns]=""
@@ -1228,14 +1228,15 @@ def show_co2_results(simulator_dict):
         # simulator_dict['E_S3'] = E_S3
         st.session_state['E_S123'] = E_S123
         st.session_state['E_S3'] = E_S3
-        st.write("Emissions GES, Scope 1 ⛽ : " + str(round(st.session_state["tot_S1"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 2 ⚡ : " + str(round(st.session_state["tot_S2"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 3 🚛+🦺+🏗️ : " + str(round(st.session_state["E_S3"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 3 Déchets 🚛 : " + str(round(st.session_state["E_tot"]+st.session_state["tot_S3d"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 3 Matériaux 🦺 : " + str(round(st.session_state["tot_S3a"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 3 Construction 🏗️ : " + str(round(st.session_state["EMISSIONS_ouv"], 1)) + " tCO2e ")
-
         st.write("Emissions GES totales 🌱 : " + str(round(st.session_state["E_S123"], 1)) + " tCO2e ")
+        st.write("__Emissions GES, Scope 1 ⛽ : " + str(round(st.session_state["tot_S1"], 1)) + " tCO2e ")
+        st.write("__Emissions GES, Scope 2 ⚡ : " + str(round(st.session_state["tot_S2"], 1)) + " tCO2e ")
+        st.write("__Emissions GES, Scope 3 totales 🚛+🦺+🏗️ : " + str(round(st.session_state["E_S3"], 1)) + " tCO2e ")
+        st.write("_______Emissions GES, Scope 3 - Déchets 🚛 : " + str(round(st.session_state["E_tot"]+st.session_state["tot_S3d"], 1)) + " tCO2e ")
+        st.write("_______Emissions GES, Scope 3 - Matériaux 🦺 : " + str(round(st.session_state["tot_S3a"], 1)) + " tCO2e ")
+        st.write("_______Emissions GES, Scope 3 - Construction 🏗️ : " + str(round(st.session_state["EMISSIONS_ouv"], 1)) + " tCO2e ")
+
+
         if E_S123 > 0:
             poste = ["1", "2", "3"]
             # es = [simulator_dict["tot_S1"], simulator_dict["tot_S2"], E_S3]
