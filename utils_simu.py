@@ -85,6 +85,7 @@ def pie_plot(inputs_list, labels_name, title, key_name):
     title = legend.get_title()
     title.set_color("#F05E16")
     title.set_size(18)
+    plt.savefig('./figures/pie_plot_Distribution {}.jpg'.format(key_name),bbox_inches='tight')
     return _fig
 
 def bar_plot(inputs_list, labels_name, title, x_label_title, y_label_title):
@@ -95,6 +96,7 @@ def bar_plot(inputs_list, labels_name, title, x_label_title, y_label_title):
     _ax.set_xlabel(x_label_title, color="#67686b", size=14)
     plt.xticks(rotation=45)
     _ax.bar(labels_name, inputs_list, color="#F7BE6D", edgecolor="#FA9C1B")
+    plt.savefig('./figures/bar_plot_{}.jpg'.format(title), bbox_inches='tight')
     return _fig
 
 #get data function
@@ -336,6 +338,14 @@ def build_pdf_from_dict(the_input_dict):
     else:
         pdf.cell(200, 10, txt="Aucune donnée saisie", ln=1)
     pdf.cell(200, 10, txt="", ln=1)
+    pdf.set_font("sen", "", size=16)
+    pdf.set_text_color(128, 128, 128)
+    pdf.cell(200, 10, txt="FIGURES", ln=1)
+    directory = './figures'
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for filename in filenames:
+            if filename.endswith('.jpg'):
+                pdf.image('./figures/{}'.format(filename),w=45)
     pdf.set_font("sen", size=8, style='')
     pdf.set_text_color(128, 128, 128)
     str_textEnd="Ce simulateur propose une estimation des émissions CO2e d'un chantier. Il s'agit d'un outil dont l'objectif" \
