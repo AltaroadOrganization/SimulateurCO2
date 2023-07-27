@@ -29,7 +29,6 @@ def download_state_management(_simulator_dict, ACCESS_KEY, SECRET_KEY):
             st.session_state.download_done=True
 
 #function to check if an email is valid
-
 def solve(s):
    pat = "^[a-zA-Z0-9-_.]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
    if re.match(pat,s):
