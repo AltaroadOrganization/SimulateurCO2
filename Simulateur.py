@@ -83,7 +83,7 @@ def show_header(simulator_dict):
                        file_name="LeManifeste_SimulateurCO2_Altaroad.pdf",
                        mime='application/octet-stream')
 
-    link = '[Une question ? Contactez-nous !](https://www.altaroad.com/demander-une-demo/)'
+    link = '[Une question ? Contactez-nous 📧!](https://www.altaroad.com/demander-une-demo/)'
     st.markdown(link, unsafe_allow_html=True)
 
     st.write('---------------------------------------------------')
@@ -125,7 +125,7 @@ def show_scope3_1(simulator_dict):
     header2 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Evacuation des déchets 🗑️</p>
+    <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Evacuation des déchets 🚛 </p>
     </head>
     '''
     st.write('---------------------------------------------------')
@@ -137,7 +137,7 @@ def show_scope3_1(simulator_dict):
         subheader1 = '''
         <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-        <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Quantité de déchets à évacuer 🚮</p>
+        <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Quantité de déchets à évacuer 🚛</p>
         </head>
         '''
         st.markdown(subheader1, unsafe_allow_html=True)
@@ -307,7 +307,7 @@ def show_scope3_1(simulator_dict):
     subheader7 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Données & Bilan CO2e 🌍</p>
+    <p style="font-family:Sen; color:#f37121; font-weight: bold; letter-spacing: 0px; line-height: 1.2; font-size: 20px;">Données & Bilan CO2e 🌱</p>
     </head>
     '''
     st.markdown(subheader7, unsafe_allow_html=True)
@@ -840,14 +840,14 @@ def show_scope3_2(simulator_dict):
     header3 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Autres déchets 🗑️ & Livraison Matériaux 🛒</p>
+    <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Autres déchets 🚛 & Livraison Matériaux 🦺</p>
     </head>
     '''
     st.write('---------------------------------------------------')
     st.markdown(header3, unsafe_allow_html=True)
     #st.header("SCOPE 3 : Autres déchets 🗑️ & achats 🛒")
     st.write("Ici, vous simulez les émissions liées à l'évacuation et traitement d'autres types de déchets et à l'achat et livraison de matières premières, équipements ou services")
-    st.write("Cliquer sur Rafraîchir avant de démarrer 🔄")
+    st.write("Cliquer sur Rafraîchir avant de démarrer")
     if st.button('Rafraîchir Scope 3', use_container_width=True):
         scope3d = "scope3d_blank.csv"
         df_S3d = pd.read_csv(scope3d, encoding="latin1", sep=",", decimal='.', index_col=0)
@@ -858,7 +858,7 @@ def show_scope3_2(simulator_dict):
         df_S3a[df_S3a.columns] = ""
         df_S3a.to_csv('scope3a_blank.csv')
 
-    with st.expander("Type de déchet ♻"):
+    with st.expander("Type de déchet"):
         scope3d = "scope3d_blank.csv"
         df_S3d = pd.read_csv(scope3d, encoding="latin1", sep=",", decimal='.')
         #bdd_d = "Base_Carbone_FE_S3.csv"
@@ -893,7 +893,7 @@ def show_scope3_2(simulator_dict):
         #TRAIT = str(df['Spécificité 2'].unique())
         st.write(" ")
         st.write(" ")
-        st.text("Emissions GES de la donnée 💨 : " + str(EMISSIONS) + " tCO2e " + "(+ ou - " + str(INCERTITUDE) + " tCO2e)")
+        st.text("Emissions GES de la donnée 🌱 : " + str(EMISSIONS) + " tCO2e " + "(+ ou - " + str(INCERTITUDE) + " tCO2e)")
         if st.button("Ajout du poste d'émissions ➕ "):
             new = ["Scope 3", POSTE, TYPE, str(DO), u, EMISSIONS]
             with open(scope3d, 'a', newline='', encoding='latin1') as f_object:
@@ -901,7 +901,7 @@ def show_scope3_2(simulator_dict):
                 writer_object.writerow(new)
                 f_object.close()
 
-    with st.expander("Type de Matériaux livrés 🛒"):
+    with st.expander("Type de Matériaux livrés 🦺"):
         scope3a = "scope3a_blank.csv"
         df_S3a = pd.read_csv(scope3a, encoding="latin1", sep=",", decimal='.')
         #bdd_a = "Base_Carbone_FE_S3.csv"
@@ -943,7 +943,7 @@ def show_scope3_2(simulator_dict):
         TRAIT_a = str(df['Spécificité 2'].unique())
         st.write(" ")
         st.write(" ")
-        st.text("Emissions GES de la donnée 🛒 🌍 : " + str(EMISSIONS_a) + " tCO2e " + "(+ ou - " + str(
+        st.text("Emissions GES de la donnée 🌱 : " + str(EMISSIONS_a) + " tCO2e " + "(+ ou - " + str(
             INCERTITUDE_a) + " tCO2e)")
         if st.button("Ajout du poste d'émissions ➕   "):
             new = ["Scope 3", POSTE_a, TRAIT_a, str(DO_a), u, EMISSIONS_a]
@@ -960,11 +960,11 @@ def show_scope3_2(simulator_dict):
         df_S3 = pd.concat([df_S3d, df_S3a])
         st.dataframe(df_S3)
         tot_S3d = round(df_S3d["Emissions GES (en tCO2e)"].sum(), 1)
-        st.text("Total des émissions GES 🗑️ 🌍 : " + str(tot_S3d) + " tCO2e")
+        st.text("Total des émissions GES autres déchets 🌱 : " + str(tot_S3d) + " tCO2e")
         tot_S3a = round(df_S3a["Emissions GES (en tCO2e)"].sum(), 1)
-        st.text("Total des émissions GES 🛒 🌍 : " + str(tot_S3a) + " tCO2e")
+        st.text("Total des émissions GES matériaux 🌱 : " + str(tot_S3a) + " tCO2e")
         tot_S3 = round(df_S3["Emissions GES (en tCO2e)"].sum(), 1)
-        st.text("Total des émissions GES du scope 3 🗑️️+🛒 🌍 : " + str(tot_S3) + " tCO2e")
+        st.text("Total des émissions GES du scope 3 correspondant 🌱 : " + str(tot_S3) + " tCO2e")
         st.write(" ")
 
         if tot_S3d > 0:
@@ -992,7 +992,7 @@ def show_scope12(simulator_dict):
     header1 = '''
         <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-        <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPES 1&2 : Consommations d'énergies 🔋</p>
+        <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPES 1&2 : Consommations d'énergies ⛽</p>
         </head>
         '''
     st.write('---------------------------------------------------')
@@ -1000,7 +1000,7 @@ def show_scope12(simulator_dict):
     # st.header("SCOPE 1&2 : Consommations d'énergies 🔋")
     st.write(
         "Ici, vous pouvez simuler les émissions carbone directes et indirectes des Scopes 1 & 2 liées aux consommations d'énergies fossiles et d'électricité")
-    st.write("Cliquer sur Rafraîchir avant de démarrer 🔄")
+    st.write("Cliquer sur Rafraîchir avant de démarrer")
     if st.button('Rafraîchir Scope 1 et 2', use_container_width=True):
         scope2 = "scope2_blank.csv"
         df_S2 = pd.read_csv(scope2, encoding="latin1", sep=",", decimal='.', index_col=0)
@@ -1011,7 +1011,7 @@ def show_scope12(simulator_dict):
         df_S1[df_S1.columns] = ""
         df_S1.to_csv('scope1_blank.csv')
 
-    with st.expander("Scope1 - Energies fossiles 🛢️"):
+    with st.expander("Scope1 - Energies fossiles ⛽"):
         scope1 = "scope1_blank.csv"
         df_S1 = pd.read_csv(scope1, encoding="latin1", sep=",", decimal='.', index_col=0)
         df_S1 = df_S1.dropna()
@@ -1056,7 +1056,7 @@ def show_scope12(simulator_dict):
         st.write(" ")
         st.write(" ")
         st.text(
-            "Emissions GES de la donnée 🌍 : " + str(EMISSIONS) + " tCO2e " + "(+ ou - " + str(INCERTITUDE) + " tCO2e)")
+            "Emissions GES de la donnée 🌱 : " + str(EMISSIONS) + " tCO2e " + "(+ ou - " + str(INCERTITUDE) + " tCO2e)")
         if st.button("Ajout du poste d'émissions ➕"):
             new = ["Scope1", POSTE, ATT, str(DO), u, EMISSIONS]
             with open(scope1, 'a', newline='', encoding='latin1') as f_object:
@@ -1075,7 +1075,7 @@ def show_scope12(simulator_dict):
         POSTE2 = "['Electricité']"
         st.write(" ")
         st.write(" ")
-        st.text("Emissions GES de la donnée 🌍 : " + str(EMISSIONS2) + " tCO2e " + "(+ ou - " + str(
+        st.text("Emissions GES de la donnée 🌱 : " + str(EMISSIONS2) + " tCO2e " + "(+ ou - " + str(
             INCERTITUDE2) + " tCO2e)")
         if st.button("Ajout du poste d'émissions ➕  "):
             new2 = ["Scope2", POSTE2, "-", str(DO2), u2, EMISSIONS2]
@@ -1092,11 +1092,11 @@ def show_scope12(simulator_dict):
         df_S1et2 = pd.concat([df_S1, df_S2])
         st.dataframe(df_S1et2)
         tot_S1 = round(df_S1["Emissions GES (en tCO2e)"].sum(), 1)
-        st.text("Total des émissions GES du scope 1 🛢️ 🌍 : " + str(tot_S1) + " tCO2e")
+        st.text("Total des émissions GES du scope 1 ⛽ 🌱 : " + str(tot_S1) + " tCO2e")
         tot_S2 = round(df_S2["Emissions GES (en tCO2e)"].sum(), 1)
-        st.text("Total des émissions GES du scope 2 ⚡ 🌍 : " + str(tot_S2) + " tCO2e")
+        st.text("Total des émissions GES du scope 2 ⚡ 🌱 : " + str(tot_S2) + " tCO2e")
         tot_S1et2 = round(df_S1et2["Emissions GES (en tCO2e)"].sum(), 1)
-        st.text("Total des émissions GES des scopes 1 & 2 🛢️+⚡ 🌍 : " + str(tot_S1et2) + " tCO2e")
+        st.text("Total des émissions GES des scopes 1 & 2 ⛽+⚡ 🌱 : " + str(tot_S1et2) + " tCO2e")
         st.write(" ")
 
         if tot_S1 > 0 or tot_S2 > 0:
@@ -1185,7 +1185,7 @@ def show_scope3_construction(simulator_dict):
         INCERTITUDE_ouv = round(EMISSIONS_ouv * 0.01 * i, 2)
         st.write(" ")
     with st.expander("Résultat 📊"):
-        st.subheader("Emissions GES de l'ouvrage 🌍 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
+        st.subheader("Emissions GES de l'ouvrage 🌱 : " + str(int(EMISSIONS_ouv)) + " tCO2e ")
         st.write("(+ ou - " + str(int(INCERTITUDE_ouv)) + " tCO2e)")
 
     # simulator_dict['ouvrage'] = ouvrage
@@ -1211,7 +1211,7 @@ def show_co2_results(simulator_dict):
     header5 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Bilan CO2 simulé 🌍</p>
+    <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">Bilan CO2 simulé 🌱</p>
     </head>
     '''
     st.write('---------------------------------------------------')
@@ -1228,14 +1228,14 @@ def show_co2_results(simulator_dict):
         # simulator_dict['E_S3'] = E_S3
         st.session_state['E_S123'] = E_S123
         st.session_state['E_S3'] = E_S3
-        st.write("Emissions GES, Scope 1 ⚡ : " + str(round(st.session_state["tot_S1"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 2 🛢️ : " + str(round(st.session_state["tot_S2"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 3 🗑️+🛒+🏗️ : " + str(round(st.session_state["E_S3"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 3 Déchets 🗑️ : " + str(round(st.session_state["E_tot"]+st.session_state["tot_S3d"], 1)) + " tCO2e ")
-        st.write("Emissions GES, Scope 3 Matériaux 🛒 : " + str(round(st.session_state["tot_S3a"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 1 ⛽ : " + str(round(st.session_state["tot_S1"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 2 ⚡ : " + str(round(st.session_state["tot_S2"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 3 🚛+🦺+🏗️ : " + str(round(st.session_state["E_S3"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 3 Déchets 🚛 : " + str(round(st.session_state["E_tot"]+st.session_state["tot_S3d"], 1)) + " tCO2e ")
+        st.write("Emissions GES, Scope 3 Matériaux 🦺 : " + str(round(st.session_state["tot_S3a"], 1)) + " tCO2e ")
         st.write("Emissions GES, Scope 3 Construction 🏗️ : " + str(round(st.session_state["EMISSIONS_ouv"], 1)) + " tCO2e ")
 
-        st.write("Emissions GES totales 🌍 : " + str(round(st.session_state["E_S123"], 1)) + " tCO2e ")
+        st.write("Emissions GES totales 🌱 : " + str(round(st.session_state["E_S123"], 1)) + " tCO2e ")
         if E_S123 > 0:
             poste = ["1", "2", "3"]
             # es = [simulator_dict["tot_S1"], simulator_dict["tot_S2"], E_S3]
