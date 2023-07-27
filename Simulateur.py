@@ -74,14 +74,14 @@ def show_header(simulator_dict):
              "par Altaroad (https://www.altaroad.com/digitrack/)")
     st.write("")
 
-    col1, col2=st.columns(2)
-    col1.write("Pour plus d'informations, téléchargez le Manifeste ici")
+    col1, _, col2=st.columns([4,1,2])
+    col1.write("Pour plus d'informations, téléchargez le Manifeste ▶")
     with open('LeManifeste_SimulateurCO2_Altaroad.pdf', "rb") as pdf_file:
         PDFbyte = pdf_file.read()
     col2.download_button(label="le Manifeste",
                        data=PDFbyte,
                        file_name="LeManifeste_SimulateurCO2_Altaroad.pdf",
-                       mime='application/octet-stream')
+                       mime='application/octet-stream',use_container_width=True)
 
     link = '[Une question ? Contactez-nous 📧!](https://www.altaroad.com/demander-une-demo/)'
     st.markdown(link, unsafe_allow_html=True)
@@ -840,7 +840,7 @@ def show_scope3_2(simulator_dict):
     header3 = '''
     <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sen">
-    <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Autres déchets 🚛 & Livraison Matériaux 🦺</p>
+    <p style="font-family:Sen; color:#67686b; letter-spacing: -1px; line-height: 1.2; font-size: 30px;">SCOPE 3 : Autres déchets 🚛 & Matériaux neufs 🦺</p>
     </head>
     '''
     st.write('---------------------------------------------------')
