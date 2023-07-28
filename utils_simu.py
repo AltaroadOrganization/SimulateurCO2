@@ -74,28 +74,28 @@ def get_img_with_href(local_img_path, target_url):
 
 #plot function
 def pie_plot(inputs_list, labels_name, title, key_name):
-    _fig, _ax = plt.subplots()
+    _fig, _ax = plt.subplots(figsize=(8,8))
     _ax.set_title("Distribution {}".format(key_name), color="#F05E16", size=20)
     _ax.pie(inputs_list, autopct='%1.1f%%', textprops=dict(color="w"), startangle=90, shadow=False,
-            colors=["#F7BE6D","#FFB247","#FA9C1B","#F58216","#F05E16"])
+            colors=["#264653","#2A9D8F","#E9C46A","#F4A261","#E76F51"])
     _ax.axis('equal')
     legend = _ax.legend(labels_name, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), labelcolor="black",
-                        edgecolor="#F7BE6D")
+                        edgecolor="#F4A261")
     legend.set_title(title)
     title = legend.get_title()
-    title.set_color("#F05E16")
+    title.set_color("#F4A261")
     title.set_size(18)
     plt.savefig('./figures/pie_plot_Distribution {}.jpg'.format(key_name),bbox_inches='tight')
     return _fig
 
 def bar_plot(inputs_list, labels_name, title, x_label_title, y_label_title):
-    _fig = plt.figure()
+    _fig = plt.figure(figsize=(8,8))
     _ax = _fig.add_axes([0, 0, 1, 1])
-    _ax.set_title(title, color="#F05E16", size=20)
+    _ax.set_title(title, color="#F4A261", size=20)
     _ax.set_ylabel(y_label_title, color="#67686b", size=14)
     _ax.set_xlabel(x_label_title, color="#67686b", size=14)
     plt.xticks(rotation=45)
-    _ax.bar(labels_name, inputs_list, color="#F7BE6D", edgecolor="#FA9C1B")
+    _ax.bar(labels_name, inputs_list, color="#2A9D8F", edgecolor="#264653")
     plt.savefig('./figures/bar_plot_{}.jpg'.format(title), bbox_inches='tight')
     return _fig
 
@@ -337,15 +337,28 @@ def build_pdf_from_dict(the_input_dict):
                                  the_input_dict["E_tot"] + the_input_dict["EMISSIONS_ouv"] + the_input_dict["tot_S3d"] + the_input_dict["tot_S3a"] + the_input_dict["tot_S1et2"])) * 100, 1)) + " %", ln=1)
     else:
         pdf.cell(200, 10, txt="Aucune donnée saisie", ln=1)
+
+    #ajout des figures
+    pdf.add_page()
     pdf.cell(200, 10, txt="", ln=1)
     pdf.set_font("sen", "", size=16)
     pdf.set_text_color(128, 128, 128)
     pdf.cell(200, 10, txt="FIGURES", ln=1)
     directory = './figures'
+    i=1
+    y_fig=pdf.y
     for dirpath, dirnames, filenames in os.walk(directory):
         for filename in filenames:
             if filename.endswith('.jpg'):
-                pdf.image('./figures/{}'.format(filename),w=45)
+                if i % 2 != 0:
+                    y_fig=pdf.y
+                    pdf.image('./figures/{}'.format(filename), w=50)
+                if i % 2 == 0:
+                    pdf.image('./figures/{}'.format(filename), w=50, x=110, y=y_fig)
+                print(i,y_fig)
+                i+=1
+
+    pdf.add_page()
     pdf.set_font("sen", size=8, style='')
     pdf.set_text_color(128, 128, 128)
     str_textEnd="Ce simulateur propose une estimation des émissions CO2e d'un chantier. Il s'agit d'un outil dont l'objectif" \

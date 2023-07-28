@@ -78,6 +78,12 @@ def show_header(simulator_dict):
         # Clear values from *all* all in-memory and on-disk data caches:
         # i.e. clear values from both square and cube
         st.cache_data.clear()
+        #clear all the previously existing figures
+        directory = './figures'
+        for dirpath, dirnames, filenames in os.walk(directory):
+            for filename in filenames:
+                if filename.endswith('.jpg'):
+                    os.remove('./figures/{}'.format(filename))
 
     header0 = '''
     <head>
