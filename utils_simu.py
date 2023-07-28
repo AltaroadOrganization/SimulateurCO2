@@ -355,7 +355,6 @@ def build_pdf_from_dict(the_input_dict):
                     pdf.image('./figures/{}'.format(filename), w=50)
                 if i % 2 == 0:
                     pdf.image('./figures/{}'.format(filename), w=50, x=110, y=y_fig)
-                print(i,y_fig)
                 i+=1
 
     pdf.add_page()
